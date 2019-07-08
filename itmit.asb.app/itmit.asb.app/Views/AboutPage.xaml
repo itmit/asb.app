@@ -33,12 +33,15 @@
                     </FlexLayout>
                 </StackLayout>
             </Frame>
-            <Button Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY" TextColor="White" BackgroundColor="Red" HorizontalOptions="CenterAndExpand" BorderRadius="10"/>
-            <StackLayout Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand" BackgroundColor="#222222" HeightRequest="80">
-                <FlexLayout HorizontalOptions="CenterAndExpand">
-                    <Label Text="1500 р" TextColor="Yellow" HorizontalOptions="Center"/>
-                    <Label Text="30 дней" TextColor="Yellow" HorizontalOptions="Center"/>
-                </FlexLayout>
+            <Button Margin="30,20" Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY" TextColor="White" BackgroundColor="#b2100c" HorizontalOptions="CenterAndExpand" BorderRadius="10"/>
+            <StackLayout Margin="30,0" Grid.Row="3" Grid.Column="0">
+                <Frame CornerRadius="10" Padding="1" BackgroundColor="Black">
+                    <Frame CornerRadius="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#222222" HeightRequest="120" Margin="0" Padding="0">
+                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                            <Label Text="1500 р/30 дней" TextColor="Yellow" FontSize="Large"/>
+                        </StackLayout>
+                    </Frame>
+                </Frame>
             </StackLayout>
         </Grid>
     </ScrollView>
