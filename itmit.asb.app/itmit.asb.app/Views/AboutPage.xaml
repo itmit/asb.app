@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="itmit.asb.app.Views.AboutPage"
+             xmlns:vm="clr-namespace:itmit.asb.app.ViewModels"
+             BackgroundImage="mainf.png"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--Page Level Resources: Compatibile with Xamarin Live Player -->
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Text="ПОДПИСКА" TextColor="#b20d0b" HorizontalOptions="CenterAndExpand" Margin="0,20,0,0" FontSize="Large"/>
+            <Frame Grid.Row="1" Grid.Column="0" Margin="0,40" CornerRadius="100" WidthRequest="150" HeightRequest="150" HorizontalOptions="CenterAndExpand">
+                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Label Text="АКТИВНА" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"/>
+                    <Label Text="ОСТАЛОСЬ" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"/>
+                    <FlexLayout HorizontalOptions="Center">
+                        <Label Text="2992" FontSize="Large" TextColor="#b20d0b"/>
+                        <Label Text="ДНЕЙ" FontSize="Large" TextColor="#b20d0b"/>
+                    </FlexLayout>
+                </StackLayout>
+            </Frame>
+            <Button Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY" TextColor="White" BackgroundColor="Red" HorizontalOptions="CenterAndExpand" BorderRadius="10"/>
+            <StackLayout Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand" BackgroundColor="#222222" HeightRequest="80">
+                <FlexLayout HorizontalOptions="CenterAndExpand">
+                    <Label Text="1500 р" TextColor="Yellow" HorizontalOptions="Center"/>
+                    <Label Text="30 дней" TextColor="Yellow" HorizontalOptions="Center"/>
+                </FlexLayout>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>
