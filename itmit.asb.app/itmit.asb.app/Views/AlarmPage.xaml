@@ -40,7 +40,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Image Grid.Column="0" Grid.Row="0" Source="ic_call_black_48dp.png" Margin="0,15,0,0"/>
+                                <Image Grid.Column="0" Grid.Row="0" Source="zvonok.png" Margin="0,15,0,0"/>
                                 <Label Grid.Column="0" Grid.Row="1" Text="ТРЕВОГА И" TextColor="White" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,10,0,0"/>
                                 <Label Grid.Column="0" Grid.Row="2" Text="ЗВОНОК" TextColor="White" FontSize="15" HorizontalOptions="Center" VerticalOptions="Center" />
                             </Grid>

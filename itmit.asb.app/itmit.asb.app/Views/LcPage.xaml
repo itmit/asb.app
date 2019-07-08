@@ -10,7 +10,7 @@
             <StackLayout VerticalOptions="Fill" HeightRequest="200">
                 <Frame BackgroundColor="#ef2b2e" Padding="3" CornerRadius="100" VerticalOptions="Center">
                     <Frame CornerRadius="100" BackgroundColor="#222222" Padding="40">
-                        <Image Source="user.png"  VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="120"/>
+                        <Image Source="user1.png"  VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="120"/>
                     </Frame>
                 </Frame>
             </StackLayout>
