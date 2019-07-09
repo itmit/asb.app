@@ -12,9 +12,9 @@
             BackgroundColor="#222222"
             >
     <TabbedPage.Children>
-        <NavigationPage >
+        <NavigationPage>
             <NavigationPage.Icon>
-                <FileImageSource File="ic_call_black_36dp.png" />
+                <FileImageSource File="ic_adjust_black_36dp.png" />
             </NavigationPage.Icon>
             <x:Arguments>
                 <views:alarm />
@@ -22,7 +22,7 @@
         </NavigationPage>
         <NavigationPage>
             <NavigationPage.Icon>
-                <FileImageSource File="ic_adjust_black_36dp.png" />
+                <FileImageSource File="ic_call_black_36dp.png" />
             </NavigationPage.Icon>
             <x:Arguments>
                 <views:AboutPage/>
