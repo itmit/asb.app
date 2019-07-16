@@ -4,12 +4,10 @@
             x:Class="itmit.asb.app.Views.MainPage"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
             xmlns:views="clr-namespace:itmit.asb.app.Views"
-            android:TabbedPage.ToolbarPlacement="Bottom"
-            android:TabbedPage.BarItemColor="#b31710"
-            android:TabbedPage.BarSelectedItemColor="Red"
             NavigationPage.HasNavigationBar="false"
             android:TabbedPage.IsSwipePagingEnabled="False"
             BackgroundColor="#222222"
+            
             >
     <TabbedPage.Children>
         <NavigationPage>

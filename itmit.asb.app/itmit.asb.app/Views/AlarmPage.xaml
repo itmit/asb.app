@@ -32,6 +32,9 @@
                     <Frame BackgroundColor="#000000" CornerRadius="100" Margin="0" Padding="5">
                         <Frame BackgroundColor="#ef2b2e" CornerRadius="100" WidthRequest="140" HeightRequest="140" Margin="0" Padding="0">
                             <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AlarmCommand}"  NumberOfTapsRequired="1"/>
+                                </Grid.GestureRecognizers>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>

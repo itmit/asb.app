@@ -1,7 +1,6 @@
 ﻿using Android.Content;
 using Android.Support.Design.Internal;
 using Android.Views;
-using itmit.asb.app.Controls;
 using itmit.asb.app.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -10,7 +9,7 @@ using Xamarin.Forms.Platform.Android.AppCompat;
 [assembly: ExportRenderer(typeof(TabbedPage), typeof(MainTabbedPageRenderer))]
 namespace itmit.asb.app.Droid.Renderers
 {
-    public class MainTabbedPageRenderer : TabbedPageRenderer
+	public class MainTabbedPageRenderer : TabbedPageRenderer
     {
         public MainTabbedPageRenderer(Context context) : base(context) { }
 
@@ -36,7 +35,7 @@ namespace itmit.asb.app.Droid.Renderers
                         var item = bottomNavigationMenuView.GetChildAt(i) as BottomNavigationItemView;
                         if (item == null) continue;
 
-                        item.SetShiftingMode(false);
+                        
                         item.SetChecked(item.ItemData.IsChecked);
                     }
 

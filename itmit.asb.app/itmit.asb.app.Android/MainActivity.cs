@@ -1,11 +1,13 @@
 ﻿using System;
-
+using Android;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
 
 namespace itmit.asb.app.Droid
 {
@@ -19,7 +21,59 @@ namespace itmit.asb.app.Droid
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation) != Permission.Granted
+			    || ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
+			{
+				RequestLocationPermission();
+			}
+			
             LoadApplication(new App());
         }
-    }
+
+		private void RequestLocationPermission()
+		{
+			if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.AccessFineLocation))
+			{
+				ActivityCompat.RequestPermissions(this,
+												  new[]
+												  {
+													  Manifest.Permission.AccessFineLocation
+												  },
+												  PermissionsRequestAccessFineLocation);
+			}
+			else
+			{
+				ActivityCompat.RequestPermissions(this,
+												  new[]
+												  {
+													  Manifest.Permission.AccessFineLocation
+												  },
+												  PermissionsRequestAccessFineLocation);
+			}
+
+			if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.AccessCoarseLocation))
+			{
+				ActivityCompat.RequestPermissions(this,
+												  new[]
+												  {
+													  Manifest.Permission.AccessCoarseLocation
+												  },
+												  PermissionsRequestAccessCoarseLocation);
+			}
+			else
+			{
+				ActivityCompat.RequestPermissions(this,
+												  new[]
+												  {
+													  Manifest.Permission.AccessCoarseLocation
+												  },
+												  PermissionsRequestAccessCoarseLocation);
+			}
+		}
+
+		public int PermissionsRequestAccessCoarseLocation => 100;
+
+		public int PermissionsRequestAccessFineLocation => 100;
+	}
 }
