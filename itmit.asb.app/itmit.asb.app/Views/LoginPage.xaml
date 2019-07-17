@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="itmit.asb.app.Views.LoginPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry HorizontalOptions="Fill" Margin="30" Placeholder="e-mail" Text="{Binding Login}"/>
+            <Entry HorizontalOptions="Fill" Margin="30" Placeholder="pass" Text="{Binding Password}"/>
+            <Button HorizontalOptions="Fill" Margin="30" Text="Submit" Command="{Binding LoginCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

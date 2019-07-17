@@ -1,4 +1,5 @@
 ﻿using System;
+using itmit.asb.app.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using itmit.asb.app.Views;
@@ -7,14 +8,28 @@ using itmit.asb.app.Views;
 namespace itmit.asb.app
 {
     public partial class App : Application
-    {
+	{
+		private static User _user;
 
-        public App()
+		public static User User
+		{
+			get => _user;
+			set
+			{
+				if (value.Token.Equals(string.Empty))
+				{
+					return;
+				}
+				_user = value;
+			}
+		}
+
+		public App()
         {
             InitializeComponent();
 
-
-            MainPage = new MainPage();
+			MainPage = new LoginPage();
+            //MainPage = new MainPage();
         }
 
         protected override void OnStart()

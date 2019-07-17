@@ -29,9 +29,10 @@ namespace itmit.asb.app.Services
 
 			var response = await client.PostAsync(new Uri(Uri), encodedContent);
 
+			var jsonString = await response.Content.ReadAsStringAsync();
+
 			if (!response.IsSuccessStatusCode)
 			{
-				var jsonString = await response.Content.ReadAsStringAsync();
 				Debug.WriteLine(jsonString);
 			}
 
