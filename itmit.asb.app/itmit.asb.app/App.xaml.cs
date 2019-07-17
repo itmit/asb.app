@@ -9,7 +9,7 @@ namespace itmit.asb.app
 {
     public partial class App : Application
 	{
-		private static User _user;
+		private static User _user = new User();
 
 		public static User User
 		{

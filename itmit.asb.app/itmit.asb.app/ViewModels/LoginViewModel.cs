@@ -16,6 +16,7 @@ namespace itmit.asb.app.ViewModels
 	{
 		private string _login;
 		private string _password;
+		private bool _authNotSuccess;
 
 		public LoginViewModel()
 		{
@@ -23,6 +24,14 @@ namespace itmit.asb.app.ViewModels
 			{
 				LoginCommandExecute();
 			}, obj => true);
+
+			AuthNotSuccess = false;
+		}
+
+		public bool AuthNotSuccess
+		{
+			get => _authNotSuccess;
+			set => SetProperty(ref _authNotSuccess, value);
 		}
 
 		public RelayCommand LoginCommand
@@ -34,7 +43,14 @@ namespace itmit.asb.app.ViewModels
 		private async void LoginCommandExecute()
 		{
 			App.User = await LoginAsync(Login, Password);
-			Application.Current.MainPage = new MainPage();
+			if (App.User.Token.Equals(string.Empty))
+			{
+				AuthNotSuccess = true;
+			}
+			else
+			{
+				Application.Current.MainPage = new MainPage();
+			}
 		}
 
 		public string Password
