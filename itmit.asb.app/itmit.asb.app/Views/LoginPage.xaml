@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="itmit.asb.app.Views.LoginPage">
+             x:Class="itmit.asb.app.Views.LoginPage"
+             xmlns:ex="clr-namespace:itmit.asb.app.Controls"
+             BackgroundColor="#222222"
+             >
     <ContentPage.Content>
         <StackLayout>
-            <Entry HorizontalOptions="Fill" Margin="30" Placeholder="e-mail" Text="{Binding Login}"/>
-            <Entry HorizontalOptions="Fill" Margin="30" Placeholder="pass" Text="{Binding Password}"/>
-            <Button HorizontalOptions="Fill" Margin="30" Text="Submit" Command="{Binding LoginCommand}"/>
+            <ex:LoginEntry HorizontalOptions="Fill" Margin="30" Placeholder="ТЕЛЕФОН" FontSize="Large" TextColor="#b20e0b" Text="{Binding Login}"/>
+            <ex:LoginEntry HorizontalOptions="Fill" Margin="30" Placeholder="ПАРОЛЬ" FontSize="Large" TextColor="#b20e0b" Text="{Binding Password}" IsPassword="True"/>
+            <Button Margin="30" Text="ВОЙТИ" Command="{Binding LoginCommand}" BackgroundColor="#b20e0b" Padding="15" WidthRequest="250" TextColor="White" FontSize="Large"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

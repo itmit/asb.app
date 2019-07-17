@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\BorderAlarmRenderer.cs" />
+    <Compile Include="Renderers\LoginEntryRenderer.cs" />
     <Compile Include="Renderers\MainTabbedPageRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
