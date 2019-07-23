@@ -66,7 +66,7 @@ namespace itmit.asb.app.ViewModels
 		}
 
 		private const string Uri = "http://asb.itmit-studio.ru/api/login";
-		private const string SecretKey = "2QAHVdLTLmODi0gFAmr8vScFLGLVIGam0Y6bDdh9";
+		private const string SecretKey = "vN5sb00fwosNvDdpcJUyPDio5W8IKehdJ0XCYBQh";
 
 		public async Task<User> LoginAsync(string login, string pass)
 		{
@@ -77,7 +77,7 @@ namespace itmit.asb.app.ViewModels
 
 				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string> {
 					{
-						"email",
+						"phoneNumber",
 						login
 					},
 					{

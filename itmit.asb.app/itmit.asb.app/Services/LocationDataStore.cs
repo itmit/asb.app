@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using itmit.asb.app.Models;
 
@@ -16,6 +17,9 @@ namespace itmit.asb.app.Services
 		{
 			var client = new HttpClient();
 
+			client.DefaultRequestHeaders.Authorization = 
+				new AuthenticationHeaderValue(App.User.TokenType, App.User.Token);
+
 			var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string> {
 				{
 					"latitude",
@@ -27,14 +31,12 @@ namespace itmit.asb.app.Services
 				}
 			});
 
-			var response = await client.PostAsync(new Uri(Uri), encodedContent);
+			HttpResponseMessage response = await client.PostAsync(new Uri(Uri), encodedContent);
 
+#if DEBUG
 			var jsonString = await response.Content.ReadAsStringAsync();
-
-			if (!response.IsSuccessStatusCode)
-			{
-				Debug.WriteLine(jsonString);
-			}
+			Debug.WriteLine(jsonString);
+#endif
 
 			return await Task.FromResult(true);
 		}

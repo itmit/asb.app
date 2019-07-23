@@ -3,12 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="itmit.asb.app.Views.LoginPage"
              xmlns:ex="clr-namespace:itmit.asb.app.Controls"
+             xmlns:asb="clr-namespace:itmit.asb.app"
              BackgroundColor="#222222"
              >
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Неправильные логин или пароль" TextColor="#b20e0b" IsVisible="{Binding AuthNotSuccess}"/>
-            <ex:LoginEntry HorizontalOptions="Fill" Margin="30" Placeholder="ТЕЛЕФОН" FontSize="Large" TextColor="#b20e0b" Text="{Binding Login}"/>
+            <ex:LoginEntry HorizontalOptions="Fill" Margin="30" Placeholder="ТЕЛЕФОН" FontSize="Large" TextColor="#b20e0b" Text="{Binding Login}" Keyboard="Numeric">
+                <ex:LoginEntry.Behaviors>
+                    <asb:MaskedBehavior Mask="+X (XXX) XXX-XX-XX"/>
+                </ex:LoginEntry.Behaviors>
+            </ex:LoginEntry>
             <ex:LoginEntry HorizontalOptions="Fill" Margin="30" Placeholder="ПАРОЛЬ" FontSize="Large" TextColor="#b20e0b" Text="{Binding Password}" IsPassword="True"/>
             <Button Margin="30" Text="ВОЙТИ" Command="{Binding LoginCommand}" BackgroundColor="#b20e0b" Padding="15" WidthRequest="250" TextColor="White" FontSize="Large"/>
         </StackLayout>
