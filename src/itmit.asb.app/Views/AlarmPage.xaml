@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ex="clr-namespace:itmit.asb.app.Controls"
              x:Class="itmit.asb.app.Views.alarm"
-             BackgroundImage="mainf.png"
+             BackgroundImageSource="mainf.png"
              NavigationPage.HasNavigationBar="false"
              >
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Center" Margin="0,50" VerticalOptions="Center">
             <StackLayout HeightRequest="300" Margin="80,0">
-                <Frame OutlineColor="#2e2e2e" BackgroundColor="#2e2e2e" CornerRadius="100" Margin="0" Padding="10">
+                <Frame BorderColor="#2e2e2e" BackgroundColor="#2e2e2e" CornerRadius="100" Margin="0" Padding="10">
                     <Frame BackgroundColor="#000000" CornerRadius="100" Margin="0" Padding="5">
                         <Frame BackgroundColor="#ef2b2e" CornerRadius="100" WidthRequest="180" HeightRequest="180"  Margin="0" Padding="0">
                             <Grid ColumnSpacing="0">

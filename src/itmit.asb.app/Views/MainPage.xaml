@@ -7,45 +7,47 @@
             NavigationPage.HasNavigationBar="false"
             android:TabbedPage.IsSwipePagingEnabled="False"
             BackgroundColor="#222222"
-            
+            SelectedTabColor="Red"
+            UnselectedTabColor="#b31710"
+            BarBackgroundColor="#2e2e2e"
             >
     <TabbedPage.Children>
         <NavigationPage>
-            <NavigationPage.Icon>
+            <NavigationPage.IconImageSource>
                 <FileImageSource File="ic_adjust_black_36dp.png" />
-            </NavigationPage.Icon>
+            </NavigationPage.IconImageSource>
             <x:Arguments>
                 <views:alarm />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage>
-            <NavigationPage.Icon>
+            <NavigationPage.IconImageSource>
                 <FileImageSource File="ic_call_black_36dp.png" />
-            </NavigationPage.Icon>
+            </NavigationPage.IconImageSource>
             <x:Arguments>
                 <views:AboutPage/>
             </x:Arguments>
         </NavigationPage>
         <NavigationPage>
-            <NavigationPage.Icon>
+            <NavigationPage.IconImageSource>
                 <FileImageSource File="ic_account_circle_black_36dp.png" />
-            </NavigationPage.Icon>
+            </NavigationPage.IconImageSource>
             <x:Arguments>
                 <views:LcPage />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage>
-            <NavigationPage.Icon>
+            <NavigationPage.IconImageSource>
                 <FileImageSource File="ic_arrow_back_black_36dp.png" />
-            </NavigationPage.Icon>
+            </NavigationPage.IconImageSource>
             <x:Arguments>
                 <views:AboutPage />
             </x:Arguments>
         </NavigationPage>
         <NavigationPage>
-            <NavigationPage.Icon>
+            <NavigationPage.IconImageSource>
                 <FileImageSource File="ic_keyboard_tab_black_36dp.png" />
-            </NavigationPage.Icon>
+            </NavigationPage.IconImageSource>
             <x:Arguments>
                 <views:AboutPage />
             </x:Arguments>

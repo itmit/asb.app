@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Web;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
@@ -78,21 +79,22 @@ namespace itmit.asb.app.ViewModels
 				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string> {
 					{
 						"phoneNumber",
-						login
+						HttpUtility.UrlEncode(login)
 					},
 					{
 						"password",
-						pass
+						HttpUtility.UrlEncode(pass)
 					}
 				});
 
 				response = await client.PostAsync(new Uri(Uri), encodedContent);
 			}
 
+			var jsonString = await response.Content.ReadAsStringAsync();
+			Debug.WriteLine(jsonString);
+
 			if (response.IsSuccessStatusCode)
 			{
-				var jsonString = await response.Content.ReadAsStringAsync();
-				Debug.WriteLine(jsonString);
 				if (jsonString != null)
 				{
 					JsonDataResponse<User> jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
