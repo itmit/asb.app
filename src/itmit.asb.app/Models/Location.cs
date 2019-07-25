@@ -29,10 +29,11 @@ namespace itmit.asb.app.Models
 		/// Возвращает текущие координаты местоположения.
 		/// </summary>
 		/// <returns>Текущие координаты.</returns>
-		public static async Task<Location> GetCurrentGeolocationAsync()
+		public static async Task<Location> GetCurrentGeolocationAsync(GeolocationAccuracy accuracy)
 		{
-			var location = await Geolocation.GetLastKnownLocationAsync();
-			 
+			var request = new GeolocationRequest(accuracy);
+			var location = await Geolocation.GetLocationAsync(request);
+
 			if (location == null) {
 				return await Task.FromResult(_currentGeolocation);
 			}

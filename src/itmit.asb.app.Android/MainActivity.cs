@@ -1,6 +1,7 @@
 ﻿using System;
 using Android;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
@@ -8,6 +9,8 @@ using Android.Widget;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
+using Android.Gms.Common.Apis;
+using Android.Gms.Location;
 
 namespace itmit.asb.app.Droid
 {
@@ -27,8 +30,10 @@ namespace itmit.asb.app.Droid
 			{
 				RequestLocationPermission();
 			}
-			
-            LoadApplication(new App());
+
+			DisplayLocationSettingsRequest();
+
+			LoadApplication(new App());
         }
 
 		private void RequestLocationPermission()
@@ -72,8 +77,57 @@ namespace itmit.asb.app.Droid
 			}
 		}
 
-		public int PermissionsRequestAccessCoarseLocation => 100;
+		public const int PermissionsRequestAccessCoarseLocation = 100;
 
-		public int PermissionsRequestAccessFineLocation => 100;
+		public const int PermissionsRequestAccessFineLocation = 50;
+
+		public const int RequestCheckSettings = 1;
+
+		private void DisplayLocationSettingsRequest()
+        {
+            var googleApiClient = new GoogleApiClient.Builder(this).AddApi(LocationServices.API).Build();
+            googleApiClient.Connect();
+
+            var locationRequest = LocationRequest.Create();
+            locationRequest.SetPriority(LocationRequest.PriorityHighAccuracy);
+            locationRequest.SetInterval(10000);
+            locationRequest.SetFastestInterval(10000 / 2);
+
+            var builder = new LocationSettingsRequest.Builder().AddLocationRequest(locationRequest);
+            builder.SetAlwaysShow(true);
+
+            var result = LocationServices.SettingsApi.CheckLocationSettings(googleApiClient, builder.Build());
+            result.SetResultCallback((LocationSettingsResult callback) =>
+            {
+                switch (callback.Status.StatusCode)
+                {
+                    case LocationSettingsStatusCodes.Success:
+                        {
+                            //DoStuffWithLocation();
+                            break;
+                        }
+                    case LocationSettingsStatusCodes.ResolutionRequired:
+                        {
+                            try
+                            {
+                                // Show the dialog by calling startResolutionForResult(), and check the result
+                                // in onActivityResult().
+                                callback.Status.StartResolutionForResult(this, RequestCheckSettings);
+                            }
+                            catch (IntentSender.SendIntentException e)
+                            {
+                            }
+
+                            break;
+                        }
+                    default:
+                        {
+                            // If all else fails, take the user to the android location settings
+                            StartActivity(new Intent(Android.Provider.Settings.ActionLocationSourceSettings));
+                            break;
+                        }
+                }
+            });
+        }
 	}
 }

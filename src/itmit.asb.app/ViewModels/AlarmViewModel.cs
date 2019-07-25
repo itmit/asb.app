@@ -1,5 +1,6 @@
-﻿using itmit.asb.app.Models;
-using itmit.asb.app.Services;
+﻿using itmit.asb.app.Services;
+using Xamarin.Essentials;
+using Location = itmit.asb.app.Models.Location;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -15,7 +16,7 @@ namespace itmit.asb.app.ViewModels
 
 		private async void SendAlarm(LocationDataStore service)
 		{
-			await service.AddItemAsync(await Location.GetCurrentGeolocationAsync());
+			await service.AddItemAsync(await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Best));
 		}
 
         public RelayCommand AlarmCommand { get; private set; }

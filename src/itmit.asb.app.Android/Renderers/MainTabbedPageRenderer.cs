@@ -21,26 +21,26 @@ namespace itmit.asb.app.Droid.Renderers
             {
                 BottomNavigationMenuView bottomNavigationMenuView = FindChildOfType<BottomNavigationMenuView>(ViewGroup);
 
-                if (bottomNavigationMenuView != null)
-                {
-                    var shiftMode = bottomNavigationMenuView.Class.GetDeclaredField("mShiftingMode");
+                //if (bottomNavigationMenuView != null)
+                //{
+                //    var shiftMode = bottomNavigationMenuView.Class.GetDeclaredField("mShiftingMode");
 
-                    shiftMode.Accessible = true;
-                    shiftMode.SetBoolean(bottomNavigationMenuView, false);
-                    shiftMode.Accessible = false;
-                    shiftMode.Dispose();
+                //    shiftMode.Accessible = true;
+                //    shiftMode.SetBoolean(bottomNavigationMenuView, false);
+                //    shiftMode.Accessible = false;
+                //    shiftMode.Dispose();
 
-                    for (var i = 0; i < bottomNavigationMenuView.ChildCount; i++)
-                    {
-                        var item = bottomNavigationMenuView.GetChildAt(i) as BottomNavigationItemView;
-                        if (item == null) continue;
+                //    for (var i = 0; i < bottomNavigationMenuView.ChildCount; i++)
+                //    {
+                //        var item = bottomNavigationMenuView.GetChildAt(i) as BottomNavigationItemView;
+                //        if (item == null) continue;
 
                         
-                        item.SetChecked(item.ItemData.IsChecked);
-                    }
+                //        item.SetChecked(item.ItemData.IsChecked);
+                //    }
 
-                    if (bottomNavigationMenuView.ChildCount > 0) bottomNavigationMenuView.UpdateMenuView();
-                }
+                //    if (bottomNavigationMenuView.ChildCount > 0) bottomNavigationMenuView.UpdateMenuView();
+                //}
             }
         }
 
