@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using System.Web;
 using itmit.asb.app.Services;
 using Newtonsoft.Json;
+using Realms;
 using Xamarin.Auth;
 
 namespace itmit.asb.app.Models
 {
-	public class User
+	public class User : RealmObject
 	{
 		public UserToken UserToken 
 		{

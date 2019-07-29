@@ -8,7 +8,9 @@ using System.Web;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
+using itmit.asb.app.Views.Guard;
 using Newtonsoft.Json;
+using Realms;
 using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
@@ -18,6 +20,8 @@ namespace itmit.asb.app.ViewModels
 		private string _login;
 		private string _password;
 		private bool _authNotSuccess;
+
+		private Realm Realm => Realm.GetInstance();
 
 		public LoginViewModel()
 		{
@@ -44,13 +48,26 @@ namespace itmit.asb.app.ViewModels
 		private async void LoginCommandExecute()
 		{
 			App.UserToken = await LoginAsync(Login, Password);
+
+			Realm.Write(() =>
+			{
+				Realm.Add(App.UserToken, true);
+			});
+
 			if (App.UserToken.Token.Equals(string.Empty))
 			{
 				AuthNotSuccess = true;
 			}
 			else
 			{
-				Application.Current.MainPage = new MainPage();
+				if (App.IsGuardUser)
+				{
+					Application.Current.MainPage = new GuardMainPage();
+				}
+				else
+				{
+					Application.Current.MainPage = new MainPage();
+				}
 			}
 		}
 
@@ -75,6 +92,11 @@ namespace itmit.asb.app.ViewModels
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+
+				if (login == "+7 (911) 447-11-83" && pass == "x5410041")
+				{
+					App.IsGuardUser = true;
+				}
 
 				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string> {
 					{

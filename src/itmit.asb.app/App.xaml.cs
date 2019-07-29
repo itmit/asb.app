@@ -24,6 +24,12 @@ namespace itmit.asb.app
 			}
 		}
 
+		public static bool IsGuardUser
+		{
+			get;
+			set;
+		} = false;
+
 		public App()
         {
             InitializeComponent();

@@ -1,13 +1,15 @@
-﻿using itmit.asb.app.Models;
+﻿using System;
+using itmit.asb.app.Models;
+using Realms;
 
 namespace itmit.asb.app.ViewModels
 {
 	public class LcViewModel : BaseViewModel
 	{
-		private string _userPictureSource = "";
-		private string _organization = "";
-		private string _phoneNumber = "";
-		private string _node = "";
+		private string _userPictureSource = string.Empty;
+		private string _organization = string.Empty;
+		private string _phoneNumber = string.Empty;
+		private string _node = string.Empty;
 		private User _user;
 
 		public LcViewModel()
@@ -22,7 +24,6 @@ namespace itmit.asb.app.ViewModels
 			if (_user.UserPictureSource != string.Empty 
 			    || _user.UserPictureSource != null
 				|| _user.UserPictureSource != "null"
-
 				)
 			{
 				UserPictureSource = _user.UserPictureSource;

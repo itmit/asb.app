@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Realms;
 
 namespace itmit.asb.app.Models
 {
-	public class UserToken
+	public class UserToken : RealmObject
 	{
 
 		[JsonProperty("access_token")]
