@@ -43,8 +43,8 @@ namespace itmit.asb.app.ViewModels
 
 		private async void LoginCommandExecute()
 		{
-			App.User = await LoginAsync(Login, Password);
-			if (App.User.Token.Equals(string.Empty))
+			App.UserToken = await LoginAsync(Login, Password);
+			if (App.UserToken.Token.Equals(string.Empty))
 			{
 				AuthNotSuccess = true;
 			}
@@ -67,9 +67,9 @@ namespace itmit.asb.app.ViewModels
 		}
 
 		private const string Uri = "http://asb.itmit-studio.ru/api/login";
-		private const string SecretKey = "vN5sb00fwosNvDdpcJUyPDio5W8IKehdJ0XCYBQh";
+		private const string SecretKey = "znrAr76W8rN22aMAcAT0BbYFcF4ivR8j9GVAOgkD";
 
-		public async Task<User> LoginAsync(string login, string pass)
+		public async Task<UserToken> LoginAsync(string login, string pass)
 		{
 			HttpResponseMessage response;
 			using (var client = new HttpClient())
@@ -97,12 +97,12 @@ namespace itmit.asb.app.ViewModels
 			{
 				if (jsonString != null)
 				{
-					JsonDataResponse<User> jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
+					JsonDataResponse<UserToken> jsonData = JsonConvert.DeserializeObject<JsonDataResponse<UserToken>>(jsonString);
 					return await Task.FromResult(jsonData.Data);
 				}
 			}
 			
-			return await Task.FromResult(new User());
+			return await Task.FromResult(new UserToken());
 		}
 	}
 }

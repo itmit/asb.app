@@ -18,7 +18,7 @@ namespace itmit.asb.app.Services
 			var client = new HttpClient();
 
 			client.DefaultRequestHeaders.Authorization = 
-				new AuthenticationHeaderValue(App.User.TokenType, App.User.Token);
+				new AuthenticationHeaderValue(App.UserToken.TokenType, App.UserToken.Token);
 
 			var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string> {
 				{

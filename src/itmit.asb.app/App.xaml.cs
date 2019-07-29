@@ -9,18 +9,18 @@ namespace itmit.asb.app
 {
     public partial class App : Application
 	{
-		private static User _user = new User();
+		private static UserToken _userToken = new UserToken();
 
-		public static User User
+		public static UserToken UserToken
 		{
-			get => _user;
+			get => _userToken;
 			set
 			{
 				if (value.Token.Equals(string.Empty))
 				{
 					return;
 				}
-				_user = value;
+				_userToken = value;
 			}
 		}
 
