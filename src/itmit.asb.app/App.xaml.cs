@@ -1,5 +1,6 @@
 ﻿using System;
 using itmit.asb.app.Models;
+using itmit.asb.app.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using itmit.asb.app.Views;
@@ -35,7 +36,6 @@ namespace itmit.asb.app
             InitializeComponent();
 
 			MainPage = new LoginPage();
-            //MainPage = new MainPage();
         }
 
         protected override void OnStart()
