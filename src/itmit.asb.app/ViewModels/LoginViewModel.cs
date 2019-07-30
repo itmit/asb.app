@@ -66,7 +66,7 @@ namespace itmit.asb.app.ViewModels
 				}
 				else
 				{
-					Application.Current.MainPage = new MainPage();
+					Application.Current.MainPage = new AboutPage();
 				}
 			}
 		}
