@@ -4,18 +4,18 @@
              x:Class="itmit.asb.app.Views.LoginPage"
              xmlns:ex="clr-namespace:itmit.asb.app.Controls"
              xmlns:asb="clr-namespace:itmit.asb.app"
-             BackgroundColor="#222222"
+             BackgroundImageSource="mainf.png"
              >
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Неправильные логин или пароль" TextColor="#b20e0b" IsVisible="{Binding AuthNotSuccess}"/>
-            <ex:LoginEntry HorizontalOptions="Fill" Margin="30" Placeholder="ТЕЛЕФОН" FontSize="Large" TextColor="#b20e0b" Text="{Binding Login}" Keyboard="Numeric">
+            <ex:LoginEntry Margin="30" Placeholder="ТЕЛЕФОН" FontSize="Large" TextColor="#b20e0b" PlaceholderColor="#b20e0b" Text="{Binding Login}" Keyboard="Numeric">
                 <ex:LoginEntry.Behaviors>
                     <asb:MaskedBehavior Mask="+X (XXX) XXX-XX-XX"/>
                 </ex:LoginEntry.Behaviors>
             </ex:LoginEntry>
-            <ex:LoginEntry HorizontalOptions="Fill" Margin="30" Placeholder="ПАРОЛЬ" FontSize="Large" TextColor="#b20e0b" Text="{Binding Password}" IsPassword="True"/>
-            <Button Margin="30" Text="ВОЙТИ" Command="{Binding LoginCommand}" BackgroundColor="#b20e0b" Padding="15" WidthRequest="250" TextColor="White" FontSize="Large"/>
+            <ex:LoginEntry Margin="30" Placeholder="ПАРОЛЬ" FontSize="Large" TextColor="#b20e0b" PlaceholderColor="#b20e0b" Text="{Binding Password}" IsPassword="True"/>
+            <Button Margin="0,20,0,0" HorizontalOptions="Center" Text="ВОЙТИ" Command="{Binding LoginCommand}" BackgroundColor="#b20e0b" Padding="0,15" WidthRequest="230" TextColor="White" FontSize="Large" CornerRadius="10"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

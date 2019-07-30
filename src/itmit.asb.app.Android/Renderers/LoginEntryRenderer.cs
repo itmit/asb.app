@@ -1,4 +1,7 @@
 ﻿using Android.Content;
+using Android.Content.Res;
+using Android.Graphics;
+using Android.OS;
 using itmit.asb.app.Controls;
 using itmit.asb.app.Droid.Renderers;
 using Xamarin.Forms;
@@ -19,8 +22,10 @@ namespace itmit.asb.app.Droid.Renderers
             base.OnElementChanged(e);
             if (Control != null)
             {
-                // Control.Background = new ColorDrawable(Android.Graphics.Color.);
-               // Control.(Color.Rgb(178, 14, 11));
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.Lollipop)
+                    Control.BackgroundTintList = ColorStateList.ValueOf(Color.Rgb(199, 11, 9));
+                else
+                    Control.Background.SetColorFilter(Color.Rgb(199, 11, 9), PorterDuff.Mode.SrcAtop);
             }
         }
     }
