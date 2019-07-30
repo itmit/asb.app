@@ -15,12 +15,7 @@ namespace itmit.asb.app.Views
 		public LcPage ()
 		{
 			InitializeComponent ();
-			var vm = new LcViewModel();
-			BindingContext = vm;
-			Task.Run(() =>
-			{
-				vm.LoadUserAsync(App.UserToken);
-			});
+			BindingContext = new LcViewModel(App.User);
 		}
 	}
 }

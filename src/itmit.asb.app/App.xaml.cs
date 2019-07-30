@@ -1,42 +1,48 @@
 ﻿using System;
+using System.Linq;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using itmit.asb.app.Views;
+using itmit.asb.app.Views.Guard;
+using Realms;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace itmit.asb.app
 {
     public partial class App : Application
 	{
-		private static UserToken _userToken = new UserToken();
-
-		public static UserToken UserToken
-		{
-			get => _userToken;
-			set
-			{
-				if (value.Token.Equals(string.Empty))
-				{
-					return;
-				}
-				_userToken = value;
-			}
-		}
-
-		public static bool IsGuardUser
+		public static User User
 		{
 			get;
 			set;
-		} = false;
+		}
 
 		public App()
         {
             InitializeComponent();
 
-			MainPage = new LoginPage();
-        }
+			DependencyService.Register<IAuthService>();
+
+			var realm = Realm.GetInstance();
+			User user = realm.All<User>().SingleOrDefault();
+
+			if (user == null)
+			{
+				MainPage = new LoginPage();
+				return;
+			}
+
+			User = user;
+			if (User.IsGuard)
+			{
+				MainPage = new GuardMainPage();
+				return;
+			}
+
+			MainPage = new MainPage();
+		}
 
         protected override void OnStart()
         {

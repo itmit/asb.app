@@ -17,37 +17,8 @@ namespace itmit.asb.app.Models
 		public UserToken UserToken 
 		{
 			get;
-			private set;
+			set;
 		}
-
-		public static async Task<User> GetUserByTokenAsync(UserToken token)
-		{
-			HttpResponseMessage response;
-			using (var client = new HttpClient())
-			{
-				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
-
-				response = await client.PostAsync(new Uri(Uri), null);
-			}
-
-			var jsonString = await response.Content.ReadAsStringAsync();
-			Debug.WriteLine(jsonString);
-
-			if (response.IsSuccessStatusCode)
-			{
-				if (jsonString != null)
-				{
-					JsonDataResponse<User> jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
-					jsonData.Data.UserToken = token;
-					return await Task.FromResult(jsonData.Data);
-				}
-			}
-
-			throw new AuthException($"Пользователь с таким токеном, не найден. Токен: {token.Token}");
-		}
-
-		public const string Uri = "http://asb.itmit-studio.ru/api/details";
-
 
 		[JsonProperty("user_picture")]
 		public string UserPictureSource
@@ -75,6 +46,12 @@ namespace itmit.asb.app.Models
 			set;
 		}
 		public string Email
+		{
+			get;
+			set;
+		}
+
+		public bool IsGuard
 		{
 			get;
 			set;
