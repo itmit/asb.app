@@ -48,12 +48,12 @@ namespace itmit.asb.app.ViewModels
 		private async void LoginCommandExecute()
 		{
 			App.UserToken = await LoginAsync(Login, Password);
-
+            /*
 			Realm.Write(() =>
 			{
 				Realm.Add(App.UserToken, true);
 			});
-
+            */
 			if (App.UserToken.Token.Equals(string.Empty))
 			{
 				AuthNotSuccess = true;

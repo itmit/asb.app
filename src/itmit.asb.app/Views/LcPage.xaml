@@ -1,47 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ex="clr-namespace:itmit.asb.app.Controls"
              x:Class="itmit.asb.app.Views.LcPage"
              BackgroundImageSource="mainf.png"
              NavigationPage.HasNavigationBar="false"
              >
     <ContentPage.Content>
-        <StackLayout  VerticalOptions="FillAndExpand" HorizontalOptions="Center" Margin="0,30">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackLayout Grid.Column="0" Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Center">
-                    <Frame BackgroundColor="#ef2b2e" Padding="3" CornerRadius="100" VerticalOptions="Center">
-                        <Frame CornerRadius="100" BackgroundColor="#222222" Padding="40">
-                            <Image Source="{Binding UserPictureSource}"  VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="120"/>
+        <ScrollView>
+            <StackLayout  VerticalOptions="FillAndExpand" HorizontalOptions="Center" Margin="0,30">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="0" Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Center">
+                        <Frame BackgroundColor="#ef2b2e" Padding="3" CornerRadius="100" VerticalOptions="Center">
+                            <Frame CornerRadius="100" BackgroundColor="#222222" Padding="40">
+                                <Image Source="{Binding UserPictureSource}"  VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="120"/>
+                            </Frame>
                         </Frame>
-                    </Frame>
-                </StackLayout>
-                <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
-                    <Button Text="ДОБАВИТЬ ФОТО" FontSize="20" TextColor="White" BackgroundColor="#b2110d" CornerRadius="10"/>
-                    <Label TextColor="#b2110d" FontSize="20" Text="{Binding Organization}" Margin="0,15,0,0" HorizontalOptions="Center"/>
-                    <Label TextColor="#b2110d" FontSize="20" Text="{Binding PhoneNumber}" Margin="0,15,0,0" HorizontalOptions="Center"/>
-                </StackLayout>
-                <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
-                    <Frame BorderColor="Black" Padding="1" CornerRadius="10" HorizontalOptions="FillAndExpand">
-                        <StackLayout>
-                            <Frame BackgroundColor="#1f1f1f" CornerRadius="10" Margin="0" Padding="5,5" HorizontalOptions="Fill">
-                                <Label Text="ПРИМЕЧАНИЕ" TextColor="Yellow" FontSize="20" BackgroundColor="Transparent"/>
-                            </Frame>
-                            <Frame BorderColor="Black" Padding="1" Margin="0" HorizontalOptions="FillAndExpand" >
-                                <Entry Text="{Binding Node}" Placeholder="Добавьте подробную информацию о себе" PlaceholderColor="Yellow" BackgroundColor="#2a2a2a" HeightRequest="200"/>
-                            </Frame>
+                    </StackLayout>
+                    <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
+                        <Button HorizontalOptions="Center" Padding="15" Text="ДОБАВИТЬ ФОТО" FontSize="20" TextColor="White" BackgroundColor="#b2110d" CornerRadius="10"/>
+                        <Label TextColor="#b2110d" FontSize="20" Text="{Binding Organization}" Margin="0,15,0,0" HorizontalOptions="Center"/>
+                        <Label TextColor="#b2110d" FontSize="20" Text="{Binding PhoneNumber}" Margin="0,15,0,0" HorizontalOptions="Center"/>
+                    </StackLayout>
+                    <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
+                        <StackLayout Padding="1" Margin="0" BackgroundColor="Black" HorizontalOptions="FillAndExpand">
+                            <StackLayout  BackgroundColor="#1f1f1f" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <Label Margin="5" Text="ПРИМЕЧАНИЕ" TextColor="Yellow" FontSize="20" BackgroundColor="Transparent"/>
+                            </StackLayout>
                         </StackLayout>
-                    </Frame>
-                </StackLayout>
-            </Grid>
-        </StackLayout>
+                        <StackLayout Padding="1" BackgroundColor="Black">
+                            <StackLayout HeightRequest="200" Margin="0" BackgroundColor="#2a2a2a">
+                                <Editor Text="{Binding Node}" Placeholder="Добавьте подробную информацию о себе" PlaceholderColor="Yellow" BackgroundColor="#2a2a2a" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
