@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Forms;
@@ -24,6 +25,7 @@ namespace itmit.asb.app
             InitializeComponent();
 
 			DependencyService.Register<IAuthService>();
+			DependencyService.Register<IBidsService>();
 
 			var realm = Realm.GetInstance();
 			User user = realm.All<User>().SingleOrDefault();

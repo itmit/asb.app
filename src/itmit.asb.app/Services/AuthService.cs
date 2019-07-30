@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using System.Web;
 using itmit.asb.app.Models;
 using Newtonsoft.Json;
 
@@ -33,6 +34,11 @@ namespace itmit.asb.app.Services
 		private const string SecretKey = "znrAr76W8rN22aMAcAT0BbYFcF4ivR8j9GVAOgkD";
 		#endregion
 		#endregion
+
+		public AuthService()
+		{
+
+		}
 
 		#region Public
 		/// <summary>
@@ -83,10 +89,10 @@ namespace itmit.asb.app.Services
 				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
 				{
 					{
-						"login", login
+						"phoneNumber", HttpUtility.UrlEncode(login)
 					},
 					{
-						"password", pass
+						"password", HttpUtility.UrlEncode(pass)
 					}
 				});
 

@@ -9,31 +9,23 @@ using Newtonsoft.Json;
 
 namespace itmit.asb.app.Services
 {
-	public class BidsDataStore : IDataStore<Bid>
+	public class BidsService : IBidsService
 	{
 		private readonly UserToken _token;
 		private const string ItemsListUri = "http://asb.itmit-studio.ru/api/bids";
 
-		public BidsDataStore(UserToken token)
+		public BidsService(UserToken token)
 		{
 			_token = token;
 		}
 
-		public Task<bool> AddItemAsync(Bid item) => throw new System.NotImplementedException();
-
-		public Task<bool> UpdateItemAsync(Bid item) => throw new System.NotImplementedException();
-
-		public Task<bool> DeleteItemAsync(string id) => throw new System.NotImplementedException();
-
-		public Task<Bid> GetItemAsync(string id) => throw new System.NotImplementedException();
-
-		public async Task<IEnumerable<Bid>> GetItemsAsync(bool forceRefresh = false)
+		public async Task<IEnumerable<Bid>> GetBidsAsync(BidStatus status)
 		{
 			HttpResponseMessage response;
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{_token.TokenType} {_token.Token}");
-				response = await client.PostAsync(new Uri(ItemsListUri), null);
+				response = await client.GetAsync(new Uri(ItemsListUri + $"?status={status}"));
 			}
 
 			var jsonString = await response.Content.ReadAsStringAsync();
@@ -50,5 +42,7 @@ namespace itmit.asb.app.Services
 
 			return await Task.FromResult(new List<Bid>());
 		}
+
+		public Task<bool> SetBidStatusAsync(Bid bid, BidStatus status) => throw new NotImplementedException();
 	}
 }

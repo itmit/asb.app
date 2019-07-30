@@ -21,6 +21,7 @@ namespace itmit.asb.app.ViewModels
 		private string _login;
 		private string _password;
 		private bool _authNotSuccess;
+		private readonly IAuthService _authService = DependencyService.Get<IAuthService>();
 
 		private Realm Realm => Realm.GetInstance();
 
@@ -49,11 +50,10 @@ namespace itmit.asb.app.ViewModels
 
 		private async void LoginCommandExecute()
 		{
-			var authService = DependencyService.Get<IAuthService>();
 
 			try
 			{
-				App.User = await authService.GetUserByTokenAsync(await authService.LoginAsync(Login, Password));
+				App.User = await _authService.GetUserByTokenAsync(await _authService.LoginAsync(Login, Password));
 			}
 			catch(AuthenticationException e)
 			{

@@ -11,7 +11,10 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Gms.Common.Apis;
 using Android.Gms.Location;
+using itmit.asb.app.Services;
 
+[assembly: Xamarin.Forms.Dependency(typeof(AuthService))]
+[assembly: Xamarin.Forms.Dependency(typeof(BidsService))]
 namespace itmit.asb.app.Droid
 {
     [Activity(Label = "itmit.asb.app", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]

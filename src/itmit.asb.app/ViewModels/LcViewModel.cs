@@ -19,7 +19,7 @@ namespace itmit.asb.app.ViewModels
 			Organization = user.Organization;
 			PhoneNumber = user.PhoneNumber;
 			Node = user.Node;
-			if (user.UserPictureSource != string.Empty || user.UserPictureSource != null || user.UserPictureSource != "null")
+			if (!string.IsNullOrEmpty(user.UserPictureSource) && user.UserPictureSource != "null")
 			{
 				UserPictureSource = user.UserPictureSource;
 			}
