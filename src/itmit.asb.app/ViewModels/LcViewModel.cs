@@ -1,36 +1,28 @@
 ﻿using System;
 using itmit.asb.app.Models;
+using itmit.asb.app.Services;
 using Realms;
+using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
 	public class LcViewModel : BaseViewModel
 	{
-		private string _userPictureSource = string.Empty;
+		private string _userPictureSource = "user1.png";
 		private string _organization = string.Empty;
 		private string _phoneNumber = string.Empty;
 		private string _node = string.Empty;
-		private User _user;
 
-		public LcViewModel()
+		public LcViewModel(User user)
 		{
 			UserPictureSource = "user1.png";
-		}
-
-		public async void LoadUserAsync(UserToken token)
-		{
-			_user = await User.GetUserByTokenAsync(token);
-
-			if (_user.UserPictureSource != string.Empty 
-			    || _user.UserPictureSource != null
-				|| _user.UserPictureSource != "null"
-				)
+			Organization = user.Organization;
+			PhoneNumber = user.PhoneNumber;
+			Node = user.Node;
+			if (!string.IsNullOrEmpty(user.UserPictureSource) && user.UserPictureSource != "null")
 			{
-				UserPictureSource = _user.UserPictureSource;
+				UserPictureSource = user.UserPictureSource;
 			}
-			Organization = _user.Organization;
-			PhoneNumber = _user.PhoneNumber;
-			Node = _user.Node;
 		}
 
 		public string UserPictureSource

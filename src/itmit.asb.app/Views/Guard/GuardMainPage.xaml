@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="itmit.asb.app.Views.Guard.GuardMainPage">
+             xmlns:guard="clr-namespace:itmit.asb.app.Views.Guard"
+             x:Class="itmit.asb.app.Views.Guard.GuardMainPage"
+             NavigationPage.HasNavigationBar="True">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Выход" Clicked="MenuItem_OnClicked"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
-            <ListView ItemsSource="{Binding Bids}" SelectedItem="{Binding SelectedBid}" >
+            <ListView ItemsSource="{Binding Bids}" SelectedItem="{Binding SelectedBid, Mode=TwoWay}"  
+                      IsPullToRefreshEnabled="True" HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
+                        <guard:BidViewCell/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

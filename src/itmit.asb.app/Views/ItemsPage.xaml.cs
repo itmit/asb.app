@@ -29,9 +29,11 @@ namespace itmit.asb.app.Views
         {
             var item = args.SelectedItem as Item;
             if (item == null)
-                return;
+			{
+				return;
+			}
 
-            await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
+			await Navigation.PushAsync(new ItemDetailPage(new ItemDetailViewModel(item)));
 
             // Manually deselect item.
             ItemsListView.SelectedItem = null;
@@ -47,7 +49,9 @@ namespace itmit.asb.app.Views
             base.OnAppearing();
 
             if (viewModel.Items.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
-        }
+			{
+				viewModel.LoadItemsCommand.Execute(null);
+			}
+		}
     }
 }
