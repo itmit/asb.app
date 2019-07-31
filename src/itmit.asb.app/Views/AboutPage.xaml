@@ -11,11 +11,12 @@
 
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid>
-        <!--<Grid.RowDefinitions>
+    <Grid ColumnSpacing="0" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="60"/>
-        </Grid.RowDefinitions>-->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <ScrollView Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
@@ -54,24 +55,23 @@
                 </StackLayout>
             </Grid>
         </ScrollView>
-        <!--<StackLayout Grid.Row="1" BackgroundColor="#2e2e2e" VerticalOptions="EndAndExpand">
-            <Grid VerticalOptions="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent"/>
-                <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" BackgroundColor="Transparent"/>
-                <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2" BackgroundColor="Transparent"/>
-                <ImageButton Source="ic_arrow_back_black_36dp.png" Grid.Row="0" Grid.Column="3" BackgroundColor="Transparent"/>
-                <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" BackgroundColor="Transparent"/>
-            </Grid>
-        </StackLayout>-->
+        <BoxView  Grid.Row="1" BackgroundColor="Black" HeightRequest="1"/>
+        <Grid  Grid.Row="2" ColumnSpacing="0" RowSpacing="0" BackgroundColor="#222222" Padding="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+            <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+            <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+            <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+            <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center"/>
+        </Grid>
     </Grid>
 </ContentPage>

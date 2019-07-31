@@ -171,5 +171,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Prim.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_vertical_align_top_black_36dp.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
