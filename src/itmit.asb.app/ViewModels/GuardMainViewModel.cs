@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using itmit.asb.app.Views.Guard;
 using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
@@ -9,11 +10,14 @@ namespace itmit.asb.app.ViewModels
 	public class GuardMainViewModel : BaseViewModel
 	{
 		private ObservableCollection<Bid> _bids;
-		private readonly IBidsService _bidsService = DependencyService.Get<IBidsService>();
+		private readonly INavigation _navigation;
+		private Bid _selectedBid;
 
-		public GuardMainViewModel()
+		public GuardMainViewModel(INavigation navigation)
 		{
+			_navigation = navigation;
 			Task.Run(UpdateBids);
+			_bids = new ObservableCollection<Bid>();
 		}
 
 		public ObservableCollection<Bid> Bids
@@ -24,13 +28,28 @@ namespace itmit.asb.app.ViewModels
 
 		public Bid SelectedBid
 		{
-			get;
-			set;
+			get => _selectedBid;
+			set {
+				_selectedBid = value;
+				if (value != null)
+				{
+					PushPage(new BidDetailPage(value));
+					_selectedBid = null;
+				}
+
+				OnPropertyChanged(nameof(SelectedBid));
+			}
+		}
+
+		private async void PushPage(Page page)
+		{
+			await _navigation.PushAsync(page);
 		}
 
 		public async void UpdateBids()
 		{
-			var bidsList = await _bidsService.GetBidsAsync(BidStatus.PendingAcceptance);
+			IBidsService bidsService = new BidsService(App.User.UserToken);
+			var bidsList = await bidsService.GetBidsAsync(BidStatus.PendingAcceptance);
 			Bids.Clear();
 			foreach (Bid bid in bidsList)
 			{

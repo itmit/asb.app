@@ -14,32 +14,26 @@ namespace itmit.asb.app
 {
     public partial class App : Application
 	{
-		public static User User
-		{
-			get;
-			set;
-		}
+		public static User User =>
+			Realm.GetInstance()
+				 .All<User>()
+				 .SingleOrDefault();
 
 		public App()
         {
             InitializeComponent();
 
 			DependencyService.Register<IAuthService>();
-			DependencyService.Register<IBidsService>();
-
-			var realm = Realm.GetInstance();
-			User user = realm.All<User>().SingleOrDefault();
-
-			if (user == null)
+			
+			if (User == null)
 			{
 				MainPage = new LoginPage();
 				return;
 			}
 
-			User = user;
 			if (User.IsGuard)
 			{
-				MainPage = new GuardMainPage();
+				MainPage = new NavigationPage(new GuardMainPage());
 				return;
 			}
 

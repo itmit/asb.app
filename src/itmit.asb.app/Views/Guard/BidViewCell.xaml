@@ -4,7 +4,8 @@
              x:Class="itmit.asb.app.Views.Guard.BidViewCell">
   <ViewCell.View>
       <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
+            <Label Text="{Binding Client.Name}"/>
+            <Label Text="{Binding CreatedAt}"/>
+        </StackLayout>
   </ViewCell.View>
 </ViewCell>

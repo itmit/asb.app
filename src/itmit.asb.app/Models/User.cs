@@ -45,12 +45,20 @@ namespace itmit.asb.app.Models
 			get;
 			set;
 		}
+
+		public string Name
+		{
+			get;
+			set;
+		}
+
 		public string Email
 		{
 			get;
 			set;
 		}
 
+		[JsonProperty("is_guard")]
 		public bool IsGuard
 		{
 			get;

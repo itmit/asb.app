@@ -36,9 +36,7 @@ namespace itmit.asb.app.Services
 		#endregion
 
 		public AuthService()
-		{
-
-		}
+		{ }
 
 		#region Public
 		/// <summary>

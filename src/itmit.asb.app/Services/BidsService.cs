@@ -12,7 +12,7 @@ namespace itmit.asb.app.Services
 	public class BidsService : IBidsService
 	{
 		private readonly UserToken _token;
-		private const string ItemsListUri = "http://asb.itmit-studio.ru/api/bids";
+		private const string ItemsListUri = "http://asb.itmit-studio.ru/api/bid";
 
 		public BidsService(UserToken token)
 		{
@@ -24,8 +24,9 @@ namespace itmit.asb.app.Services
 			HttpResponseMessage response;
 			using (var client = new HttpClient())
 			{
+				var s = ItemsListUri + $"?status={status.ToString()}";
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{_token.TokenType} {_token.Token}");
-				response = await client.GetAsync(new Uri(ItemsListUri + $"?status={status}"));
+				response = await client.GetAsync(new Uri(ItemsListUri + $"?status={status.ToString()}"));
 			}
 
 			var jsonString = await response.Content.ReadAsStringAsync();

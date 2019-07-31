@@ -50,10 +50,10 @@ namespace itmit.asb.app.ViewModels
 
 		private async void LoginCommandExecute()
 		{
-
+			User user;
 			try
 			{
-				App.User = await _authService.GetUserByTokenAsync(await _authService.LoginAsync(Login, Password));
+				user = await _authService.GetUserByTokenAsync(await _authService.LoginAsync(Login, Password));
 			}
 			catch(AuthenticationException e)
 			{
@@ -64,12 +64,12 @@ namespace itmit.asb.app.ViewModels
 
 			Realm.Write(() =>
 			{
-				Realm.Add(App.User, true);
+				Realm.Add(user, true);
 			});
 
-			if (App.User.IsGuard)
+			if (user.IsGuard)
 			{
-				Application.Current.MainPage = new GuardMainPage();
+				Application.Current.MainPage = new NavigationPage(new GuardMainPage());
 				return;
 			}
 
