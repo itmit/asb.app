@@ -35,7 +35,7 @@ namespace itmit.asb.app.Droid
 			}
 
 			DisplayLocationSettingsRequest();
-
+			Xamarin.FormsMaps.Init(this, savedInstanceState);
 			LoadApplication(new App());
         }
 
