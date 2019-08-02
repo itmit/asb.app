@@ -37,7 +37,7 @@ namespace itmit.asb.app
 				return;
 			}
 
-			MainPage = new MainPage();
+			MainPage = new alarm();
 		}
 
         protected override void OnStart()
