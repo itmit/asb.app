@@ -8,6 +8,8 @@ namespace itmit.asb.app.Services
 	{
 		Task<IEnumerable<Bid>> GetBidsAsync(BidStatus status);
 
-		Task<bool> SetBidStatusAsync(Bid bid, BidStatus status);
+		void SetBidStatusAsync(Bid bid, BidStatus status);
+
+		void CreateBid(Bid bid);
 	}
 }

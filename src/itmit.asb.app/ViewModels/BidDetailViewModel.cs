@@ -1,4 +1,8 @@
-﻿using itmit.asb.app.Models;
+﻿using System;
+using System.Windows.Input;
+using itmit.asb.app.Models;
+using itmit.asb.app.Services;
+using System.Diagnostics;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -11,10 +15,26 @@ namespace itmit.asb.app.ViewModels
 		private string _node;
 		private string _name;
 		private string _email;
+		private readonly IBidsService _bidService = new BidsService(App.User.UserToken);
 
 		public BidDetailViewModel(Bid bid)
 		{
 			_bid = bid;
+
+			AcceptBidCommand = new RelayCommand(obj =>
+			{
+				if (obj is Bid bidParam)
+				{
+					try
+					{
+						_bidService.SetBidStatusAsync(bidParam, BidStatus.Accepted);
+					}
+					catch(System.Exception e)
+					{
+						Debug.WriteLine(e);
+					}
+				}
+			}, obj => CanExecuteAcceptBidCommand(obj));
 
 			UserPictureSource = "user1.png";
 			Organization = bid.Client.Organization;
@@ -28,6 +48,25 @@ namespace itmit.asb.app.ViewModels
 			}
 		}
 
+		private bool CanExecuteAcceptBidCommand(object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+
+			if (obj is Bid bid)
+			{
+				return bid.Guid != Guid.Empty;
+			}
+
+			return false;
+		}
+
+		public ICommand AcceptBidCommand
+		{
+			get;
+		}
 
 		public string UserPictureSource
 		{

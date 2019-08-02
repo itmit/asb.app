@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 using TabbedPage = Xamarin.Forms.TabbedPage;
@@ -11,7 +12,7 @@ namespace itmit.asb.app.Views
         public MainPage()
         {
             InitializeComponent();
-			On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+			On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 		}
     }
 }

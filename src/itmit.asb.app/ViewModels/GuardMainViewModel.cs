@@ -4,6 +4,7 @@ using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views.Guard;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -33,7 +34,14 @@ namespace itmit.asb.app.ViewModels
 				_selectedBid = value;
 				if (value != null)
 				{
-					PushPage(new BidDetailPage(value));
+					try
+					{
+						PushPage(new BidDetailPage(value));
+					}
+					catch (System.Exception e)
+					{
+						Debug.WriteLine(e);
+					}
 					_selectedBid = null;
 				}
 

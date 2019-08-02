@@ -18,6 +18,12 @@ namespace itmit.asb.app.Views.Guard
 			InitializeComponent();
 
 			BindingContext = new BidDetailViewModel(bid);
+			AcceptBidButton.CommandParameter = bid;
+		}
+
+		private async void Button_OnClicked(object sender, EventArgs e)
+		{
+			//await Navigation.PushAsync(new MapPage());
 		}
 	}
 }

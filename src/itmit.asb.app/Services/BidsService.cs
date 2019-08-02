@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -11,12 +12,47 @@ namespace itmit.asb.app.Services
 {
 	public class BidsService : IBidsService
 	{
-		private readonly UserToken _token;
-		private const string ItemsListUri = "http://asb.itmit-studio.ru/api/bid";
+		#region Data
+		#region Consts
+		private const string BidApiUri = "http://asb.itmit-studio.ru/api/bid";
+		private const string ChangeStatusUri = "http://asb.itmit-studio.ru/api/bid/changeStatus";
+		#endregion
 
-		public BidsService(UserToken token)
+		#region Fields
+		private readonly UserToken _token;
+		#endregion
+		#endregion
+
+		#region .ctor
+		public BidsService(UserToken token) => _token = token;
+		#endregion
+
+		#region IBidsService members
+		public async void CreateBid(Bid bid)
 		{
-			_token = token;
+			using (var client = new HttpClient())
+			{
+				var user = App.User;
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(user.UserToken.TokenType, user.UserToken.Token);
+
+				var response = await client.PostAsync(new Uri(BidApiUri),
+													  new FormUrlEncodedContent(new Dictionary<string, string>
+													  {
+														  {
+															  "uid", bid.Guid.ToString()
+														  },
+														  {
+															  "latitude", bid.Location.Latitude.ToString(CultureInfo.InvariantCulture)
+														  },
+														  {
+															  "longitude", bid.Location.Longitude.ToString(CultureInfo.InvariantCulture)
+														  }
+													  }));
+#if DEBUG
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+#endif
+			}
 		}
 
 		public async Task<IEnumerable<Bid>> GetBidsAsync(BidStatus status)
@@ -24,9 +60,8 @@ namespace itmit.asb.app.Services
 			HttpResponseMessage response;
 			using (var client = new HttpClient())
 			{
-				var s = ItemsListUri + $"?status={status.ToString()}";
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{_token.TokenType} {_token.Token}");
-				response = await client.GetAsync(new Uri(ItemsListUri + $"?status={status.ToString()}"));
+				response = await client.GetAsync(new Uri(BidApiUri + $"?status={status.ToString()}"));
 			}
 
 			var jsonString = await response.Content.ReadAsStringAsync();
@@ -36,7 +71,7 @@ namespace itmit.asb.app.Services
 			{
 				if (jsonString != null)
 				{
-					JsonDataResponse<List<Bid>> jsonData = JsonConvert.DeserializeObject<JsonDataResponse<List<Bid>>>(jsonString);
+					var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<List<Bid>>>(jsonString);
 					return await Task.FromResult(jsonData.Data);
 				}
 			}
@@ -44,6 +79,36 @@ namespace itmit.asb.app.Services
 			return await Task.FromResult(new List<Bid>());
 		}
 
-		public Task<bool> SetBidStatusAsync(Bid bid, BidStatus status) => throw new NotImplementedException();
+		public async void SetBidStatusAsync(Bid bid, BidStatus status)
+		{
+			HttpResponseMessage response;
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{_token.TokenType} {_token.Token}");
+				response = await client.PostAsync(new Uri(ChangeStatusUri),
+												  new FormUrlEncodedContent(new Dictionary<string, string>
+												  {
+													  {
+														  "uid", bid.Guid.ToString()
+													  },
+													  {
+														  "new_status", status.ToString()
+													  }
+												  }));
+			}
+
+			var jsonString = await response.Content.ReadAsStringAsync();
+			Debug.WriteLine(jsonString);
+
+			if (response.IsSuccessStatusCode)
+			{
+				return;
+			}
+
+			// TODO: Выбрасывать исключение при неудачи.
+
+			throw new Exception();
+		}
+		#endregion
 	}
 }

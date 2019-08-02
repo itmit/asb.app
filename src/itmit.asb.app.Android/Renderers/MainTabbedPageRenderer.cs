@@ -1,4 +1,5 @@
 ﻿using Android.Content;
+using Android.Support.Design.BottomNavigation;
 using Android.Support.Design.Internal;
 using Android.Views;
 using itmit.asb.app.Droid.Renderers;
@@ -11,38 +12,42 @@ namespace itmit.asb.app.Droid.Renderers
 {
 	public class MainTabbedPageRenderer : TabbedPageRenderer
     {
-        public MainTabbedPageRenderer(Context context) : base(context) { }
+		public MainTabbedPageRenderer(Context context)
+			: base(context)
+		{
 
-        protected override void OnElementChanged(ElementChangedEventArgs<TabbedPage> e)
-        {
-            base.OnElementChanged(e);
+		}
 
-            if (ViewGroup != null && ViewGroup.ChildCount > 0)
-            {
-                BottomNavigationMenuView bottomNavigationMenuView = FindChildOfType<BottomNavigationMenuView>(ViewGroup);
+       protected override void OnElementChanged(ElementChangedEventArgs<TabbedPage> e)
+       {
+           base.OnElementChanged(e);
 
-                //if (bottomNavigationMenuView != null)
-                //{
-                //    var shiftMode = bottomNavigationMenuView.Class.GetDeclaredField("mShiftingMode");
+           if (ViewGroup != null && ViewGroup.ChildCount > 0)
+           {
+               BottomNavigationMenuView bottomNavigationMenuView = FindChildOfType<BottomNavigationMenuView>(ViewGroup);
 
-                //    shiftMode.Accessible = true;
-                //    shiftMode.SetBoolean(bottomNavigationMenuView, false);
-                //    shiftMode.Accessible = false;
-                //    shiftMode.Dispose();
+				if (bottomNavigationMenuView != null)
+				{
+					//var shiftMode = bottomNavigationMenuView.Class.GetDeclaredField("mShiftingMode");
 
-                //    for (var i = 0; i < bottomNavigationMenuView.ChildCount; i++)
-                //    {
-                //        var item = bottomNavigationMenuView.GetChildAt(i) as BottomNavigationItemView;
-                //        if (item == null) continue;
+					//shiftMode.Accessible = true;
+					//shiftMode.SetBoolean(bottomNavigationMenuView, false);
+					//shiftMode.Accessible = false;
+					//shiftMode.Dispose();
 
-                        
-                //        item.SetChecked(item.ItemData.IsChecked);
-                //    }
+					//for (var i = 0; i < bottomNavigationMenuView.ChildCount; i++)
+					//{
+					//	var item = bottomNavigationMenuView.GetChildAt(i) as BottomNavigationItemView;
+					//	if (item == null) continue;
 
-                //    if (bottomNavigationMenuView.ChildCount > 0) bottomNavigationMenuView.UpdateMenuView();
-                //}
-            }
-        }
+
+					//	item.SetChecked(item.ItemData.IsChecked);
+					//}
+
+					//if (bottomNavigationMenuView.ChildCount > 0) bottomNavigationMenuView.UpdateMenuView();
+				}
+			}
+       }
 
         private T FindChildOfType<T>(ViewGroup viewGroup) where T : Android.Views.View
         {

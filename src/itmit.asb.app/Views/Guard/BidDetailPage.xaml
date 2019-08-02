@@ -38,6 +38,8 @@
                     </StackLayout>
                 </Grid>
 
+                <Button x:Name="AcceptBidButton"  Text="Принять заявку" Command="{Binding AcceptBidCommand}"/>
+                <Button Text="Открыть карту" Clicked="Button_OnClicked"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
