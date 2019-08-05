@@ -11,7 +11,7 @@ namespace itmit.asb.app.ViewModels
 		{
 			AlarmCommand = new RelayCommand(obj => {
 				SendAlarm(new BidsService(App.User.UserToken));
-			}, obj => true);
+			}, obj => Connectivity.NetworkAccess == NetworkAccess.Internet);
 		}
 
 		private async void SendAlarm(IBidsService service)
