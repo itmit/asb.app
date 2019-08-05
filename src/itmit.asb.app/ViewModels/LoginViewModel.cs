@@ -29,7 +29,7 @@ namespace itmit.asb.app.ViewModels
 		{
 			LoginCommand = new RelayCommand(obj =>
 			{
-				LoginCommandExecute();
+				Task.Run(LoginCommandExecute);
 			},
 			obj => App.User == null && Login != string.Empty && Password != string.Empty);
 
@@ -73,7 +73,7 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
-			Application.Current.MainPage = new MainPage();
+			Application.Current.MainPage = new alarm();
 			
 		}
 

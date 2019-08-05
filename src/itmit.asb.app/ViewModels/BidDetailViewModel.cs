@@ -3,6 +3,7 @@ using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -25,14 +26,10 @@ namespace itmit.asb.app.ViewModels
 			{
 				if (obj is Bid bidParam)
 				{
-					try
+					Task.Run(() =>
 					{
-						_bidService.SetBidStatusAsync(bidParam, BidStatus.Accepted);
-					}
-					catch(System.Exception e)
-					{
-						Debug.WriteLine(e);
-					}
+						AcceptBidCommandExecute(bidParam);
+					});
 				}
 			}, obj => CanExecuteAcceptBidCommand(obj));
 
@@ -45,6 +42,18 @@ namespace itmit.asb.app.ViewModels
 			if (!string.IsNullOrEmpty(bid.Client.UserPictureSource) && bid.Client.UserPictureSource != "null")
 			{
 				UserPictureSource = bid.Client.UserPictureSource;
+			}
+		}
+
+		public void AcceptBidCommandExecute(Bid bid)
+		{
+			try
+			{
+				_bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
+			}
+			catch (System.Exception e)
+			{
+				Debug.WriteLine(e);
 			}
 		}
 
