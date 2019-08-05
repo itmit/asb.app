@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using itmit.asb.app.Models;
 using itmit.asb.app.ViewModels;
+using Realms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -40,7 +42,13 @@ namespace itmit.asb.app.Views
 
         private void ImageButton_Clicked_4(object sender, EventArgs e)
         {
-
-        }
+			var realm = Realm.GetInstance();
+			using (var transaction = realm.BeginWrite())
+			{
+				realm.RemoveAll<User>();
+				transaction.Commit();
+			}
+			Application.Current.MainPage = new LoginPage();
+		}
     }
 }
