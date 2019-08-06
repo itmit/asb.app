@@ -37,9 +37,10 @@
                         </StackLayout>
                     </StackLayout>
                 </Grid>
-
-                <Button x:Name="AcceptBidButton"  Text="Принять заявку" Command="{Binding AcceptBidCommand}"/>
-                <Button Text="Открыть карту" Clicked="Button_OnClicked"/>
+                <StackLayout Margin="0,20">
+                    <Button x:Name="AcceptBidButton"  Text="Принять заявку" Command="{Binding AcceptBidCommand}" CornerRadius="30" BackgroundColor="Transparent" BorderWidth="1" BorderColor="#ef2b2e" HorizontalOptions="Center" TextColor="White" FontSize="Large" Margin="0,0,0,5"/>
+                    <Button Text="Открыть карту" Clicked="Button_OnClicked" CornerRadius="30" BackgroundColor="Transparent"  BorderWidth="1" BorderColor="#ef2b2e" HorizontalOptions="Center" TextColor="White" FontSize="Large"/>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
