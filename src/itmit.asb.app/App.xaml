@@ -23,6 +23,95 @@
                 <Setter Property="HeightRequest" Value="40"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
             </Style>
+            <Style x:Key="Menu" TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="0"/>
+                <Setter Property="RowSpacing" Value="0"/>
+                <Setter Property="BackgroundColor" Value="#222222"/>
+                <Setter Property="Padding" Value="0,10"/>
+            </Style>
+            <Style x:Key="LabelAlarmPage" TargetType="Label">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="FrameAlarmOne" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#ef2b2e"/>
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="WidthRequest" Value="140"/>
+                <Setter Property="HeightRequest" Value="140"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <Style x:Key="FrameAlarmTwo" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#000000"/>
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <Style x:Key="FrameAlarmThree" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#2e2e2e"/>
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+            <Style x:Key="LabelAlarmTrevoga" TargetType="Label">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="0,10,0,0"/>
+            </Style>
+            <Style x:Key="ImageAlarmTrevoga" TargetType="Image">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="0,15,0,0"/>
+            </Style>
+            <Style x:Key="FrameAlarmTrevOne" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#ef2b2e"/>
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="WidthRequest" Value="180"/>
+                <Setter Property="HeightRequest" Value="180"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <Style x:Key="FrameAlarmTrevTwo" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#000000"/>
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="5"/>
+            </Style>
+            <Style x:Key="FrameAlarmTrevThree" TargetType="Frame">
+                <Setter Property="BorderColor" Value="#2e2e2e"/>
+                <Setter Property="BackgroundColor" Value="#2e2e2e"/>
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="10"/>
+            </Style>
+            <Style x:Key="ButtonLoginPage" TargetType="Button">
+                <Setter Property="Margin" Value="0,20,0,0"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="#b20e0b"/>
+                <Setter Property="Padding" Value="0,15"/>
+                <Setter Property="WidthRequest" Value="230"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+            <Style x:Key="EntryLoginPage" TargetType="Entry">
+                <Setter Property="Margin" Value="30"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="#b20e0b"/>
+                <Setter Property="PlaceholderColor" Value="#b20e0b"/>
+                <Setter Property="IsPassword" Value="True"/>
+            </Style>
+            <Style x:Key="EntryLoginPageNumber" TargetType="Entry">
+                <Setter Property="Margin" Value="30"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="TextColor" Value="#b20e0b"/>
+                <Setter Property="PlaceholderColor" Value="#b20e0b"/>
+                <Setter Property="Keyboard" Value="Numeric"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
