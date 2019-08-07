@@ -15,7 +15,7 @@
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="0">
                 <StackLayout  VerticalOptions="FillAndExpand" HorizontalOptions="Center" Margin="0,30">
-                    <Grid>
+                    <Grid ColumnSpacing="0" RowSpacing="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -37,15 +37,21 @@
                             <Label TextColor="#b2110d" FontSize="20" Text="{Binding Organization}" Margin="0,15,0,0" HorizontalOptions="Center"/>
                             <Label TextColor="#b2110d" FontSize="20" Text="{Binding PhoneNumber}" Margin="0,15,0,0" HorizontalOptions="Center"/>
                         </StackLayout>
-                        <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
-                            <ex:PrimLcPage Padding="0" Margin="0" HorizontalOptions="FillAndExpand">
-                                <Label Margin="5" Text="ПРИМЕЧАНИЕ" TextColor="Yellow" FontSize="20" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="#1f1f1f"/>
-                            </ex:PrimLcPage>
-                            <ex:PrimLcPageTwo Padding="1" >
-                                <StackLayout HeightRequest="200" Margin="5" BackgroundColor="#2a2a2a">
-                                    <Editor Text="{Binding Node}" Placeholder="Добавьте подробную информацию о себе" PlaceholderColor="Yellow" BackgroundColor="#2a2a2a" HorizontalOptions="Fill" VerticalOptions="Fill"/>
-                                </StackLayout>
-                            </ex:PrimLcPageTwo>
+                        <StackLayout Margin="30,10,30,30" Grid.Column="0" Grid.Row="2">
+                            <Frame Padding="0" Margin="0" HorizontalOptions="FillAndExpand" CornerRadius="10" BackgroundColor="Black">
+                                <Grid RowSpacing="0" ColumnSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <ex:PrimLcPage Padding="8" Margin="1,1,1,0">
+                                        <Label Text="ПРИМЕЧАНИЕ" TextColor="Yellow" FontSize="25" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                                    </ex:PrimLcPage>
+                                    <ex:PrimLcPageTwo Grid.Row="1" HeightRequest="200" Padding="0" Margin="1,0,1,1">
+                                        <ex:EditorLcPage Text="{Binding Node}" Placeholder="Добавьте подробную информацию о себе" PlaceholderColor="Yellow" AutoSize="TextChanges" FontSize="Medium" HasRoundedCorner="true" IsExpandable="true"/>
+                                    </ex:PrimLcPageTwo>
+                                </Grid>
+                            </Frame>
                         </StackLayout>
                     </Grid>
                 </StackLayout>

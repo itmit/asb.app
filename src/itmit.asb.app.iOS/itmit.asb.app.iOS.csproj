@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Renderers\EditorLcPageRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,4 +148,5 @@
       <Name>itmit.asb.app</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
 </Project>

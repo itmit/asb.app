@@ -17,6 +17,12 @@
                 <Setter Property="Margin" Value="0,20,0,0" />
                 <Setter Property="FontSize" Value="Large" />
             </Style>
+            <Style x:Key="ButtonMenu" TargetType="ImageButton">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="WidthRequest" Value="40"/>
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
