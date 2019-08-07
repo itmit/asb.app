@@ -48,7 +48,7 @@
                                         <Label Text="ПРИМЕЧАНИЕ" Style="{StaticResource LabelLcPagePrim}"/>
                                     </ex:PrimLcPage>
                                     <ex:PrimLcPageTwo Grid.Row="1" Style="{StaticResource FramePrimLcPageTwo}">
-                                        <ex:EditorLcPage Text="{Binding Node}" Style="{StaticResource EditorLcPage}"/>
+                                        <ex:EditorLcPage Text="{Binding Node}" Style="{StaticResource EditorLcPage}" HasRoundedCorner="True" IsExpandable="True"/>
                                     </ex:PrimLcPageTwo>
                                 </Grid>
                             </Frame>
