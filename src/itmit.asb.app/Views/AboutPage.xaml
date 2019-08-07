@@ -28,10 +28,10 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Text="ПОДПИСКА" TextColor="#b20d0b" HorizontalOptions="CenterAndExpand" Margin="0,60,0,0" FontSize="Large"/>
-                <StackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,30">
-                    <Frame CornerRadius="100" BackgroundColor="#b2100c" Padding="1">
-                        <Frame CornerRadius="100" WidthRequest="150" HeightRequest="150" HorizontalOptions="Center" BackgroundColor="#212121">
+                <Label Grid.Row="0" Grid.Column="0" Text="ПОДПИСКА" Style="{StaticResource LabelBuy}"/>
+                <StackLayout Grid.Row="1" Grid.Column="0" Style="{StaticResource StackLayoutBuy}">
+                    <Frame Style="{StaticResource FrameBuyTwo}">
+                        <Frame Style="{StaticResource FrameBuyOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                                 <Label Text="АКТИВНА" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"/>
                                 <Label Text="ОСТАЛОСЬ" FontSize="Medium" TextColor="#b20d0b" HorizontalOptions="Center"/>
@@ -43,10 +43,10 @@
                         </Frame>
                     </Frame>
                 </StackLayout>
-                <Button Margin="30,20" Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY" TextColor="White" BackgroundColor="#770c0b" HorizontalOptions="Fill" BorderRadius="10" FontSize="Large"/>
+                <Button Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY" Style="{StaticResource ButtonSubscribe}"/>
                 <StackLayout Margin="30,0" Grid.Row="3" Grid.Column="0">
-                    <Frame CornerRadius="10" Padding="1" BackgroundColor="Black">
-                        <Frame CornerRadius="10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="#222222" HeightRequest="120" Margin="0" Padding="0">
+                    <Frame Style="{StaticResource FrameSubscribeTwo}">
+                        <Frame Style="{StaticResource FrameSubscribeOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                                 <Label Text="1500 р/30 дней" TextColor="Yellow" FontSize="Large"/>
                             </StackLayout>
@@ -56,7 +56,7 @@
             </Grid>
         </ScrollView>
         <BoxView  Grid.Row="1" BackgroundColor="Black" HeightRequest="1"/>
-        <Grid  Grid.Row="2" ColumnSpacing="0" RowSpacing="0" BackgroundColor="#222222" Padding="0,10">
+        <Grid  Grid.Row="2" Style="{StaticResource Menu}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -67,11 +67,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked"/>
-            <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_1"/>
-            <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_2"/>
-            <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_3"/>
-            <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_4"/>
+            <Label x:Name="Exception_alarm"/>
+            <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonMenu}"/>
+            <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonMenu}"/>
+            <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonMenu}"/>
+            <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonMenu}"/>
+            <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" Style="{StaticResource ButtonMenu}"/>
         </Grid>
     </Grid>
 </ContentPage>

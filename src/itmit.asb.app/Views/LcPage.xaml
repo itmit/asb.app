@@ -26,29 +26,29 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackLayout Grid.Column="0" Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Center">
-                            <Frame BackgroundColor="#ef2b2e" Padding="3" CornerRadius="100" VerticalOptions="Center">
-                                <Frame CornerRadius="100" BackgroundColor="#222222" Padding="40">
-                                    <Image Source="{Binding UserPictureSource}"  VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="120"/>
+                            <Frame Style="{StaticResource FrameLcPageUserTwo}">
+                                <Frame Style="{StaticResource FrameLcPageUser}">
+                                    <Image Source="{Binding UserPictureSource}" Style="{StaticResource ImageLcPage}"/>
                                 </Frame>
                             </Frame>
                         </StackLayout>
                         <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
-                            <Button HorizontalOptions="Center" Padding="15" Text="ДОБАВИТЬ ФОТО" FontSize="20" TextColor="White" BackgroundColor="#b2110d" CornerRadius="10"/>
-                            <Label TextColor="#b2110d" FontSize="20" Text="{Binding Organization}" Margin="0,15,0,0" HorizontalOptions="Center"/>
-                            <Label TextColor="#b2110d" FontSize="20" Text="{Binding PhoneNumber}" Margin="0,15,0,0" HorizontalOptions="Center"/>
+                            <Button Style="{StaticResource ButtonPhoto}"/>
+                            <Label Text="{Binding Organization}" Style="{StaticResource LabelOrganization}"/>
+                            <Label Text="{Binding PhoneNumber}" Style="{StaticResource LabelOrganization}"/>
                         </StackLayout>
                         <StackLayout Margin="30,10,30,30" Grid.Column="0" Grid.Row="2">
-                            <Frame Padding="0" Margin="0" HorizontalOptions="FillAndExpand" CornerRadius="10" BackgroundColor="Black">
+                            <Frame Style="{StaticResource FrameLcPagePrimMain}">
                                 <Grid RowSpacing="0" ColumnSpacing="0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
                                     <ex:PrimLcPage Padding="8" Margin="1,1,1,0">
-                                        <Label Text="ПРИМЕЧАНИЕ" TextColor="Yellow" FontSize="25" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                                        <Label Text="ПРИМЕЧАНИЕ" Style="{StaticResource LabelLcPagePrim}"/>
                                     </ex:PrimLcPage>
-                                    <ex:PrimLcPageTwo Grid.Row="1" HeightRequest="200" Padding="0" Margin="1,0,1,1">
-                                        <ex:EditorLcPage Text="{Binding Node}" Placeholder="Добавьте подробную информацию о себе" PlaceholderColor="Yellow" AutoSize="TextChanges" FontSize="Medium" HasRoundedCorner="true" IsExpandable="true"/>
+                                    <ex:PrimLcPageTwo Grid.Row="1" Style="{StaticResource FramePrimLcPageTwo}">
+                                        <ex:EditorLcPage Text="{Binding Node}" Style="{StaticResource EditorLcPage}"/>
                                     </ex:PrimLcPageTwo>
                                 </Grid>
                             </Frame>
@@ -57,7 +57,7 @@
                 </StackLayout>
             </ScrollView>
             <BoxView  Grid.Row="1" BackgroundColor="Black" HeightRequest="1"/>
-            <Grid  Grid.Row="2" ColumnSpacing="0" RowSpacing="0" BackgroundColor="#222222" Padding="0,10">
+            <Grid  Grid.Row="2" Style="{StaticResource Menu}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -68,11 +68,12 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked"/>
-                <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_1"/>
-                <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_2"/>
-                <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_3"/>
-                <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" BackgroundColor="Transparent" WidthRequest="40" HeightRequest="40" HorizontalOptions="Center" Clicked="ImageButton_Clicked_4"/>
+                <Label x:Name="Exception_alarm"/>
+                <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" Style="{StaticResource ButtonMenu}"/>
+                <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" Style="{StaticResource ButtonMenu}"/>
+                <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonMenu}"/>
+                <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3" Style="{StaticResource ButtonMenu}"/>
+                <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" Style="{StaticResource ButtonMenu}"/>
             </Grid>
         </Grid>
     </ContentPage.Content>

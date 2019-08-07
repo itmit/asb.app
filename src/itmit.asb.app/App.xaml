@@ -112,6 +112,108 @@
                 <Setter Property="PlaceholderColor" Value="#b20e0b"/>
                 <Setter Property="Keyboard" Value="Numeric"/>
             </Style>
+            <Style x:Key="FrameSubscribeOne" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+                <Setter Property="BackgroundColor" Value="#222222"/>
+                <Setter Property="HeightRequest" Value="120"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+            </Style>
+            <Style x:Key="FrameSubscribeTwo" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="BackgroundColor" Value="Black"/>
+                <Setter Property="Padding" Value="1"/>
+            </Style>
+            <Style x:Key="ButtonSubscribe" TargetType="Button">
+                <Setter Property="Margin" Value="30,20"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="#770c0b"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="BorderRadius" Value="10"/>
+                <Setter Property="FontSize" Value="Large"/>
+            </Style>
+            <Style x:Key="FrameBuyOne" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="WidthRequest" Value="150"/>
+                <Setter Property="HeightRequest" Value="150"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="#212121"/>
+            </Style>
+            <Style x:Key="FrameBuyTwo" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="BackgroundColor" Value="#b2100c"/>
+                <Setter Property="Padding" Value="1"/>
+            </Style>
+            <Style x:Key="StackLayoutBuy" TargetType="StackLayout">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Margin" Value="0,30"/>
+            </Style>
+            <Style x:Key="LabelBuy" TargetType="Label">
+                <Setter Property="TextColor" Value="#b20d0b"/>
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="Margin" Value="0,60,0,0"/>
+                <Setter Property="FontSize" Value="Large"/>
+            </Style>
+            <Style x:Key="EditorLcPage" TargetType="Editor">
+                <Setter Property="Placeholder" Value="Добавьте подробную информацию о себе"/>
+                <Setter Property="PlaceholderColor" Value="Yellow"/>
+                <Setter Property="AutoSize" Value="TextChanges"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="HasRoundedCorner" Value="true"/>
+                <Setter Property="IsExpandable" Value="true"/>
+            </Style>
+            <Style x:Key="FramePrimLcPageTwo" TargetType="Frame">
+                <Setter Property="HeightRequest" Value="200"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="1,0,1,1"/>
+            </Style>
+            <Style x:Key="LabelLcPagePrim" TargetType="Label">
+                <Setter Property="TextColor" Value="Yellow"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="VerticalOptions" Value="Fill"/>
+            </Style>
+            <Style x:Key="FrameLcPagePrimMain" TargetType="Frame">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="BackgroundColor" Value="Black"/>
+            </Style>
+            <Style x:Key="LabelOrganization" TargetType="Label">
+                <Setter Property="TextColor" Value="#b2110d"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Margin" Value="0,15,0,0"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+            <Style x:Key="ButtonPhoto" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Padding" Value="15"/>
+                <Setter Property="Text" Value="ДОБАВИТЬ ФОТО"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="#b2110d"/>
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+            <Style x:Key="ImageLcPage" TargetType="Image">
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="WidthRequest" Value="120"/>
+            </Style>
+            <Style x:Key="FrameLcPageUser" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="BackgroundColor" Value="#222222"/>
+                <Setter Property="Padding" Value="40"/>
+            </Style>
+            <Style x:Key="FrameLcPageUserTwo" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#ef2b2e"/>
+                <Setter Property="Padding" Value="3"/>
+                <Setter Property="CornerRadius" Value="100"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
