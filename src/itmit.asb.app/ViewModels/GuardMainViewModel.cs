@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
@@ -61,6 +62,8 @@ namespace itmit.asb.app.ViewModels
 			Bids.Clear();
 			foreach (Bid bid in bidsList)
 			{
+				bid.UpdatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
+				bid.CreatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
 				Bids.Add(bid);
 			}
 		}

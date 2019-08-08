@@ -87,10 +87,10 @@ namespace itmit.asb.app.Services
 				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
 				{
 					{
-						"phoneNumber", HttpUtility.UrlEncode(login)
+						"phoneNumber", login
 					},
 					{
-						"password", HttpUtility.UrlEncode(pass)
+						"password", pass
 					}
 				});
 
