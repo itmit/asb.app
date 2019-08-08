@@ -17,17 +17,17 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackLayout Grid.Column="0" Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Center">
-                        <Frame BackgroundColor="#ef2b2e" Padding="3" CornerRadius="100" VerticalOptions="Center">
-                            <Frame CornerRadius="100" BackgroundColor="#222222" Padding="40">
-                                <Image Source="{Binding UserPictureSource}"  VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="120"/>
+                        <Frame Style="{StaticResource FrameLcPageUserTwo}">
+                            <Frame Style="{StaticResource FrameLcPageUser}">
+                                <Image Source="{Binding UserPictureSource}" Style="{StaticResource ImageLcPage}"/>
                             </Frame>
                         </Frame>
                     </StackLayout>
                     <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
-                        <Label TextColor="#b2110d" FontSize="20" Text="{Binding Name}" Margin="0,15,0,0" HorizontalOptions="Center"/>
-                        <Label TextColor="#b2110d" FontSize="20" Text="{Binding Organization}" Margin="0,15,0,0" HorizontalOptions="Center"/>
-                        <Label TextColor="#b2110d" FontSize="20" Text="{Binding PhoneNumber}" Margin="0,15,0,0" HorizontalOptions="Center"/>
-                        <Label TextColor="#b2110d" FontSize="20" Text="{Binding Email}" Margin="0,15,0,0" HorizontalOptions="Center"/>
+                        <Label Text="{Binding Name}" Style="{StaticResource LabelBidDetail}"/>
+                        <Label Text="{Binding Organization}" Style="{StaticResource LabelBidDetail}"/>
+                        <Label Text="{Binding PhoneNumber}" Style="{StaticResource LabelBidDetail}"/>
+                        <Label Text="{Binding Email}" Style="{StaticResource LabelBidDetail}"/>
                     </StackLayout>
                     <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
                         <StackLayout Padding="1" BackgroundColor="Black">
@@ -38,8 +38,8 @@
                     </StackLayout>
                 </Grid>
                 <StackLayout Margin="0,20">
-                    <Button x:Name="AcceptBidButton"  Text="Принять заявку" Command="{Binding AcceptBidCommand}" CornerRadius="30" BackgroundColor="Transparent" BorderWidth="1" BorderColor="#ef2b2e" HorizontalOptions="Center" TextColor="White" FontSize="Large" Margin="0,0,0,5"/>
-                    <Button Text="Открыть карту" Clicked="Button_OnClicked" CornerRadius="30" BackgroundColor="Transparent"  BorderWidth="1" BorderColor="#ef2b2e" HorizontalOptions="Center" TextColor="White" FontSize="Large"/>
+                    <Button x:Name="AcceptBidButton"  Text="Принять заявку" Command="{Binding AcceptBidCommand}" Margin="0,0,0,5" Style="{StaticResource ButtonBidDetail}"/>
+                    <Button Text="Открыть карту" Clicked="Button_OnClicked" Style="{StaticResource ButtonBidDetail}"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

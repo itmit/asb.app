@@ -211,6 +211,22 @@
                 <Setter Property="CornerRadius" Value="100"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
             </Style>
+            <Style x:Key="ButtonBidDetail" TargetType="Button">
+                <Setter Property="Text" Value="Открыть карту"/>
+                <Setter Property="CornerRadius" Value="30"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="BorderColor" Value="#ef2b2e"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="Large"/>
+            </Style>
+            <Style x:Key="LabelBidDetail" TargetType="Label">
+                <Setter Property="TextColor" Value="#b2110d"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Margin" Value="0,15,0,0"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
