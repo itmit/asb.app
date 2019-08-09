@@ -91,7 +91,7 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
-			Application.Current.MainPage = new alarm();
+			Application.Current.MainPage = new AlarmPage();
 		}
 		#endregion
 	}
