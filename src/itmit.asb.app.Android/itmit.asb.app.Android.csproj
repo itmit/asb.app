@@ -168,7 +168,7 @@
       <Version>4.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Location">
-      <Version>71.1600.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

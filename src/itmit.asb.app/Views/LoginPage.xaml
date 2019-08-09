@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:itmit.asb.app.Controls"
              xmlns:app="clr-namespace:itmit.asb.app"
-             x:Class="itmit.asb.app.Views.LoginPage">
+             x:Class="itmit.asb.app.Views.LoginPage"
+             BackgroundImageSource="mainf.png"
+             >
 
     <ContentPage.Content>
         <Grid ColumnSpacing="0" RowSpacing="0">
