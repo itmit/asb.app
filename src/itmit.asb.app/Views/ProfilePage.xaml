@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ex="clr-namespace:itmit.asb.app.Controls"
-             x:Class="itmit.asb.app.Views.LcPage"
-             BackgroundImageSource="mainf.png"
-             NavigationPage.HasNavigationBar="false"
-             >
+             xmlns:controls="clr-namespace:itmit.asb.app.Controls"
+             x:Class="itmit.asb.app.Views.ProfilePage">
+
     <ContentPage.Content>
         <Grid ColumnSpacing="0" RowSpacing="0">
             <Grid.RowDefinitions>
@@ -44,12 +42,12 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <ex:PrimLcPage Padding="8" Margin="1,1,1,0">
+                                    <controls:PrimLcPage Padding="8" Margin="1,1,1,0">
                                         <Label Text="ПРИМЕЧАНИЕ" Style="{StaticResource LabelLcPagePrim}"/>
-                                    </ex:PrimLcPage>
-                                    <ex:PrimLcPageTwo Grid.Row="1" Style="{StaticResource FramePrimLcPageTwo}">
-                                        <ex:EditorLcPage Text="{Binding Node}" Placeholder="Добавьте подробную информацию о себе" Style="{StaticResource EditorLcPage}" PlaceholderColor="Yellow" HasRoundedCorner="true" IsExpandable="true"/>
-                                    </ex:PrimLcPageTwo>
+                                    </controls:PrimLcPage>
+                                    <controls:PrimLcPageTwo Grid.Row="1" Style="{StaticResource FramePrimLcPageTwo}">
+                                        <controls:EditorLcPage Text="{Binding Node}" Placeholder="Добавьте подробную информацию о себе" Style="{StaticResource EditorLcPage}" PlaceholderColor="Yellow" HasRoundedCorner="true" IsExpandable="true"/>
+                                    </controls:PrimLcPageTwo>
                                 </Grid>
                             </Frame>
                         </StackLayout>

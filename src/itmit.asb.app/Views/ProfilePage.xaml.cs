@@ -12,13 +12,12 @@ using Xamarin.Forms.Xaml;
 namespace itmit.asb.app.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AlarmPage : ContentPage
+	public partial class ProfilePage : ContentPage
 	{
-		public AlarmPage()
+		public ProfilePage()
 		{
 			InitializeComponent();
-
-			BindingContext = new AlarmViewModel();
+			BindingContext = new LcViewModel(App.User);
 		}
 
 		private void ImageButton_Clicked(object sender, EventArgs e)
@@ -28,13 +27,12 @@ namespace itmit.asb.app.Views
 
 		private void ImageButton_Clicked_1(object sender, EventArgs e)
 		{
-			// void Call("");
-			// return;
+			Application.Current.MainPage = new NavigationPage(new AlarmPage());
 		}
 
 		private void ImageButton_Clicked_2(object sender, EventArgs e)
 		{
-			Application.Current.MainPage = new NavigationPage(new LcPage());
+			Application.Current.MainPage = new NavigationPage(new ProfilePage());
 		}
 
 		private void ImageButton_Clicked_3(object sender, EventArgs e)

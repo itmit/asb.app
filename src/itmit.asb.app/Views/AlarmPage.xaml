@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ex="clr-namespace:itmit.asb.app.Controls"
-             x:Class="itmit.asb.app.Views.alarm"
+             x:Class="itmit.asb.app.Views.AlarmPage"
              BackgroundImageSource="mainf.png"
              NavigationPage.HasNavigationBar="false"
              >
