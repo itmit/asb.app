@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="itmit.asb.app.Views.LoginPage"
-             xmlns:ex="clr-namespace:itmit.asb.app.Controls"
-             xmlns:asb="clr-namespace:itmit.asb.app"
-             BackgroundImageSource="mainf.png"
-             >
+             xmlns:controls="clr-namespace:itmit.asb.app.Controls"
+             xmlns:app="clr-namespace:itmit.asb.app"
+             x:Class="itmit.asb.app.Views.LoginPage">
+
     <ContentPage.Content>
         <Grid ColumnSpacing="0" RowSpacing="0">
             <Grid.RowDefinitions>
@@ -16,12 +15,12 @@
             <ScrollView Grid.Row="0">
                 <StackLayout>
                     <Label Text="Неправильные логин или пароль" TextColor="#b20e0b" IsVisible="{Binding AuthNotSuccess}"/>
-                    <ex:LoginEntry Placeholder="ТЕЛЕФОН" Text="{Binding Login}" Style="{StaticResource EntryLoginPageNumber}">
-                        <ex:LoginEntry.Behaviors>
-                            <asb:MaskedBehavior Mask="+X (XXX) XXX-XX-XX"/>
-                        </ex:LoginEntry.Behaviors>
-                    </ex:LoginEntry>
-                    <ex:LoginEntry Placeholder="ПАРОЛЬ" Text="{Binding Password}" Style="{StaticResource EntryLoginPage}"/>
+                    <controls:LoginEntry Placeholder="ТЕЛЕФОН" Text="{Binding Login}" Style="{StaticResource EntryLoginPageNumber}">
+                        <controls:LoginEntry.Behaviors>
+                            <app:MaskedBehavior Mask="+X (XXX) XXX-XX-XX"/>
+                        </controls:LoginEntry.Behaviors>
+                    </controls:LoginEntry>
+                    <controls:LoginEntry Placeholder="ПАРОЛЬ" Text="{Binding Password}" Style="{StaticResource EntryLoginPage}"/>
                     <Button Text="ВОЙТИ" Command="{Binding LoginCommand}" Style="{StaticResource ButtonLoginPage}"/>
                 </StackLayout>
             </ScrollView>
