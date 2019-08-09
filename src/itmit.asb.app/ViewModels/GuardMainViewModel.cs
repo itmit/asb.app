@@ -6,6 +6,7 @@ using itmit.asb.app.Services;
 using itmit.asb.app.Views.Guard;
 using Xamarin.Forms;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -20,12 +21,22 @@ namespace itmit.asb.app.ViewModels
 			_navigation = navigation;
 			Task.Run(UpdateBids);
 			_bids = new ObservableCollection<Bid>();
+			RefreshCommand = new RelayCommand(obj =>
+			{
+				IsBusy = true;
+				Task.Run(UpdateBids);
+			}, obj => !IsBusy);
 		}
 
 		public ObservableCollection<Bid> Bids
 		{
 			get => _bids;
 			set => SetProperty(ref _bids, value);
+		}
+
+		public ICommand RefreshCommand
+		{
+			get;
 		}
 
 		public Bid SelectedBid
@@ -39,7 +50,7 @@ namespace itmit.asb.app.ViewModels
 					{
 						PushPage(new BidDetailPage(value));
 					}
-					catch (System.Exception e)
+					catch (Exception e)
 					{
 						Debug.WriteLine(e);
 					}
@@ -66,6 +77,8 @@ namespace itmit.asb.app.ViewModels
 				bid.CreatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
 				Bids.Add(bid);
 			}
+
+			IsBusy = false;
 		}
 	}
 }

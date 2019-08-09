@@ -9,8 +9,12 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
-            <ListView ItemsSource="{Binding Bids}" SelectedItem="{Binding SelectedBid, Mode=TwoWay}"  
-                      IsPullToRefreshEnabled="True" HasUnevenRows="True">
+            <ListView ItemsSource="{Binding Bids}" 
+                      IsRefreshing="{Binding IsBusy, Mode=OneWay}" 
+                      RefreshCommand="{Binding RefreshCommand}" 
+                      SelectedItem="{Binding SelectedBid, Mode=TwoWay}"  
+                      IsPullToRefreshEnabled="True" 
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <guard:BidViewCell/>
