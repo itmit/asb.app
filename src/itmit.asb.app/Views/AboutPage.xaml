@@ -33,11 +33,11 @@
                     <Frame Style="{StaticResource FrameBuyTwo}">
                         <Frame Style="{StaticResource FrameBuyOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                <Label Text="АКТИВНА" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"/>
+                                <Label Text="АКТИВНА" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center" FontAttributes="Bold"/>
                                 <Label Text="ОСТАЛОСЬ" FontSize="Medium" TextColor="#b20d0b" HorizontalOptions="Center"/>
                                 <FlexLayout HorizontalOptions="Center" Padding="20,0,0,0">
-                                    <Label Text="2992" FontSize="Large" TextColor="#b20d0b" Margin="0,0,10,0"/>
-                                    <Label Text="ДНЕЙ" FontSize="Medium" TextColor="#b20d0b"/>
+                                    <Label Text="2992" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold" Margin="0,0,10,0"/>
+                                    <Label Text="ДНЕЙ" FontSize="Medium" TextColor="#b20d0b" Margin="0,3,0,0"/>
                                 </FlexLayout>
                             </StackLayout>
                         </Frame>
@@ -48,7 +48,7 @@
                     <Frame Style="{StaticResource FrameSubscribeTwo}">
                         <Frame Style="{StaticResource FrameSubscribeOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                <Label Text="1500 р/30 дней" TextColor="Yellow" FontSize="Large"/>
+                                <Label Text="1500 р/30 дней" TextColor="#f4e213" FontSize="Large" FontAttributes="Bold"/>
                             </StackLayout>
                         </Frame>
                     </Frame>

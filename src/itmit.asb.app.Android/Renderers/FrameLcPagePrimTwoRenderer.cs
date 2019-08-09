@@ -10,6 +10,7 @@ namespace itmit.asb.app.Droid.Renderers
 {
     public class FrameLcPagePrimTwoRenderer : VisualElementRenderer<Frame>
     {
+        [System.Obsolete]
         public FrameLcPagePrimTwoRenderer(Context context) : base(context)
         {
             SetBackgroundDrawable(Resources.GetDrawable(Resource.Drawable.Prim2));
