@@ -98,7 +98,6 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\drawable\xamarin_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />
@@ -119,40 +118,16 @@
     <AndroidResource Include="Resources\drawable\TabbedPageBottom.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_adjust_black_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_call_black_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_account_circle_black_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_keyboard_backspace_black_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_keyboard_tab_black_18dp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_arrow_back_black_36dp.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_call_black_36dp.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_keyboard_tab_black_36dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_account_circle_black_36dp.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_adjust_black_36dp.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\img_424515.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_call_black_48dp.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\border_alarm.xml" />
@@ -168,7 +143,7 @@
       <Version>4.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Location">
-      <Version>71.1600.0</Version>
+      <Version>60.1142.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Prim2.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_account_circle_black_36dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

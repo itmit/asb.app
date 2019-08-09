@@ -9,6 +9,7 @@ namespace itmit.asb.app.Droid.Renderers
 {
     public class BorderAlarmRenderer : VisualElementRenderer<Frame>
     {
+        [System.Obsolete]
         public BorderAlarmRenderer(Context context) : base(context)
         {
             SetBackgroundDrawable(Resources.GetDrawable(Resource.Drawable.border_alarm));
