@@ -204,6 +204,7 @@
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="Center"/>
                 <Setter Property="WidthRequest" Value="120"/>
+                <Setter Property="Aspect" Value="AspectFill"/>
             </Style>
             <Style x:Key="FrameLcPageUser" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="100"/>
