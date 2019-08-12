@@ -27,11 +27,15 @@ namespace itmit.asb.app.Droid
 	{
 		#region Data
 		#region Consts
-		public const int PermissionsRequestAccessCoarseLocation = 100;
+		private const int PermissionsRequestAccessCoarseLocation = 100;
 
-		public const int PermissionsRequestAccessFineLocation = 50;
+		private const int PermissionsRequestAccessFineLocation = 50;
 
-		public const int RequestCheckSettings = 1;
+		private const int PermissionsRequestAccessReadStorage = 10;
+
+		private const int PermissionsRequestAccessWriteStorage = 20;
+
+		private const int RequestCheckSettings = 1;
 		#endregion
 		#endregion
 
@@ -44,11 +48,9 @@ namespace itmit.asb.app.Droid
 			base.OnCreate(savedInstanceState);
 			Forms.Init(this, savedInstanceState);
 
-			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation) != Permission.Granted ||
-				ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
-			{
-				RequestLocationPermission();
-			}
+			CheckPermissions();
+
+			Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Storage);
 
 			DisplayLocationSettingsRequest();
 			FormsMaps.Init(this, savedInstanceState);
@@ -105,45 +107,38 @@ namespace itmit.asb.app.Droid
 			});
 		}
 
-		private void RequestLocationPermission()
+		private void CheckPermissions()
 		{
-			if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.AccessFineLocation))
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation) != Permission.Granted)
 			{
-				ActivityCompat.RequestPermissions(this,
-												  new[]
-												  {
-													  Manifest.Permission.AccessFineLocation
-												  },
-												  PermissionsRequestAccessFineLocation);
-			}
-			else
-			{
-				ActivityCompat.RequestPermissions(this,
-												  new[]
-												  {
-													  Manifest.Permission.AccessFineLocation
-												  },
-												  PermissionsRequestAccessFineLocation);
+				CheckPermission(Manifest.Permission.AccessFineLocation, PermissionsRequestAccessFineLocation);
 			}
 
-			if (ActivityCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.AccessCoarseLocation))
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
 			{
-				ActivityCompat.RequestPermissions(this,
-												  new[]
-												  {
-													  Manifest.Permission.AccessCoarseLocation
-												  },
-												  PermissionsRequestAccessCoarseLocation);
+				CheckPermission(Manifest.Permission.AccessCoarseLocation, PermissionsRequestAccessCoarseLocation);
 			}
-			else
+
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != Permission.Granted)
 			{
-				ActivityCompat.RequestPermissions(this,
-												  new[]
-												  {
-													  Manifest.Permission.AccessCoarseLocation
-												  },
-												  PermissionsRequestAccessCoarseLocation);
+				CheckPermission(Manifest.Permission.ReadExternalStorage, PermissionsRequestAccessReadStorage);
 			}
+
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+			{
+				CheckPermission(Manifest.Permission.WriteExternalStorage, PermissionsRequestAccessWriteStorage);
+			}
+		}
+
+		private void CheckPermission(string permission, int permissionsRequestCode)
+		{
+			ActivityCompat.ShouldShowRequestPermissionRationale(this, permission);
+			ActivityCompat.RequestPermissions(this,
+											  new[]
+											  {
+												  permission
+											  },
+											  permissionsRequestCode);
 		}
 		#endregion
 	}

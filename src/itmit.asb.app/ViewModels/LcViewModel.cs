@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Plugin.FilePicker;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -34,7 +38,7 @@ namespace itmit.asb.app.ViewModels
 												  {
 													  UpdatePhotoCommandExecute();
 												  },
-												  obj => true);
+												  obj => CrossMedia.IsSupported);
 		}
 		#endregion
 
@@ -72,25 +76,32 @@ namespace itmit.asb.app.ViewModels
 		#region Private
 		private async void UpdatePhotoCommandExecute()
 		{
-			try
+			await CrossMedia.Current.Initialize();
+
+			if (!CrossMedia.Current.IsPickPhotoSupported)
 			{
-				var fileData = await CrossFilePicker.Current.PickFile();
-
-				// user canceled file picking
-				if (fileData == null)
-				{
-					return;
-				}
-
-				var service = new AuthService();
-
-				service.SetAvatar(fileData.DataArray, App.User.UserToken);
-
-				Debug.WriteLine("File name chosen: " + fileData.FileName);
+				return;
 			}
-			catch (Exception ex)
+
+			MediaFile image = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
 			{
-				Debug.WriteLine("Exception choosing file: " + ex);
+				PhotoSize = PhotoSize.Medium
+			});
+
+			if (image == null)
+			{
+				return;
+			}
+
+			UserPictureSource = image.Path;
+
+			using (var memoryStream = new MemoryStream())
+			{
+				image.GetStream().CopyTo(memoryStream);
+				image.Dispose();
+				var service = new AuthService();
+				service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
+
 			}
 		}
 		#endregion
