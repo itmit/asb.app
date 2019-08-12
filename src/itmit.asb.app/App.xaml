@@ -175,7 +175,6 @@
                 <Setter Property="FontSize" Value="25" />
                 <Setter Property="HorizontalOptions" Value="Fill" />
                 <Setter Property="VerticalOptions" Value="Fill" />
-                <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style x:Key="FrameLcPagePrimMain" TargetType="Frame">
                 <Setter Property="Padding" Value="0" />
