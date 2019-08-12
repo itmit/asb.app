@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="itmit.asb.app.Views.Guard.BidDetailPage"
@@ -8,38 +9,40 @@
             <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="Center" Margin="0,30">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackLayout Grid.Column="0" Grid.Row="0" VerticalOptions="Fill" HorizontalOptions="Center">
                         <Frame Style="{StaticResource FrameLcPageUserTwo}">
                             <Frame Style="{StaticResource FrameLcPageUser}">
-                                <Image Source="{Binding UserPictureSource}" Style="{StaticResource ImageLcPage}"/>
+                                <Image Source="{Binding UserPictureSource}" Style="{StaticResource ImageLcPage}" />
                             </Frame>
                         </Frame>
                     </StackLayout>
                     <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
-                        <Label Text="{Binding Name}" Style="{StaticResource LabelBidDetail}"/>
-                        <Label Text="{Binding Organization}" Style="{StaticResource LabelBidDetail}"/>
-                        <Label Text="{Binding PhoneNumber}" Style="{StaticResource LabelBidDetail}"/>
-                        <Label Text="{Binding Email}" Style="{StaticResource LabelBidDetail}"/>
+                        <Label Text="{Binding Name}" Style="{StaticResource LabelBidDetail}" />
+                        <Label Text="{Binding Organization}" Style="{StaticResource LabelBidDetail}" />
+                        <Label Text="{Binding PhoneNumber}" Style="{StaticResource LabelBidDetail}" />
+                        <Label Text="{Binding Email}" Style="{StaticResource LabelBidDetail}" />
                     </StackLayout>
                     <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
                         <StackLayout Padding="1" BackgroundColor="Black">
                             <StackLayout HeightRequest="200" Margin="0" BackgroundColor="#2a2a2a">
-                                <Label Text="{Binding Node}" TextColor="#b2110d" HorizontalOptions="Fill" VerticalOptions="Fill"/>
+                                <Label Text="{Binding Node}" TextColor="#b2110d" HorizontalOptions="Fill"
+                                       VerticalOptions="Fill" />
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
                 </Grid>
                 <StackLayout Margin="0,20">
-                    <Button x:Name="AcceptBidButton"  Text="Принять заявку" Command="{Binding AcceptBidCommand}" Margin="0,0,0,5" Style="{StaticResource ButtonBidDetail}"/>
-                    <Button Text="Открыть карту" Clicked="Button_OnClicked" Style="{StaticResource ButtonBidDetail}"/>
+                    <Button x:Name="AcceptBidButton" Text="Принять заявку" Command="{Binding AcceptBidCommand}"
+                            Margin="0,0,0,5" Style="{StaticResource ButtonBidDetail}" />
+                    <Button Text="Открыть карту" Clicked="Button_OnClicked" Style="{StaticResource ButtonBidDetail}" />
                 </StackLayout>
             </StackLayout>
         </ScrollView>

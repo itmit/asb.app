@@ -5,14 +5,21 @@ namespace itmit.asb.app.Models
 {
 	public class Location
 	{
+		#region Data
+		#region Static
 		private static Location _currentGeolocation;
+		#endregion
+		#endregion
 
-		public Location (double latitude, double longitude)
+		#region .ctor
+		public Location(double latitude, double longitude)
 		{
 			Latitude = latitude;
 			Longitude = longitude;
 		}
+		#endregion
 
+		#region Properties
 		public double Latitude
 		{
 			get;
@@ -24,7 +31,9 @@ namespace itmit.asb.app.Models
 			get;
 			set;
 		}
+		#endregion
 
+		#region Public
 		/// <summary>
 		/// Возвращает текущие координаты местоположения.
 		/// </summary>
@@ -34,12 +43,14 @@ namespace itmit.asb.app.Models
 			var request = new GeolocationRequest(accuracy);
 			var location = await Geolocation.GetLocationAsync(request);
 
-			if (location == null) {
+			if (location == null)
+			{
 				return await Task.FromResult(_currentGeolocation);
 			}
 
 			_currentGeolocation = new Location(location.Latitude, location.Longitude);
 			return await Task.FromResult(_currentGeolocation);
 		}
+		#endregion
 	}
 }

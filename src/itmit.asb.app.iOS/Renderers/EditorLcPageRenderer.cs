@@ -1,7 +1,7 @@
-﻿using Foundation;
+﻿using System.ComponentModel;
+using Foundation;
 using itmit.asb.app.Controls;
 using itmit.asb.app.iOS.Renderers;
-using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -10,106 +10,140 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace itmit.asb.app.iOS.Renderers
 {
-    public class EditorLcPageRenderer : EditorRenderer
-    {
-        UILabel _placeholderLabel;
+	public class EditorLcPageRenderer : EditorRenderer
+	{
+		#region Data
+		#region Fields
+		private UILabel _placeholderLabel;
+		#endregion
+		#endregion
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Editor> e)
-        {
-            base.OnElementChanged(e);
+		#region Public
+		public void CreatePlaceholder()
+		{
+			var element = Element as EditorLcPage;
 
-            if (Control != null)
-            {
-                if (_placeholderLabel == null)
-                {
-                    CreatePlaceholder();
-                }
+			_placeholderLabel = new UILabel
+			{
+				Text = element?.Placeholder,
+				TextColor = element.PlaceholderColor.ToUIColor(),
+				BackgroundColor = UIColor.Clear
+			};
 
-            }
+			var edgeInsets = Control.TextContainerInset;
+			var lineFragmentPadding = Control.TextContainer.LineFragmentPadding;
 
-            if (e.NewElement != null)
-            {
-                var customControl = (EditorLcPage)e.NewElement;
+			Control.AddSubview(_placeholderLabel);
 
-                if (customControl.IsExpandable)
-                    Control.ScrollEnabled = false;
-                else
-                    Control.ScrollEnabled = true;
+			var vConstraints = NSLayoutConstraint.FromVisualFormat("V:|-" + edgeInsets.Top + "-[PlaceholderLabel]-" + edgeInsets.Bottom + "-|",
+																   0,
+																   new NSDictionary(),
+																   NSDictionary.FromObjectsAndKeys(new NSObject[]
+																								   {
+																									   _placeholderLabel
+																								   },
+																								   new NSObject[]
+																								   {
+																									   new NSString("PlaceholderLabel")
+																								   }));
 
-                if (customControl.HasRoundedCorner)
-                    Control.Layer.CornerRadius = 5;
-                else
-                    Control.Layer.CornerRadius = 0;
-            }
-        }
+			var hConstraints = NSLayoutConstraint.FromVisualFormat("H:|-" + lineFragmentPadding + "-[PlaceholderLabel]-" + lineFragmentPadding + "-|",
+																   0,
+																   new NSDictionary(),
+																   NSDictionary.FromObjectsAndKeys(new NSObject[]
+																								   {
+																									   _placeholderLabel
+																								   },
+																								   new NSObject[]
+																								   {
+																									   new NSString("PlaceholderLabel")
+																								   }));
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
+			_placeholderLabel.TranslatesAutoresizingMaskIntoConstraints = false;
 
-            var customControl = (EditorLcPage)Element;
+			Control.AddConstraints(hConstraints);
+			Control.AddConstraints(vConstraints);
+		}
+		#endregion
 
-            if (e.PropertyName == Editor.TextProperty.PropertyName)
-            {
-                _placeholderLabel.Hidden = !string.IsNullOrEmpty(Control.Text);
-            }
-            else if (EditorLcPage.PlaceholderProperty.PropertyName == e.PropertyName)
-            {
-                _placeholderLabel.Text = customControl.Placeholder;
-            }
-            else if (EditorLcPage.PlaceholderColorProperty.PropertyName == e.PropertyName)
-            {
-                _placeholderLabel.TextColor = customControl.PlaceholderColor.ToUIColor();
-            }
-            else if (EditorLcPage.HasRoundedCornerProperty.PropertyName == e.PropertyName)
-            {
-                if (customControl.HasRoundedCorner)
-                    Control.Layer.CornerRadius = 5;
-                else
-                    Control.Layer.CornerRadius = 0;
-            }
-            else if (EditorLcPage.IsExpandableProperty.PropertyName == e.PropertyName)
-            {
-                if (customControl.IsExpandable)
-                    Control.ScrollEnabled = false;
-                else
-                    Control.ScrollEnabled = true;
-            }
-        }
+		#region Overrided
+		protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
+		{
+			base.OnElementChanged(e);
 
-        public void CreatePlaceholder()
-        {
-            var element = Element as EditorLcPage;
+			if (Control != null)
+			{
+				if (_placeholderLabel == null)
+				{
+					CreatePlaceholder();
+				}
+			}
 
-            _placeholderLabel = new UILabel
-            {
-                Text = element?.Placeholder,
-                TextColor = element.PlaceholderColor.ToUIColor(),
-                BackgroundColor = UIColor.Clear
-            };
+			if (e.NewElement != null)
+			{
+				var customControl = (EditorLcPage) e.NewElement;
 
-            var edgeInsets = Control.TextContainerInset;
-            var lineFragmentPadding = Control.TextContainer.LineFragmentPadding;
+				if (customControl.IsExpandable)
+				{
+					Control.ScrollEnabled = false;
+				}
+				else
+				{
+					Control.ScrollEnabled = true;
+				}
 
-            Control.AddSubview(_placeholderLabel);
+				if (customControl.HasRoundedCorner)
+				{
+					Control.Layer.CornerRadius = 5;
+				}
+				else
+				{
+					Control.Layer.CornerRadius = 0;
+				}
+			}
+		}
 
-            var vConstraints = NSLayoutConstraint.FromVisualFormat(
-                "V:|-" + edgeInsets.Top + "-[PlaceholderLabel]-" + edgeInsets.Bottom + "-|", 0, new NSDictionary(),
-                NSDictionary.FromObjectsAndKeys(
-                    new NSObject[] { _placeholderLabel }, new NSObject[] { new NSString("PlaceholderLabel") })
-            );
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
 
-            var hConstraints = NSLayoutConstraint.FromVisualFormat(
-                "H:|-" + lineFragmentPadding + "-[PlaceholderLabel]-" + lineFragmentPadding + "-|",
-                0, new NSDictionary(),
-                NSDictionary.FromObjectsAndKeys(
-                    new NSObject[] { _placeholderLabel }, new NSObject[] { new NSString("PlaceholderLabel") })
-            );
+			var customControl = (EditorLcPage) Element;
 
-            _placeholderLabel.TranslatesAutoresizingMaskIntoConstraints = false;
-
-            Control.AddConstraints(hConstraints);
-            Control.AddConstraints(vConstraints);
-        }
-    }
+			if (e.PropertyName == Editor.TextProperty.PropertyName)
+			{
+				_placeholderLabel.Hidden = !string.IsNullOrEmpty(Control.Text);
+			}
+			else if (EditorLcPage.PlaceholderProperty.PropertyName == e.PropertyName)
+			{
+				_placeholderLabel.Text = customControl.Placeholder;
+			}
+			else if (EditorLcPage.PlaceholderColorProperty.PropertyName == e.PropertyName)
+			{
+				_placeholderLabel.TextColor = customControl.PlaceholderColor.ToUIColor();
+			}
+			else if (EditorLcPage.HasRoundedCornerProperty.PropertyName == e.PropertyName)
+			{
+				if (customControl.HasRoundedCorner)
+				{
+					Control.Layer.CornerRadius = 5;
+				}
+				else
+				{
+					Control.Layer.CornerRadius = 0;
+				}
+			}
+			else if (EditorLcPage.IsExpandableProperty.PropertyName == e.PropertyName)
+			{
+				if (customControl.IsExpandable)
+				{
+					Control.ScrollEnabled = false;
+				}
+				else
+				{
+					Control.ScrollEnabled = true;
+				}
+			}
+		}
+		#endregion
+	}
 }

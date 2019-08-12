@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="itmit.asb.app.Views.Guard.BidViewCell">
-  <ViewCell.View>
+
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="itmit.asb.app.Views.Guard.BidViewCell">
+    <ViewCell.View>
         <StackLayout BackgroundColor="#1f1f1f">
-            <Label Text="{Binding Client.Name}" FontSize="30" HorizontalOptions="Center" TextColor="#ef2b2e"/>
-            <Label Text="{Binding CreatedAt}" FontSize="25" HorizontalOptions="Center" TextColor="White"/>
+            <Label Text="{Binding Client.Name}" FontSize="30" HorizontalOptions="Center" TextColor="#ef2b2e" />
+            <Label Text="{Binding CreatedAt}" FontSize="25" HorizontalOptions="Center" TextColor="White" />
         </StackLayout>
-  </ViewCell.View>
+    </ViewCell.View>
 </ViewCell>

@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="itmit.asb.app.App"
-             >
+             x:Class="itmit.asb.app.App">
     <Application.Resources>
         <ResourceDictionary>
             <!--Global Styles-->
@@ -12,226 +12,226 @@
             </Style>
             <!-- ContentPage Styles -->
             <Style x:Key="LabelSubscribe" TargetType="Label">
-                <Setter Property="TextColor" Value="#b20d0b"/>
-                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+                <Setter Property="TextColor" Value="#b20d0b" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
                 <Setter Property="Margin" Value="0,20,0,0" />
                 <Setter Property="FontSize" Value="Large" />
             </Style>
             <Style x:Key="ButtonMenu" TargetType="ImageButton">
-                <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="WidthRequest" Value="40"/>
-                <Setter Property="HeightRequest" Value="40"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="WidthRequest" Value="40" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
             <Style x:Key="Menu" TargetType="Grid">
-                <Setter Property="ColumnSpacing" Value="0"/>
-                <Setter Property="RowSpacing" Value="0"/>
-                <Setter Property="BackgroundColor" Value="#222222"/>
-                <Setter Property="Padding" Value="0,10"/>
+                <Setter Property="ColumnSpacing" Value="0" />
+                <Setter Property="RowSpacing" Value="0" />
+                <Setter Property="BackgroundColor" Value="#222222" />
+                <Setter Property="Padding" Value="0,10" />
             </Style>
             <Style x:Key="LabelAlarmPage" TargetType="Label">
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style x:Key="FrameAlarmOne" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#ef2b2e"/>
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="WidthRequest" Value="140"/>
-                <Setter Property="HeightRequest" Value="140"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="0"/>
+                <Setter Property="BackgroundColor" Value="#ef2b2e" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="WidthRequest" Value="140" />
+                <Setter Property="HeightRequest" Value="140" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
             </Style>
             <Style x:Key="FrameAlarmTwo" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#000000"/>
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BackgroundColor" Value="#000000" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="5" />
             </Style>
             <Style x:Key="FrameAlarmThree" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#2e2e2e"/>
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BackgroundColor" Value="#2e2e2e" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="10" />
             </Style>
             <Style x:Key="LabelAlarmTrevoga" TargetType="Label">
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="Margin" Value="0,10,0,0"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+                <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style x:Key="ImageAlarmTrevoga" TargetType="Image">
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="Margin" Value="0,15,0,0"/>
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,15,0,0" />
             </Style>
             <Style x:Key="FrameAlarmTrevOne" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#ef2b2e"/>
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="WidthRequest" Value="180"/>
-                <Setter Property="HeightRequest" Value="180"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="0"/>
+                <Setter Property="BackgroundColor" Value="#ef2b2e" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="WidthRequest" Value="180" />
+                <Setter Property="HeightRequest" Value="180" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
             </Style>
             <Style x:Key="FrameAlarmTrevTwo" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#000000"/>
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="5"/>
+                <Setter Property="BackgroundColor" Value="#000000" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="5" />
             </Style>
             <Style x:Key="FrameAlarmTrevThree" TargetType="Frame">
-                <Setter Property="BorderColor" Value="#2e2e2e"/>
-                <Setter Property="BackgroundColor" Value="#2e2e2e"/>
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BorderColor" Value="#2e2e2e" />
+                <Setter Property="BackgroundColor" Value="#2e2e2e" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="10" />
             </Style>
             <Style x:Key="ButtonLoginPage" TargetType="Button">
-                <Setter Property="Margin" Value="0,20,0,0"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="BackgroundColor" Value="#b20e0b"/>
-                <Setter Property="Padding" Value="0,15"/>
-                <Setter Property="WidthRequest" Value="230"/>
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="FontSize" Value="Large"/>
-                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Margin" Value="0,20,0,0" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="BackgroundColor" Value="#b20e0b" />
+                <Setter Property="Padding" Value="0,15" />
+                <Setter Property="WidthRequest" Value="230" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="CornerRadius" Value="10" />
             </Style>
             <Style x:Key="EntryLoginPage" TargetType="Entry">
-                <Setter Property="Margin" Value="30"/>
-                <Setter Property="FontSize" Value="Large"/>
-                <Setter Property="TextColor" Value="#b20e0b"/>
-                <Setter Property="PlaceholderColor" Value="#b20e0b"/>
-                <Setter Property="IsPassword" Value="True"/>
+                <Setter Property="Margin" Value="30" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="TextColor" Value="#b20e0b" />
+                <Setter Property="PlaceholderColor" Value="#b20e0b" />
+                <Setter Property="IsPassword" Value="True" />
             </Style>
             <Style x:Key="EntryLoginPageNumber" TargetType="Entry">
-                <Setter Property="Margin" Value="30"/>
-                <Setter Property="FontSize" Value="Large"/>
-                <Setter Property="TextColor" Value="#b20e0b"/>
-                <Setter Property="PlaceholderColor" Value="#b20e0b"/>
-                <Setter Property="Keyboard" Value="Numeric"/>
+                <Setter Property="Margin" Value="30" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="TextColor" Value="#b20e0b" />
+                <Setter Property="PlaceholderColor" Value="#b20e0b" />
+                <Setter Property="Keyboard" Value="Numeric" />
             </Style>
             <Style x:Key="FrameSubscribeOne" TargetType="Frame">
-                <Setter Property="CornerRadius" Value="10"/>
-                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-                <Setter Property="VerticalOptions" Value="FillAndExpand"/>
-                <Setter Property="BackgroundColor" Value="#222222"/>
-                <Setter Property="HeightRequest" Value="120"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="Padding" Value="0"/>
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="BackgroundColor" Value="#222222" />
+                <Setter Property="HeightRequest" Value="120" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="Padding" Value="0" />
             </Style>
             <Style x:Key="FrameSubscribeTwo" TargetType="Frame">
-                <Setter Property="CornerRadius" Value="10"/>
-                <Setter Property="BackgroundColor" Value="Black"/>
-                <Setter Property="Padding" Value="1"/>
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BackgroundColor" Value="Black" />
+                <Setter Property="Padding" Value="1" />
             </Style>
             <Style x:Key="ButtonSubscribe" TargetType="Button">
-                <Setter Property="Margin" Value="30,20"/>
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="BackgroundColor" Value="#9e0e0b"/>
-                <Setter Property="HorizontalOptions" Value="Fill"/>
-                <Setter Property="BorderRadius" Value="10"/>
-                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="Margin" Value="30,20" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#9e0e0b" />
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="BorderRadius" Value="10" />
+                <Setter Property="FontSize" Value="20" />
             </Style>
             <Style x:Key="FrameBuyOne" TargetType="Frame">
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="WidthRequest" Value="150"/>
-                <Setter Property="HeightRequest" Value="150"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="BackgroundColor" Value="#212121"/>
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="HeightRequest" Value="150" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="BackgroundColor" Value="#212121" />
             </Style>
             <Style x:Key="FrameBuyTwo" TargetType="Frame">
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="BackgroundColor" Value="#b2100c"/>
-                <Setter Property="Padding" Value="1"/>
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="BackgroundColor" Value="#b2100c" />
+                <Setter Property="Padding" Value="1" />
             </Style>
             <Style x:Key="StackLayoutBuy" TargetType="StackLayout">
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="Margin" Value="0,30"/>
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0,30" />
             </Style>
             <Style x:Key="LabelBuy" TargetType="Label">
-                <Setter Property="TextColor" Value="#b20d0b"/>
-                <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
-                <Setter Property="Margin" Value="0,60,0,0"/>
-                <Setter Property="FontSize" Value="Large"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#b20d0b" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="Margin" Value="0,60,0,0" />
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style x:Key="EditorLcPage" TargetType="Editor">
-                <Setter Property="Placeholder" Value="Добавьте подробную информацию о себе"/>
-                <Setter Property="AutoSize" Value="TextChanges"/>
-                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="Placeholder" Value="Добавьте подробную информацию о себе" />
+                <Setter Property="AutoSize" Value="TextChanges" />
+                <Setter Property="FontSize" Value="Medium" />
             </Style>
             <Style x:Key="FramePrimLcPageTwo" TargetType="Frame">
-                <Setter Property="HeightRequest" Value="200"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Margin" Value="1,0,1,1"/>
+                <Setter Property="HeightRequest" Value="200" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="1,0,1,1" />
             </Style>
             <Style x:Key="LabelLcPagePrim" TargetType="Label">
-                <Setter Property="TextColor" Value="#f4e213"/>
-                <Setter Property="FontSize" Value="25"/>
-                <Setter Property="HorizontalOptions" Value="Fill"/>
-                <Setter Property="VerticalOptions" Value="Fill"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#f4e213" />
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="HorizontalOptions" Value="Fill" />
+                <Setter Property="VerticalOptions" Value="Fill" />
+                <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style x:Key="FrameLcPagePrimMain" TargetType="Frame">
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Margin" Value="0"/>
-                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-                <Setter Property="CornerRadius" Value="10"/>
-                <Setter Property="BackgroundColor" Value="Black"/>
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BackgroundColor" Value="Black" />
             </Style>
             <Style x:Key="LabelOrganization" TargetType="Label">
-                <Setter Property="TextColor" Value="#b2110d"/>
-                <Setter Property="FontSize" Value="25"/>
-                <Setter Property="Margin" Value="0,10,0,0"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="#b2110d" />
+                <Setter Property="FontSize" Value="25" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+                <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style x:Key="ButtonPhoto" TargetType="Button">
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="Padding" Value="15"/>
-                <Setter Property="Text" Value="ДОБАВИТЬ ФОТО"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="BackgroundColor" Value="#b2110d"/>
-                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="Padding" Value="15" />
+                <Setter Property="Text" Value="ДОБАВИТЬ ФОТО" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#b2110d" />
+                <Setter Property="CornerRadius" Value="10" />
             </Style>
             <Style x:Key="ImageLcPage" TargetType="Image">
-                <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="WidthRequest" Value="120"/>
-                <Setter Property="Aspect" Value="AspectFill"/>
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="120" />
+                <Setter Property="Aspect" Value="AspectFill" />
             </Style>
             <Style x:Key="FrameLcPageUser" TargetType="Frame">
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="BackgroundColor" Value="#222222"/>
-                <Setter Property="Padding" Value="40"/>
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="BackgroundColor" Value="#222222" />
+                <Setter Property="Padding" Value="40" />
             </Style>
             <Style x:Key="FrameLcPageUserTwo" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="#ef2b2e"/>
-                <Setter Property="Padding" Value="3"/>
-                <Setter Property="CornerRadius" Value="100"/>
-                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="#ef2b2e" />
+                <Setter Property="Padding" Value="3" />
+                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="VerticalOptions" Value="Center" />
             </Style>
             <Style x:Key="ButtonBidDetail" TargetType="Button">
-                <Setter Property="Text" Value="Открыть карту"/>
-                <Setter Property="CornerRadius" Value="30"/>
-                <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="BorderWidth" Value="1"/>
-                <Setter Property="BorderColor" Value="#ef2b2e"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="Text" Value="Открыть карту" />
+                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="BorderColor" Value="#ef2b2e" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="Large" />
             </Style>
             <Style x:Key="LabelBidDetail" TargetType="Label">
-                <Setter Property="TextColor" Value="#b2110d"/>
-                <Setter Property="FontSize" Value="20"/>
-                <Setter Property="Margin" Value="0,15,0,0"/>
-                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="TextColor" Value="#b2110d" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="Margin" Value="0,15,0,0" />
+                <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,37 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ex="clr-namespace:itmit.asb.app.Controls"
              x:Class="itmit.asb.app.Views.AlarmPage"
              BackgroundImageSource="mainf.png"
-             NavigationPage.HasNavigationBar="false"
-             >
+             NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
         <Grid ColumnSpacing="0" RowSpacing="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="0">
                 <StackLayout HorizontalOptions="Center" Margin="0,50" VerticalOptions="Center">
                     <StackLayout HeightRequest="300" Margin="80,0">
                         <Frame Style="{StaticResource FrameAlarmTrevThree}">
                             <Frame Style="{StaticResource FrameAlarmTrevTwo}">
-                                <Frame Style="{StaticResource FrameAlarmTrevOne}" >
+                                <Frame Style="{StaticResource FrameAlarmTrevOne}">
                                     <Grid ColumnSpacing="0">
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding AlarmCommand}"  NumberOfTapsRequired="1"/>
+                                            <TapGestureRecognizer Command="{Binding AlarmCommand}"
+                                                                  NumberOfTapsRequired="1" />
                                         </Grid.GestureRecognizers>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="100"/>
-                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="100" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        <Image Grid.Column="0" Grid.Row="0" Source="img_424515.png" Style="{StaticResource ImageAlarmTrevoga}"/>
-                                        <Label Grid.Column="0" Grid.Row="1" Text="ТРЕВОГА"  Style="{StaticResource LabelAlarmTrevoga}"/>
+                                        <Image Grid.Column="0" Grid.Row="0" Source="img_424515.png"
+                                               Style="{StaticResource ImageAlarmTrevoga}" />
+                                        <Label Grid.Column="0" Grid.Row="1" Text="ТРЕВОГА"
+                                               Style="{StaticResource LabelAlarmTrevoga}" />
                                     </Grid>
                                 </Frame>
                             </Frame>
@@ -43,19 +46,22 @@
                                 <Frame Style="{StaticResource FrameAlarmOne}">
                                     <Grid>
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding AlarmCommand}"  NumberOfTapsRequired="1"/>
+                                            <TapGestureRecognizer Command="{Binding AlarmCommand}"
+                                                                  NumberOfTapsRequired="1" />
                                         </Grid.GestureRecognizers>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="50" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        <Image Grid.Column="0" Grid.Row="0" Source="zvonok.png" Margin="0,15,0,0"/>
-                                        <Label Grid.Column="0" Grid.Row="1" Text="ТРЕВОГА И" Style="{StaticResource LabelAlarmPage}" Margin="0,10,0,0"/>
-                                        <Label Grid.Column="0" Grid.Row="2" Text="ЗВОНОК" Style="{StaticResource LabelAlarmPage}" VerticalOptions="Center" />
+                                        <Image Grid.Column="0" Grid.Row="0" Source="zvonok.png" Margin="0,15,0,0" />
+                                        <Label Grid.Column="0" Grid.Row="1" Text="ТРЕВОГА И"
+                                               Style="{StaticResource LabelAlarmPage}" Margin="0,10,0,0" />
+                                        <Label Grid.Column="0" Grid.Row="2" Text="ЗВОНОК"
+                                               Style="{StaticResource LabelAlarmPage}" VerticalOptions="Center" />
                                     </Grid>
                                 </Frame>
                             </Frame>
@@ -63,24 +69,29 @@
                     </StackLayout>
                 </StackLayout>
             </ScrollView>
-            <BoxView  Grid.Row="1" BackgroundColor="Black" HeightRequest="1"/>
-            <Grid  Grid.Row="2" Style="{StaticResource Menu}">
+            <BoxView Grid.Row="1" BackgroundColor="Black" HeightRequest="1" />
+            <Grid Grid.Row="2" Style="{StaticResource Menu}">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Label x:Name="Exception_alarm"/>
-                <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" Clicked="ImageButton_Clicked" Style="{StaticResource ButtonMenu}"/>
-                <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" Clicked="ImageButton_Clicked_1" Style="{StaticResource ButtonMenu}" />
-                <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2"  Clicked="ImageButton_Clicked_2" Style="{StaticResource ButtonMenu}"/>
-                <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3" Clicked="ImageButton_Clicked_3" Style="{StaticResource ButtonMenu}"/>
-                <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" Clicked="ImageButton_Clicked_4" Style="{StaticResource ButtonMenu}"/>
+                <Label x:Name="Exception_alarm" />
+                <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0"
+                             Clicked="ImageButton_Clicked" Style="{StaticResource ButtonMenu}" />
+                <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1"
+                             Clicked="ImageButton_Clicked_1" Style="{StaticResource ButtonMenu}" />
+                <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2"
+                             Clicked="ImageButton_Clicked_2" Style="{StaticResource ButtonMenu}" />
+                <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3"
+                             Clicked="ImageButton_Clicked_3" Style="{StaticResource ButtonMenu}" />
+                <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4"
+                             Clicked="ImageButton_Clicked_4" Style="{StaticResource ButtonMenu}" />
             </Grid>
         </Grid>
     </ContentPage.Content>

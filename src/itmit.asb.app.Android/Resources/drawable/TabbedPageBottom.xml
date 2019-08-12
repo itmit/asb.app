@@ -1,7 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <TabbedPage
-            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-            android:TabbedPage.ToolbarPlacement="Bottom"
-            android:TabbedPage.BarItemColor="Black"
-            android:TabbedPage.BarSelectedItemColor="Red">
+  xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+  android:TabbedPage.ToolbarPlacement="Bottom"
+  android:TabbedPage.BarItemColor="Black"
+  android:TabbedPage.BarSelectedItemColor="Red">
 </TabbedPage>

@@ -5,6 +5,13 @@ namespace itmit.asb.app.Models
 {
 	public class UserToken : RealmObject
 	{
+		#region Properties
+		[JsonProperty("expires_at")]
+		public string ExpiresAt
+		{
+			get;
+			set;
+		}
 
 		[JsonProperty("access_token")]
 		public string Token
@@ -19,12 +26,6 @@ namespace itmit.asb.app.Models
 			get;
 			set;
 		} = "Bearer";
-
-		[JsonProperty("expires_at")]
-		public string ExpiresAt
-		{
-			get;
-			set;
-		}
+		#endregion
 	}
 }

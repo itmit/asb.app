@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace itmit.asb.app.Services
+﻿namespace itmit.asb.app.Services
 {
 	/// <summary>
 	/// Представляет тип для данных возвращаемые от внешнего сервиса в формате json.

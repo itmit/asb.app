@@ -4,29 +4,11 @@ using Newtonsoft.Json;
 namespace itmit.asb.app.Models
 {
 	/// <summary>
-	/// Представляет заявку клиента, которая формируется при нажатии на тревожную кнопку. 
+	/// Представляет заявку клиента, которая формируется при нажатии на тревожную кнопку.
 	/// </summary>
 	public class Bid
 	{
-		/// <summary>
-		/// Возвращает или устанавливает ид заявки.
-		/// </summary>
-		[JsonProperty("uid")]
-		public Guid Guid
-		{
-			get;
-			set;
-		} = Guid.NewGuid();
-
-		/// <summary>
-		/// Возвращает или устанавливает координаты места, откуда была сделана заявка.
-		/// </summary>
-		public Location Location
-		{
-			get;
-			set;
-		}
-
+		#region Properties
 		/// <summary>
 		/// Возвращает или устанавливает клиент отправивший заявку.
 		/// </summary>
@@ -47,10 +29,19 @@ namespace itmit.asb.app.Models
 		}
 
 		/// <summary>
-		/// Возвращает или устанавливает дату обновления заявки.
+		/// Возвращает или устанавливает ид заявки.
 		/// </summary>
-		[JsonProperty("updated_at")]
-		public DateTime UpdatedAt 
+		[JsonProperty("uid")]
+		public Guid Guid
+		{
+			get;
+			set;
+		} = Guid.NewGuid();
+
+		/// <summary>
+		/// Возвращает или устанавливает координаты места, откуда была сделана заявка.
+		/// </summary>
+		public Location Location
 		{
 			get;
 			set;
@@ -64,5 +55,16 @@ namespace itmit.asb.app.Models
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// Возвращает или устанавливает дату обновления заявки.
+		/// </summary>
+		[JsonProperty("updated_at")]
+		public DateTime UpdatedAt
+		{
+			get;
+			set;
+		}
+		#endregion
 	}
 }

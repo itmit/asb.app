@@ -2,8 +2,7 @@
 
 namespace itmit.asb.app.Controls
 {
-    public class LoginEntry : Entry
-    {
-
-    }
+	public class LoginEntry : Entry
+	{
+	}
 }

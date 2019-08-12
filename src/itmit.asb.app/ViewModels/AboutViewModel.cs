@@ -1,19 +1,25 @@
 ﻿using System;
 using System.Windows.Input;
-
 using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
-    {
-        public AboutViewModel()
-        {
-            Title = "About";
+	public class AboutViewModel : BaseViewModel
+	{
+		#region .ctor
+		public AboutViewModel()
+		{
+			Title = "About";
 
-            OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
-        }
+			OpenWebCommand = new Command(() => Device.OpenUri(new Uri("https://xamarin.com/platform")));
+		}
+		#endregion
 
-        public ICommand OpenWebCommand { get; }
-    }
+		#region Properties
+		public ICommand OpenWebCommand
+		{
+			get;
+		}
+		#endregion
+	}
 }

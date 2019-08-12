@@ -1,12 +1,15 @@
-﻿using itmit.asb.app.Interface;
+﻿using Android.OS;
+using itmit.asb.app.Interface;
 
 namespace itmit.asb.app.Droid
 {
-    public class CloseAplication : IClose
-    {
-        public void CloseApp()
-        {
-            Android.OS.Process.KillProcess(Android.OS.Process.MyPid());
-        }
-    }
+	public class CloseAplication : IClose
+	{
+		#region IClose members
+		public void CloseApp()
+		{
+			Process.KillProcess(Process.MyPid());
+		}
+		#endregion
+	}
 }

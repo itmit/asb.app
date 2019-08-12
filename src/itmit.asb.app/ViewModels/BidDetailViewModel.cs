@@ -1,37 +1,43 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
-using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace itmit.asb.app.ViewModels
 {
 	public class BidDetailViewModel : BaseViewModel
 	{
+		#region Data
+		#region Fields
 		private Bid _bid;
-		private string _userPictureSource;
+		private readonly IBidsService _bidService = new BidsService(App.User.UserToken);
+		private string _email;
+		private string _name;
+		private string _node;
 		private string _organization;
 		private string _phoneNumber;
-		private string _node;
-		private string _name;
-		private string _email;
-		private readonly IBidsService _bidService = new BidsService(App.User.UserToken);
+		private string _userPictureSource;
+		#endregion
+		#endregion
 
+		#region .ctor
 		public BidDetailViewModel(Bid bid)
 		{
 			_bid = bid;
 
 			AcceptBidCommand = new RelayCommand(obj =>
-			{
-				if (obj is Bid bidParam)
-				{
-					Task.Run(() =>
-					{
-						AcceptBidCommandExecute(bidParam);
-					});
-				}
-			}, obj => CanExecuteAcceptBidCommand(obj));
+												{
+													if (obj is Bid bidParam)
+													{
+														Task.Run(() =>
+														{
+															AcceptBidCommandExecute(bidParam);
+														});
+													}
+												},
+												obj => CanExecuteAcceptBidCommand(obj));
 
 			UserPictureSource = "user1.png";
 			Organization = bid.Client.Organization;
@@ -44,43 +50,30 @@ namespace itmit.asb.app.ViewModels
 				UserPictureSource = bid.Client.UserPictureSource;
 			}
 		}
+		#endregion
 
-		public void AcceptBidCommandExecute(Bid bid)
-		{
-			try
-			{
-				_bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
-			}
-			catch (System.Exception e)
-			{
-				Debug.WriteLine(e);
-			}
-		}
-
-		private bool CanExecuteAcceptBidCommand(object obj)
-		{
-			if (obj == null)
-			{
-				return false;
-			}
-
-			if (obj is Bid bid)
-			{
-				return bid.Guid != Guid.Empty;
-			}
-
-			return false;
-		}
-
+		#region Properties
 		public ICommand AcceptBidCommand
 		{
 			get;
 		}
 
-		public string UserPictureSource
+		public string Email
 		{
-			get => _userPictureSource;
-			set => SetProperty(ref _userPictureSource, value);
+			get => _email;
+			set => SetProperty(ref _email, value);
+		}
+
+		public string Name
+		{
+			get => _name;
+			set => SetProperty(ref _name, value);
+		}
+
+		public string Node
+		{
+			get => _node;
+			set => SetProperty(ref _node, value);
 		}
 
 		public string Organization
@@ -95,22 +88,42 @@ namespace itmit.asb.app.ViewModels
 			set => SetProperty(ref _phoneNumber, value);
 		}
 
-		public string Node
+		public string UserPictureSource
 		{
-			get => _node;
-			set => SetProperty(ref _node, value);
+			get => _userPictureSource;
+			set => SetProperty(ref _userPictureSource, value);
 		}
+		#endregion
 
-		public string Name
+		#region Public
+		public void AcceptBidCommandExecute(Bid bid)
 		{
-			get => _name;
-			set => SetProperty(ref _name, value);
+			try
+			{
+				_bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e);
+			}
 		}
+		#endregion
 
-		public string Email
+		#region Private
+		private bool CanExecuteAcceptBidCommand(object obj)
 		{
-			get => _email;
-			set => SetProperty(ref _email, value);
+			if (obj == null)
+			{
+				return false;
+			}
+
+			if (obj is Bid bid)
+			{
+				return bid.Guid != Guid.Empty;
+			}
+
+			return false;
 		}
+		#endregion
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace itmit.asb.app.Controls
 {
-    public class PrimLcPage : Frame
-    {
-    }
+	public class PrimLcPage : Frame
+	{
+	}
 }

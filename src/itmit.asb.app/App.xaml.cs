@@ -1,25 +1,19 @@
-﻿
-using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using itmit.asb.app.Views;
 using itmit.asb.app.Views.Guard;
 using Realms;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace itmit.asb.app
 {
 	public partial class App : Application
 	{
-		public static User User =>
-			Realm.GetInstance()
-				 .All<User>()
-				 .SingleOrDefault();
-
+		#region .ctor
 		public App()
 		{
 			InitializeComponent();
@@ -40,10 +34,19 @@ namespace itmit.asb.app
 
 			MainPage = new AlarmPage();
 		}
+		#endregion
 
-		protected override void OnStart()
+		#region Properties
+		public static User User =>
+			Realm.GetInstance()
+				 .All<User>()
+				 .SingleOrDefault();
+		#endregion
+
+		#region Overrided
+		protected override void OnResume()
 		{
-			// Handle when your app starts
+			// Handle when your app resumes
 		}
 
 		protected override void OnSleep()
@@ -51,9 +54,10 @@ namespace itmit.asb.app
 			// Handle when your app sleeps
 		}
 
-		protected override void OnResume()
+		protected override void OnStart()
 		{
-			// Handle when your app resumes
+			// Handle when your app starts
 		}
+		#endregion
 	}
 }

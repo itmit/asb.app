@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace itmit.asb.app.Interface
+﻿namespace itmit.asb.app.Interface
 {
-    public interface IClose
-    {
-        void CloseApp();
-    }
+	public interface IClose
+	{
+		#region Overridable
+		void CloseApp();
+		#endregion
+	}
 }

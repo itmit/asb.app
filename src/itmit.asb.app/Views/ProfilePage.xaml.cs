@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using itmit.asb.app.Models;
 using itmit.asb.app.ViewModels;
 using Realms;
@@ -14,12 +10,15 @@ namespace itmit.asb.app.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ProfilePage : ContentPage
 	{
+		#region .ctor
 		public ProfilePage()
 		{
 			InitializeComponent();
 			BindingContext = new LcViewModel(App.User);
 		}
+		#endregion
 
+		#region Private
 		private void ImageButton_Clicked(object sender, EventArgs e)
 		{
 			Application.Current.MainPage = new NavigationPage(new AlarmPage());
@@ -48,7 +47,9 @@ namespace itmit.asb.app.Views
 				realm.RemoveAll<User>();
 				transaction.Commit();
 			}
+
 			Application.Current.MainPage = new LoginPage();
 		}
+		#endregion
 	}
 }

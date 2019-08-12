@@ -2,8 +2,7 @@
 
 namespace itmit.asb.app.Controls
 {
-    public class BorderAlarm : Frame
-    {
-
-    }
+	public class BorderAlarm : Frame
+	{
+	}
 }

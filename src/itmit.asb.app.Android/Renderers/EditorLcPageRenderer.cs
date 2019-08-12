@@ -1,91 +1,97 @@
-﻿using Android.Content;
+﻿using System.ComponentModel;
+using Android.Content;
 using Android.Graphics.Drawables;
 using itmit.asb.app.Controls;
 using itmit.asb.app.Droid.Renderers;
-using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(EditorLcPage), typeof(EditorLcPageRenderer))]
+
 namespace itmit.asb.app.Droid.Renderers
 {
-    public class EditorLcPageRenderer : EditorRenderer
-    {
-        bool initial = true;
-        Drawable originalBackground;
+	public class EditorLcPageRenderer : EditorRenderer
+	{
+		#region Data
+		#region Fields
+		private bool initial = true;
+		private Drawable originalBackground;
+		#endregion
+		#endregion
 
-        public EditorLcPageRenderer(Context context) : base(context)
-        {
-        }
+		#region .ctor
+		public EditorLcPageRenderer(Context context)
+			: base(context)
+		{
+		}
+		#endregion
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Editor> e)
-        {
-            base.OnElementChanged(e);
+		#region Overrided
+		protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
+		{
+			base.OnElementChanged(e);
 
-            if (Control != null)
-            {
-                if (initial)
-                {
-                    originalBackground = Control.Background;
-                    initial = false;
-                }
+			if (Control != null)
+			{
+				if (initial)
+				{
+					originalBackground = Control.Background;
+					initial = false;
+				}
+			}
 
-            }
+			if (e.NewElement != null)
+			{
+				var customControl = (EditorLcPage) Element;
+				if (customControl.HasRoundedCorner)
+				{
+					ApplyBorder();
+				}
 
-            if (e.NewElement != null)
-            {
-                var customControl = (EditorLcPage)Element;
-                if (customControl.HasRoundedCorner)
-                {
-                    ApplyBorder();
-                }
+				if (!string.IsNullOrEmpty(customControl.Placeholder))
+				{
+					Control.Hint = customControl.Placeholder;
+					Control.SetHintTextColor(customControl.PlaceholderColor.ToAndroid());
+				}
+			}
+		}
 
-                if (!string.IsNullOrEmpty(customControl.Placeholder))
-                {
-                    Control.Hint = customControl.Placeholder;
-                    Control.SetHintTextColor(customControl.PlaceholderColor.ToAndroid());
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			base.OnElementPropertyChanged(sender, e);
 
-                }
-            }
-        }
+			var customControl = (EditorLcPage) Element;
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            base.OnElementPropertyChanged(sender, e);
+			if (EditorLcPage.PlaceholderProperty.PropertyName == e.PropertyName)
+			{
+				Control.Hint = customControl.Placeholder;
+			}
+			else if (EditorLcPage.PlaceholderColorProperty.PropertyName == e.PropertyName)
+			{
+				Control.SetHintTextColor(customControl.PlaceholderColor.ToAndroid());
+			}
+			else if (EditorLcPage.HasRoundedCornerProperty.PropertyName == e.PropertyName)
+			{
+				if (customControl.HasRoundedCorner)
+				{
+					ApplyBorder();
+				}
+				else
+				{
+					Control.Background = originalBackground;
+				}
+			}
+		}
+		#endregion
 
-            var customControl = (EditorLcPage)Element;
-
-            if (EditorLcPage.PlaceholderProperty.PropertyName == e.PropertyName)
-            {
-                Control.Hint = customControl.Placeholder;
-
-            }
-            else if (EditorLcPage.PlaceholderColorProperty.PropertyName == e.PropertyName)
-            {
-
-                Control.SetHintTextColor(customControl.PlaceholderColor.ToAndroid());
-
-            }
-            else if (EditorLcPage.HasRoundedCornerProperty.PropertyName == e.PropertyName)
-            {
-                if (customControl.HasRoundedCorner)
-                {
-                    ApplyBorder();
-
-                }
-                else
-                {
-                    this.Control.Background = originalBackground;
-                }
-            }
-        }
-
-        void ApplyBorder()
-        {
-            GradientDrawable gd = new GradientDrawable();
-            gd.SetCornerRadius(10);
-            gd.SetStroke(2, Color.Black.ToAndroid());
-            this.Control.Background = gd;
-        }
-    }
+		#region Private
+		private void ApplyBorder()
+		{
+			var gd = new GradientDrawable();
+			gd.SetCornerRadius(10);
+			gd.SetStroke(2, Color.Black.ToAndroid());
+			Control.Background = gd;
+		}
+		#endregion
+	}
 }

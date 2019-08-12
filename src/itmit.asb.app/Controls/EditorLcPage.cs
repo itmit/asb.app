@@ -2,56 +2,64 @@
 
 namespace itmit.asb.app.Controls
 {
-    public class EditorLcPage : Editor
-    {
-        public static BindableProperty PlaceholderProperty
-   = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(EditorLcPage));
+	public class EditorLcPage : Editor
+	{
+		#region Data
+		#region Static
+		public static BindableProperty HasRoundedCornerProperty = BindableProperty.Create(nameof(HasRoundedCorner), typeof(bool), typeof(EditorLcPage), false);
 
-        public static BindableProperty PlaceholderColorProperty
-           = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(EditorLcPage), Color.LightGray);
+		public static BindableProperty IsExpandableProperty = BindableProperty.Create(nameof(IsExpandable), typeof(bool), typeof(EditorLcPage), false);
 
-        public static BindableProperty HasRoundedCornerProperty
-        = BindableProperty.Create(nameof(HasRoundedCorner), typeof(bool), typeof(EditorLcPage), false);
+		public static BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(EditorLcPage), Color.LightGray);
+		public static BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(EditorLcPage));
+		#endregion
+		#endregion
 
-        public static BindableProperty IsExpandableProperty
-        = BindableProperty.Create(nameof(IsExpandable), typeof(bool), typeof(EditorLcPage), false);
+		#region .ctor
+		public EditorLcPage() => TextChanged += OnTextChanged;
+		#endregion
 
-        public bool IsExpandable
-        {
-            get { return (bool)GetValue(IsExpandableProperty); }
-            set { SetValue(IsExpandableProperty, value); }
-        }
-        public bool HasRoundedCorner
-        {
-            get { return (bool)GetValue(HasRoundedCornerProperty); }
-            set { SetValue(HasRoundedCornerProperty, value); }
-        }
+		#region .dtor
+		~EditorLcPage()
+		{
+			TextChanged -= OnTextChanged;
+		}
+		#endregion
 
-        public string Placeholder
-        {
-            get { return (string)GetValue(PlaceholderProperty); }
-            set { SetValue(PlaceholderProperty, value); }
-        }
+		#region Properties
+		public bool HasRoundedCorner
+		{
+			get => (bool) GetValue(HasRoundedCornerProperty);
+			set => SetValue(HasRoundedCornerProperty, value);
+		}
 
-        public Color PlaceholderColor
-        {
-            get { return (Color)GetValue(PlaceholderColorProperty); }
-            set { SetValue(PlaceholderColorProperty, value); }
-        }
+		public bool IsExpandable
+		{
+			get => (bool) GetValue(IsExpandableProperty);
+			set => SetValue(IsExpandableProperty, value);
+		}
 
-        public EditorLcPage()
-        {
-            TextChanged += OnTextChanged;
-        }
+		public string Placeholder
+		{
+			get => (string) GetValue(PlaceholderProperty);
+			set => SetValue(PlaceholderProperty, value);
+		}
 
-        ~EditorLcPage()
-        {
-            TextChanged -= OnTextChanged;
-        }
+		public Color PlaceholderColor
+		{
+			get => (Color) GetValue(PlaceholderColorProperty);
+			set => SetValue(PlaceholderColorProperty, value);
+		}
+		#endregion
 
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (IsExpandable) InvalidateMeasure();
-        }
-    }
+		#region Private
+		private void OnTextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (IsExpandable)
+			{
+				InvalidateMeasure();
+			}
+		}
+		#endregion
+	}
 }

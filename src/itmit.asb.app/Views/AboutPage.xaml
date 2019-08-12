@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="itmit.asb.app.Views.AboutPage"
@@ -13,66 +14,74 @@
     </ContentPage.Resources>
     <Grid ColumnSpacing="0" RowSpacing="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ScrollView Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Text="ПОДПИСКА" Style="{StaticResource LabelBuy}"/>
+                <Label Grid.Row="0" Grid.Column="0" Text="ПОДПИСКА" Style="{StaticResource LabelBuy}" />
                 <StackLayout Grid.Row="1" Grid.Column="0" Style="{StaticResource StackLayoutBuy}">
                     <Frame Style="{StaticResource FrameBuyTwo}">
                         <Frame Style="{StaticResource FrameBuyOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                <Label Text="АКТИВНА" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center" FontAttributes="Bold"/>
-                                <Label Text="ОСТАЛОСЬ" FontSize="Medium" TextColor="#b20d0b" HorizontalOptions="Center"/>
+                                <Label Text="АКТИВНА" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"
+                                       FontAttributes="Bold" />
+                                <Label Text="ОСТАЛОСЬ" FontSize="Medium" TextColor="#b20d0b" HorizontalOptions="Center" />
                                 <FlexLayout HorizontalOptions="Center" Padding="20,0,0,0">
-                                    <Label Text="2992" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold" Margin="0,0,10,0"/>
-                                    <Label Text="ДНЕЙ" FontSize="Medium" TextColor="#b20d0b" Margin="0,3,0,0"/>
+                                    <Label Text="2992" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold"
+                                           Margin="0,0,10,0" />
+                                    <Label Text="ДНЕЙ" FontSize="Medium" TextColor="#b20d0b" Margin="0,3,0,0" />
                                 </FlexLayout>
                             </StackLayout>
                         </Frame>
                     </Frame>
                 </StackLayout>
-                <Button Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY" Style="{StaticResource ButtonSubscribe}"/>
+                <Button Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY"
+                        Style="{StaticResource ButtonSubscribe}" />
                 <StackLayout Margin="30,0" Grid.Row="3" Grid.Column="0">
                     <Frame Style="{StaticResource FrameSubscribeTwo}">
                         <Frame Style="{StaticResource FrameSubscribeOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                <Label Text="1500 р/30 дней" TextColor="#f4e213" FontSize="Large" FontAttributes="Bold"/>
+                                <Label Text="1500 р/30 дней" TextColor="#f4e213" FontSize="Large" FontAttributes="Bold" />
                             </StackLayout>
                         </Frame>
                     </Frame>
                 </StackLayout>
             </Grid>
         </ScrollView>
-        <BoxView  Grid.Row="1" BackgroundColor="Black" HeightRequest="1"/>
-        <Grid  Grid.Row="2" Style="{StaticResource Menu}">
+        <BoxView Grid.Row="1" BackgroundColor="Black" HeightRequest="1" />
+        <Grid Grid.Row="2" Style="{StaticResource Menu}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Label x:Name="Exception_alarm"/>
-            <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" Clicked="ImageButton_Clicked" Style="{StaticResource ButtonMenu}"/>
-            <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" Clicked="ImageButton_Clicked_1" Style="{StaticResource ButtonMenu}" />
-            <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2"  Clicked="ImageButton_Clicked_2" Style="{StaticResource ButtonMenu}"/>
-            <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3" Clicked="ImageButton_Clicked_3" Style="{StaticResource ButtonMenu}"/>
-            <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4" Clicked="ImageButton_Clicked_4" Style="{StaticResource ButtonMenu}"/>
+            <Label x:Name="Exception_alarm" />
+            <ImageButton Source="ic_adjust_black_36dp.png" Grid.Row="0" Grid.Column="0" Clicked="ImageButton_Clicked"
+                         Style="{StaticResource ButtonMenu}" />
+            <ImageButton Source="ic_call_black_36dp.png" Grid.Row="0" Grid.Column="1" Clicked="ImageButton_Clicked_1"
+                         Style="{StaticResource ButtonMenu}" />
+            <ImageButton Source="ic_account_circle_black_36dp.png" Grid.Row="0" Grid.Column="2"
+                         Clicked="ImageButton_Clicked_2" Style="{StaticResource ButtonMenu}" />
+            <ImageButton Source="ic_vertical_align_top_black_36dp" Grid.Row="0" Grid.Column="3"
+                         Clicked="ImageButton_Clicked_3" Style="{StaticResource ButtonMenu}" />
+            <ImageButton Source="ic_keyboard_tab_black_36dp.png" Grid.Row="0" Grid.Column="4"
+                         Clicked="ImageButton_Clicked_4" Style="{StaticResource ButtonMenu}" />
         </Grid>
     </Grid>
 </ContentPage>
