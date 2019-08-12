@@ -12,34 +12,33 @@ namespace itmit.asb.app.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>() ?? new MockDataStore();
+		private bool _isBusy;
 
-        bool isBusy = false;
         public bool IsBusy
         {
-            get { return isBusy; }
-            set { SetProperty(ref isBusy, value); }
-        }
+            get => _isBusy;
+			set => SetProperty(ref _isBusy, value);
+		}
 
-        string title = string.Empty;
+		private string _title = string.Empty;
+
         public string Title
         {
-            get { return title; }
-            set { SetProperty(ref title, value); }
-        }
+            get => _title;
+			set => SetProperty(ref _title, value);
+		}
 
-        protected bool SetProperty<T>(ref T backingStore, T value,
-            [CallerMemberName]string propertyName = "",
-            Action onChanged = null)
+        protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action onChanged = null)
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
+			{
+				return;
+			}
 
-            backingStore = value;
+			backingStore = value;
             onChanged?.Invoke();
             OnPropertyChanged(propertyName);
-            return true;
-        }
+		}
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;

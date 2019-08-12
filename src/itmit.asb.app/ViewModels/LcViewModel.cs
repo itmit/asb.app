@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
 using Realms;
 using Xamarin.Forms;
 
@@ -23,6 +27,41 @@ namespace itmit.asb.app.ViewModels
 			{
 				UserPictureSource = user.UserPictureSource;
 			}
+
+			UpdatePhotoCommand = new RelayCommand(obj =>
+			{
+				UpdatePhotoCommandExecute();
+			}, obj => true);
+		}
+
+		private async void UpdatePhotoCommandExecute()
+		{
+			try
+			{
+				FileData fileData = await CrossFilePicker.Current.PickFile();
+
+				// user canceled file picking
+				if (fileData == null)
+				{
+					return;
+				}
+
+				var service = new AuthService();
+
+				service.SetAvatar(fileData.DataArray, App.User.UserToken);
+
+				Debug.WriteLine("File name chosen: " + fileData.FileName);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine("Exception choosing file: " + ex);
+			}
+
+		}
+
+		public ICommand UpdatePhotoCommand
+		{
+			get;
 		}
 
 		public string UserPictureSource
