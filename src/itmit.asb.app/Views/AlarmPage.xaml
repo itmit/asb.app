@@ -46,7 +46,7 @@
                                 <Frame Style="{StaticResource FrameAlarmOne}">
                                     <Grid>
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding AlarmCommand}"
+                                            <TapGestureRecognizer Command="{Binding AlarmAndCallCommand}"
                                                                   NumberOfTapsRequired="1" />
                                         </Grid.GestureRecognizers>
                                         <Grid.ColumnDefinitions>

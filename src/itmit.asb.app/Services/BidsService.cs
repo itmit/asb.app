@@ -34,20 +34,21 @@ namespace itmit.asb.app.Services
 			{
 				var user = App.User;
 				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(user.UserToken.TokenType, user.UserToken.Token);
-
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				var data = new Dictionary<string, string>
+				{
+					{
+						"uid", bid.Guid.ToString()
+					},
+					{
+						"latitude", bid.Location.Latitude.ToString(CultureInfo.InvariantCulture)
+					},
+					{
+						"longitude", bid.Location.Longitude.ToString(CultureInfo.InvariantCulture)
+					}
+				};
 				var response = await client.PostAsync(new Uri(BidApiUri),
-													  new FormUrlEncodedContent(new Dictionary<string, string>
-													  {
-														  {
-															  "uid", bid.Guid.ToString()
-														  },
-														  {
-															  "latitude", bid.Location.Latitude.ToString(CultureInfo.InvariantCulture)
-														  },
-														  {
-															  "longitude", bid.Location.Longitude.ToString(CultureInfo.InvariantCulture)
-														  }
-													  }));
+													  new FormUrlEncodedContent(data));
 #if DEBUG
 				var jsonString = await response.Content.ReadAsStringAsync();
 				Debug.WriteLine(jsonString);
@@ -61,6 +62,7 @@ namespace itmit.asb.app.Services
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{_token.TokenType} {_token.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				response = await client.GetAsync(new Uri(BidApiUri + $"?status={status.ToString()}"));
 			}
 
@@ -85,6 +87,7 @@ namespace itmit.asb.app.Services
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{_token.TokenType} {_token.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				response = await client.PostAsync(new Uri(ChangeStatusUri),
 												  new FormUrlEncodedContent(new Dictionary<string, string>
 												  {

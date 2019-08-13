@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using itmit.asb.app.Models;
 using itmit.asb.app.ViewModels;
 using Realms;
@@ -27,8 +28,10 @@ namespace itmit.asb.app.Views
 
 		private void ImageButton_Clicked_1(object sender, EventArgs e)
 		{
-			// void Call("");
-			// return;
+			Task.Run(() =>
+			{
+				App.Call("+7 (911) 447-11-83");
+			});
 		}
 
 		private void ImageButton_Clicked_2(object sender, EventArgs e)

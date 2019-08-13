@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using itmit.asb.app.Views.Guard;
 using Realms;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -42,6 +46,27 @@ namespace itmit.asb.app
 				 .All<User>()
 				 .SingleOrDefault();
 		#endregion
+
+		public static void Call(string number)
+		{
+			try
+			{
+				PhoneDialer.Open(number);
+			}
+			catch (ArgumentNullException anEx)
+			{
+				Debug.WriteLine(anEx);
+			}
+			catch (FeatureNotSupportedException ex)
+			{
+				Debug.WriteLine(ex);
+
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
+		}
 
 		#region Overrided
 		protected override void OnResume()

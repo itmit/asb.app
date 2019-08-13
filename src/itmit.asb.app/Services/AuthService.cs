@@ -22,7 +22,16 @@ namespace itmit.asb.app.Services
 		/// </summary>
 		private const string AuthUri = "http://asb.itmit-studio.ru/api/login";
 
+		/// <summary>
+		/// Задает адрес для получения картинок.
+		/// </summary>
 		private const string BasePictureUri = "http://asb.itmit-studio.ru/storage";
+
+
+		/// <summary>
+		/// Задает адрес для сохранения примечания.
+		/// </summary>
+		private const string SetNodeUri = "http://asb.itmit-studio.ru/api/client/note";
 
 		/// <summary>
 		/// Задает адрес для получения пользователя.
@@ -46,10 +55,36 @@ namespace itmit.asb.app.Services
 
 		#region Public
 		/// <summary>
+		/// Устанавливает примечание пользователя.
+		/// </summary>
+		/// <param name="node">Примечание пользователя.</param>
+		/// <param name="token">Токен пользователя.</param>
+		public async void SetNode(string note, UserToken token)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var content = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"note", note
+					}
+				});
+
+				HttpResponseMessage response = await client.PostAsync(new Uri(SetNodeUri), content);
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+			}
+		}
+
+		/// <summary>
 		/// Устанавливает аватар клиента.
 		/// </summary>
 		/// <param name="image">Массив байтов картинки отправляемые на сервер.</param>
-		/// <param name="token">Токен пользователя, которому необходимо установить токен.</param>
+		/// <param name="token">Токен пользователя.</param>
 		public async void SetAvatar(byte[] image, UserToken token)
 		{
 			using (var client = new HttpClient())
@@ -87,6 +122,7 @@ namespace itmit.asb.app.Services
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				response = await client.PostAsync(new Uri(DetailsUri), null);
 			}
@@ -121,6 +157,7 @@ namespace itmit.asb.app.Services
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
 				{

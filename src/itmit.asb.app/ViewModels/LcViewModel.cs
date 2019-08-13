@@ -7,6 +7,9 @@ using itmit.asb.app.Services;
 using Plugin.FilePicker;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using Realms;
 using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
@@ -15,30 +18,50 @@ namespace itmit.asb.app.ViewModels
 	{
 		#region Data
 		#region Fields
-		private string _node = string.Empty;
+		private string _note = string.Empty;
 		private string _organization = string.Empty;
 		private string _phoneNumber = string.Empty;
 		private string _userPictureSource = "user1.png";
+		private readonly AuthService _service = new AuthService();
+		private Realm _realm = Realm.GetInstance();
+		private bool _permissionGranted;
 		#endregion
 		#endregion
 
 		#region .ctor
 		public LcViewModel(User user)
 		{
+
 			UserPictureSource = "user1.png";
 			Organization = user.Organization;
 			PhoneNumber = user.PhoneNumber;
-			Node = user.Node;
+			Note = user.Note;
 			if (!string.IsNullOrEmpty(user.UserPictureSource) && user.UserPictureSource != "null")
 			{
 				UserPictureSource = user.UserPictureSource;
 			}
 
+			CheckPermission();
 			UpdatePhotoCommand = new RelayCommand(obj =>
 												  {
 													  UpdatePhotoCommandExecute();
 												  },
-												  obj => CrossMedia.IsSupported);
+												  obj => CanUpdatePhotoCommandExecute());
+		}
+
+		private bool CanUpdatePhotoCommandExecute()
+		{
+			if (!_permissionGranted)
+			{
+				CheckPermission();
+			}
+			return CrossMedia.IsSupported && _permissionGranted;
+		}
+
+		private async void CheckPermission()
+		{
+			var res = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+			_permissionGranted = res == PermissionStatus.Granted;
 		}
 		#endregion
 
@@ -48,10 +71,21 @@ namespace itmit.asb.app.ViewModels
 			get;
 		}
 
-		public string Node
+		public string Note
 		{
-			get => _node;
-			set => SetProperty(ref _node, value);
+			get => _note;
+			set
+			{
+				if (value != null)
+				{
+					_realm.Write(() =>
+									 {
+										 App.User.Note = value;
+									 });
+					_service.SetNode(value, App.User.UserToken);
+				}
+				SetProperty(ref _note, value);
+			}
 		}
 
 		public string Organization
@@ -99,8 +133,7 @@ namespace itmit.asb.app.ViewModels
 			{
 				image.GetStream().CopyTo(memoryStream);
 				image.Dispose();
-				var service = new AuthService();
-				service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
+				_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
 
 			}
 		}

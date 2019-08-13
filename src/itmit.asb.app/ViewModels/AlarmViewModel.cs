@@ -1,6 +1,9 @@
-﻿using itmit.asb.app.Models;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
+using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 using Location = itmit.asb.app.Models.Location;
 
 namespace itmit.asb.app.ViewModels
@@ -10,16 +13,30 @@ namespace itmit.asb.app.ViewModels
 		#region .ctor
 		public AlarmViewModel()
 		{
+			AlarmAndCallCommand = new RelayCommand(obj =>
+												   {
+													   SendAlarm(new BidsService(App.User.UserToken));
+													   App.Call("+7 911 447-11-83");
+												   },
+												   obj => CheckNetworkAccess());
 			AlarmCommand = new RelayCommand(obj =>
 											{
 												SendAlarm(new BidsService(App.User.UserToken));
+												
+												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога успешна отправлена", "Ok");
+												
 											},
-											obj => Connectivity.NetworkAccess == NetworkAccess.Internet);
+											obj => CheckNetworkAccess());
 		}
 		#endregion
 
 		#region Properties
-		public RelayCommand AlarmCommand
+		public ICommand AlarmAndCallCommand
+		{
+			get;
+		}
+
+		public ICommand AlarmCommand
 		{
 			get;
 		}

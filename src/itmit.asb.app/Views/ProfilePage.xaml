@@ -49,7 +49,7 @@
                                         <Label Text="ПРИМЕЧАНИЕ" Style="{StaticResource LabelLcPagePrim}" />
                                     </controls:PrimLcPage>
                                     <controls:PrimLcPageTwo Grid.Row="1" Style="{StaticResource FramePrimLcPageTwo}">
-                                        <controls:EditorLcPage Text="{Binding Node}"
+                                        <controls:EditorLcPage Text="{Binding Note, Mode=TwoWay}"
                                                                Placeholder="Добавьте подробную информацию о себе"
                                                                Style="{StaticResource EditorLcPage}"
                                                                PlaceholderColor="#f4e213" HasRoundedCorner="true"

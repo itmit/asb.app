@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -30,6 +33,18 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Protected
+		protected bool CheckNetworkAccess()
+		{
+			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+			{
+				return true;
+			}
+
+			Application.Current.MainPage.DisplayAlert("Внимание", "Нет подключения к сети", "Ok");
+			
+			return false;
+		}
+
 		protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action onChanged = null)
 		{
 			if (EqualityComparer<T>.Default.Equals(backingStore, value))

@@ -40,7 +40,7 @@ namespace itmit.asb.app.Models
 		/// <summary>
 		/// Возвращает или устанавливает примечания пользователя.
 		/// </summary>
-		public string Node
+		public string Note
 		{
 			get;
 			set;

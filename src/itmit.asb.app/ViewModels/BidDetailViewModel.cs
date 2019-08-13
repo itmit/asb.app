@@ -42,7 +42,7 @@ namespace itmit.asb.app.ViewModels
 			UserPictureSource = "user1.png";
 			Organization = bid.Client.Organization;
 			PhoneNumber = bid.Client.PhoneNumber;
-			Node = bid.Client.Node;
+			Node = bid.Client.Note;
 			Name = bid.Client.Name;
 			Email = bid.Client.Email;
 			if (!string.IsNullOrEmpty(bid.Client.UserPictureSource) && bid.Client.UserPictureSource != "null")
