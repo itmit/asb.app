@@ -60,8 +60,19 @@ namespace itmit.asb.app.ViewModels
 
 		private async void CheckPermission()
 		{
-			var res = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
-			_permissionGranted = res == PermissionStatus.Granted;
+			var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+			if (status != PermissionStatus.Granted)
+			{
+				if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
+				{
+					await Application.Current.MainPage.DisplayAlert("Need Storage", "Gunna need that Storage", "OK");
+				}
+
+				await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
+
+				status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+			}
+			_permissionGranted = status == PermissionStatus.Granted;
 		}
 		#endregion
 

@@ -48,6 +48,15 @@ namespace itmit.asb.app.Models
 		}
 
 		/// <summary>
+		/// Возвращает или устанавливает тип заявки.
+		/// </summary>
+		public BidType Type
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Возвращает или устанавливает статус заявки.
 		/// </summary>
 		public BidStatus Status

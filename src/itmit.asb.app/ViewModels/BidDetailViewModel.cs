@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using Xamarin.Essentials;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -15,7 +16,7 @@ namespace itmit.asb.app.ViewModels
 		private readonly IBidsService _bidService = new BidsService(App.User.UserToken);
 		private string _email;
 		private string _name;
-		private string _node;
+		private string _note;
 		private string _organization;
 		private string _phoneNumber;
 		private string _userPictureSource;
@@ -39,16 +40,30 @@ namespace itmit.asb.app.ViewModels
 												},
 												obj => CanExecuteAcceptBidCommand(obj));
 
+			OpenMapCommand = new RelayCommand(obj =>
+			{
+				OpenMapCommandExecute();
+			}, obj => true);
+
 			UserPictureSource = "user1.png";
 			Organization = bid.Client.Organization;
 			PhoneNumber = bid.Client.PhoneNumber;
-			Node = bid.Client.Note;
+			Note = bid.Client.Note;
 			Name = bid.Client.Name;
 			Email = bid.Client.Email;
 			if (!string.IsNullOrEmpty(bid.Client.UserPictureSource) && bid.Client.UserPictureSource != "null")
 			{
 				UserPictureSource = bid.Client.UserPictureSource;
 			}
+		}
+
+		private async void OpenMapCommandExecute()
+		{
+			await Map.OpenAsync(_bid.Location.Latitude, _bid.Location.Longitude, new MapLaunchOptions
+			{
+				Name = "Тревога",
+				NavigationMode = NavigationMode.None
+			});
 		}
 		#endregion
 
@@ -70,10 +85,15 @@ namespace itmit.asb.app.ViewModels
 			set => SetProperty(ref _name, value);
 		}
 
-		public string Node
+		public string Note
 		{
-			get => _node;
-			set => SetProperty(ref _node, value);
+			get => _note;
+			set => SetProperty(ref _note, value);
+		}
+
+		public ICommand OpenMapCommand
+		{
+			get;
 		}
 
 		public string Organization
@@ -81,6 +101,7 @@ namespace itmit.asb.app.ViewModels
 			get => _organization;
 			set => SetProperty(ref _organization, value);
 		}
+
 
 		public string PhoneNumber
 		{

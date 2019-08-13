@@ -18,12 +18,5 @@ namespace itmit.asb.app.Views.Guard
 			AcceptBidButton.CommandParameter = bid;
 		}
 		#endregion
-
-		#region Private
-		private async void Button_OnClicked(object sender, EventArgs e)
-		{
-			//await Navigation.PushAsync(new MapPage());
-		}
-		#endregion
 	}
 }

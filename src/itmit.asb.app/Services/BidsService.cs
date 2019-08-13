@@ -41,6 +41,9 @@ namespace itmit.asb.app.Services
 						"uid", bid.Guid.ToString()
 					},
 					{
+						"type", bid.Type.ToString()
+					},
+					{
 						"latitude", bid.Location.Latitude.ToString(CultureInfo.InvariantCulture)
 					},
 					{

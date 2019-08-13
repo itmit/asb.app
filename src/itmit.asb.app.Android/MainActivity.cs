@@ -6,10 +6,12 @@ using Android.Gms.Common.Apis;
 using Android.Gms.Location;
 using Android.OS;
 using Android.Provider;
+using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using ImageCircle.Forms.Plugin.Droid;
 using itmit.asb.app.Services;
+using Plugin.Permissions;
 using Xamarin;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -49,11 +51,12 @@ namespace itmit.asb.app.Droid
 			ToolbarResource = Resource.Layout.Toolbar;
 
 			base.OnCreate(savedInstanceState);
+			Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 			Forms.Init(this, savedInstanceState);
 
 			CheckPermissions();
 
-			Plugin.Permissions.CrossPermissions.Current.CheckPermissionStatusAsync(Plugin.Permissions.Abstractions.Permission.Storage);
+			Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
 			DisplayLocationSettingsRequest();
 			FormsMaps.Init(this, savedInstanceState);
@@ -122,15 +125,22 @@ namespace itmit.asb.app.Droid
 				CheckPermission(Manifest.Permission.AccessCoarseLocation, PermissionsRequestAccessCoarseLocation);
 			}
 
-			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != Permission.Granted)
-			{
-				CheckPermission(Manifest.Permission.ReadExternalStorage, PermissionsRequestAccessReadStorage);
-			}
+			//if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != Permission.Granted)
+			//{
+			//	CheckPermission(Manifest.Permission.ReadExternalStorage, PermissionsRequestAccessReadStorage);
+			//}
 
-			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
-			{
-				CheckPermission(Manifest.Permission.WriteExternalStorage, PermissionsRequestAccessWriteStorage);
-			}
+			//if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+			//{
+			//	CheckPermission(Manifest.Permission.WriteExternalStorage, PermissionsRequestAccessWriteStorage);
+			//}
+		}
+
+		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+		{
+			Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+			PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 
 		private void CheckPermission(string permission, int permissionsRequestCode)

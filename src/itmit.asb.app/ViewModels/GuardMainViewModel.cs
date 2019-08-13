@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
@@ -76,15 +78,14 @@ namespace itmit.asb.app.ViewModels
 		public async void UpdateBids()
 		{
 			IBidsService bidsService = new BidsService(App.User.UserToken);
-			var bidsList = await bidsService.GetBidsAsync(BidStatus.PendingAcceptance);
-			Bids.Clear();
+			List<Bid> bidsList = (await bidsService.GetBidsAsync(BidStatus.PendingAcceptance)).ToList();
 			foreach (var bid in bidsList)
 			{
 				bid.UpdatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
 				bid.CreatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
-				Bids.Add(bid);
 			}
 
+			Bids = new ObservableCollection<Bid>(bidsList);
 			IsBusy = false;
 		}
 		#endregion

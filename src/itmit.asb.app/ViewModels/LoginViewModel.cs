@@ -80,6 +80,12 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
+			using (var transaction = Realm.BeginWrite())
+			{
+				Realm.RemoveAll<User>();
+				transaction.Commit();
+			}
+
 			Realm.Write(() =>
 			{
 				Realm.Add(user, true);
