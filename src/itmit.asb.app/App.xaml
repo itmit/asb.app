@@ -200,15 +200,16 @@
                 <Setter Property="CornerRadius" Value="10" />
             </Style>
             <Style x:Key="ImageLcPage" TargetType="Image">
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="WidthRequest" Value="120" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="Aspect" Value="AspectFill" />
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="HeightRequest" Value="200" />
             </Style>
             <Style x:Key="FrameLcPageUser" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="100" />
                 <Setter Property="BackgroundColor" Value="#222222" />
-                <Setter Property="Padding" Value="40" />
+                <Setter Property="Padding" Value="0"/>
             </Style>
             <Style x:Key="FrameLcPageUserTwo" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="#ef2b2e" />

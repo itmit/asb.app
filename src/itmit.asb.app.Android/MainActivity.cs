@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Provider;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
+using ImageCircle.Forms.Plugin.Droid;
 using itmit.asb.app.Services;
 using Xamarin;
 using Xamarin.Forms;
@@ -42,7 +43,9 @@ namespace itmit.asb.app.Droid
 		#region Overrided
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
-			TabLayoutResource = Resource.Layout.Tabbar;
+            ImageCircleRenderer.Init();
+
+            TabLayoutResource = Resource.Layout.Tabbar;
 			ToolbarResource = Resource.Layout.Toolbar;
 
 			base.OnCreate(savedInstanceState);
