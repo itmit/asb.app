@@ -22,7 +22,7 @@ using Xamarin.Forms.Platform.Android;
 namespace itmit.asb.app.Droid
 {
 	[Activity(Label = "itmit.asb.app",
-		Icon = "@mipmap/icon",
+		Icon = "@mipmap/icon2",
 		Theme = "@style/MainTheme",
 		MainLauncher = true,
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]

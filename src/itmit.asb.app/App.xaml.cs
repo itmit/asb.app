@@ -41,11 +41,28 @@ namespace itmit.asb.app
 		#endregion
 
 		#region Properties
-		public static User User =>
-			Realm.GetInstance()
-				 .All<User>()
-				 .SingleOrDefault();
+		public static User User
+		{
+			get
+			{
+				var con = RealmConfiguration.DefaultConfiguration;
+				con.SchemaVersion = 2;
+				return Realm.GetInstance(con).All<User>().SingleOrDefault();
+			}
+		}
 		#endregion
+
+		public static void Logout()
+		{
+			var realm = Realm.GetInstance();
+			using (var transaction = realm.BeginWrite())
+			{
+				realm.RemoveAll<User>();
+				transaction.Commit();
+			}
+
+			Current.MainPage = new LoginPage();
+		}
 
 		public static void Call(string number)
 		{
@@ -80,7 +97,7 @@ namespace itmit.asb.app
 		}
 
 		protected override void OnStart()
-		{
+		{ 
 			// Handle when your app starts
 		}
 		#endregion

@@ -25,7 +25,7 @@ namespace itmit.asb.app.Services
 		/// <summary>
 		/// Задает адрес для получения картинок.
 		/// </summary>
-		private const string BasePictureUri = "http://asb.itmit-studio.ru/storage";
+		private const string BasePictureUri = "http://asb.itmit-studio.ru/";
 
 
 		/// <summary>

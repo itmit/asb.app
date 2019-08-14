@@ -35,13 +35,14 @@ namespace itmit.asb.app.ViewModels
 			UserPictureSource = "user1.png";
 			Organization = user.Organization;
 			PhoneNumber = user.PhoneNumber;
-			Note = user.Note;
+
+			SetProperty(ref _note, user.Note);
+
 			if (!string.IsNullOrEmpty(user.UserPictureSource) && user.UserPictureSource != "null")
 			{
 				UserPictureSource = user.UserPictureSource;
 			}
 
-			CheckPermission();
 			UpdatePhotoCommand = new RelayCommand(obj =>
 												  {
 													  UpdatePhotoCommandExecute();
@@ -65,7 +66,7 @@ namespace itmit.asb.app.ViewModels
 			{
 				if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
 				{
-					await Application.Current.MainPage.DisplayAlert("Need Storage", "Gunna need that Storage", "OK");
+					await Application.Current.MainPage.DisplayAlert("Внимание", "Для загрузки фотографии необходимо разрешение на использование хранилища.", "OK");
 				}
 
 				await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
@@ -146,6 +147,10 @@ namespace itmit.asb.app.ViewModels
 				image.Dispose();
 				_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
 
+				_realm.Write(() =>
+				{
+					App.User.UserPictureSource = image.Path;
+				});
 			}
 		}
 		#endregion

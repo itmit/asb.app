@@ -22,14 +22,7 @@ namespace itmit.asb.app.Views.Guard
 		#region Private
 		private void MenuItem_OnClicked(object sender, EventArgs e)
 		{
-			var realm = Realm.GetInstance();
-			using (var transaction = realm.BeginWrite())
-			{
-				realm.RemoveAll<User>();
-				transaction.Commit();
-			}
-
-			Application.Current.MainPage = new LoginPage();
+			App.Logout();
 		}
 		#endregion
 	}

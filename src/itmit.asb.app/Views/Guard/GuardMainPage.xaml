@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:guard="clr-namespace:itmit.asb.app.Views.Guard"
              x:Class="itmit.asb.app.Views.Guard.GuardMainPage"
-             NavigationPage.HasNavigationBar="True">
+             NavigationPage.HasNavigationBar="True"
+             Title="Активные заявки">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Выход" Clicked="MenuItem_OnClicked" />
     </ContentPage.ToolbarItems>
