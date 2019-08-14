@@ -81,8 +81,6 @@ namespace itmit.asb.app.Services
 					foreach (Bid bid in jsonData.Data)
 					{
 						bid.Client.UserPictureSource = "http://asb.itmit-studio.ru/" + bid.Client.UserPictureSource;
-
-
 					}
 
 					return await Task.FromResult(jsonData.Data);
@@ -92,6 +90,36 @@ namespace itmit.asb.app.Services
 			return await Task.FromResult(new List<Bid>());
 		}
 
+		public async Task<IEnumerable<Bid>> GetBidsAsync()
+		{
+			HttpResponseMessage response;
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{_token.TokenType} {_token.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				response = await client.GetAsync(new Uri(BidApiUri));
+			}
+
+			var jsonString = await response.Content.ReadAsStringAsync();
+			Debug.WriteLine(jsonString);
+
+			if (response.IsSuccessStatusCode)
+			{
+				if (jsonString != null)
+				{
+					var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<List<Bid>>>(jsonString);
+
+					foreach (Bid bid in jsonData.Data)
+					{
+						bid.Client.UserPictureSource = "http://asb.itmit-studio.ru/" + bid.Client.UserPictureSource;
+					}
+
+					return await Task.FromResult(jsonData.Data);
+				}
+			}
+
+			return await Task.FromResult(new List<Bid>());
+		}
 		public async void SetBidStatusAsync(Bid bid, BidStatus status)
 		{
 			HttpResponseMessage response;

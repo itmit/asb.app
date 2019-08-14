@@ -16,7 +16,8 @@
                       RefreshCommand="{Binding RefreshCommand}"
                       SelectedItem="{Binding SelectedBid, Mode=TwoWay}"
                       IsPullToRefreshEnabled="True"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True"
+                      VerticalOptions="StartAndExpand">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <guard:BidViewCell />

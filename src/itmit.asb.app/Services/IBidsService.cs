@@ -11,6 +11,8 @@ namespace itmit.asb.app.Services
 
 		Task<IEnumerable<Bid>> GetBidsAsync(BidStatus status);
 
+		Task<IEnumerable<Bid>> GetBidsAsync();
+
 		void SetBidStatusAsync(Bid bid, BidStatus status);
 		#endregion
 	}

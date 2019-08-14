@@ -21,6 +21,7 @@ namespace itmit.asb.app.ViewModels
 		private string _organization;
 		private string _phoneNumber;
 		private string _userPictureSource;
+		private bool _isValid;
 		#endregion
 		#endregion
 
@@ -37,9 +38,13 @@ namespace itmit.asb.app.ViewModels
 														{
 															AcceptBidCommandExecute(bidParam);
 														});
+														IsValid = false;
+														Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
 													}
 												},
-												obj => CanExecuteAcceptBidCommand(obj));
+												CanExecuteAcceptBidCommand);
+
+			IsValid = !CanExecuteAcceptBidCommand(null);
 
 			OpenMapCommand = new RelayCommand(obj =>
 			{
@@ -103,6 +108,11 @@ namespace itmit.asb.app.ViewModels
 			set => SetProperty(ref _organization, value);
 		}
 
+		public bool IsValid
+		{
+			get => _isValid;
+			set => SetProperty(ref _isValid, value);
+		}
 
 		public string PhoneNumber
 		{
@@ -124,7 +134,6 @@ namespace itmit.asb.app.ViewModels
 			{
 				var bidService = new BidsService(App.User.UserToken);
 				bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
-				Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
 			}
 			catch (AuthenticationException e)
 			{
@@ -143,7 +152,7 @@ namespace itmit.asb.app.ViewModels
 
 			if (obj is Bid bid)
 			{
-				return bid.Guid != Guid.Empty;
+				return bid.Guid != Guid.Empty && bid.Status != BidStatus.Accepted;
 			}
 
 			return false;

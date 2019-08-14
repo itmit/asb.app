@@ -23,7 +23,7 @@ namespace itmit.asb.app.ViewModels
 		private string _phoneNumber = string.Empty;
 		private string _userPictureSource = "user1.png";
 		private readonly AuthService _service = new AuthService();
-		private readonly Realm _realm = Realm.GetInstance();
+		private readonly Realm _realm;
 		private bool _permissionGranted;
 		private bool _isValid;
 		#endregion

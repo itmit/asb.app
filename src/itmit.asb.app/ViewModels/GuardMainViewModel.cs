@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
@@ -26,14 +27,26 @@ namespace itmit.asb.app.ViewModels
 		public GuardMainViewModel(INavigation navigation)
 		{
 			_navigation = navigation;
-			Task.Run(UpdateBids);
+			Task.Run(() =>
+			{
+				UpdateBids();
+			});
 			_bids = new ObservableCollection<Bid>();
 			RefreshCommand = new RelayCommand(obj =>
 											  {
 												  IsBusy = true;
-												  Task.Run(UpdateBids);
+												  Task.Run(() =>
+												  {
+													  UpdateBids();
+												  });
 											  },
 											  obj => !IsBusy);
+
+
+			TimerCallback tm = new TimerCallback(UpdateBids);
+
+			// создаем таймер
+			Timer timer = new Timer(tm, null, 0, 5000);
 		}
 		#endregion
 
@@ -75,10 +88,10 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Public
-		public async void UpdateBids()
+		public async void UpdateBids(object obj = null)
 		{
 			IBidsService bidsService = new BidsService(App.User.UserToken);
-			List<Bid> bidsList = (await bidsService.GetBidsAsync(BidStatus.PendingAcceptance)).ToList();
+			List<Bid> bidsList = (await bidsService.GetBidsAsync()).ToList();
 			foreach (var bid in bidsList)
 			{
 				bid.UpdatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
