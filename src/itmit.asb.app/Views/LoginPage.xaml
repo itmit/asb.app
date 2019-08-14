@@ -18,6 +18,9 @@
                 <StackLayout>
                     <Label Text="Неправильные логин или пароль" TextColor="#b20e0b"
                            IsVisible="{Binding AuthNotSuccess}" />
+
+                    <Image Source="logo" HorizontalOptions="Center" HeightRequest="256" Margin="0,40,0,0"/>
+
                     <controls:LoginEntry Placeholder="ТЕЛЕФОН" Text="{Binding Login}"
                                          Style="{StaticResource EntryLoginPageNumber}">
                         <controls:LoginEntry.Behaviors>
