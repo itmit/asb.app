@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -13,7 +15,6 @@ namespace itmit.asb.app.ViewModels
 		#region Data
 		#region Fields
 		private Bid _bid;
-		private readonly IBidsService _bidService = new BidsService(App.User.UserToken);
 		private string _email;
 		private string _name;
 		private string _note;
@@ -121,9 +122,11 @@ namespace itmit.asb.app.ViewModels
 		{
 			try
 			{
-				_bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
+				var bidService = new BidsService(App.User.UserToken);
+				bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
+				Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
 			}
-			catch (Exception e)
+			catch (AuthenticationException e)
 			{
 				Debug.WriteLine(e);
 			}

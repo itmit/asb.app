@@ -23,14 +23,18 @@ namespace itmit.asb.app.ViewModels
 		private string _phoneNumber = string.Empty;
 		private string _userPictureSource = "user1.png";
 		private readonly AuthService _service = new AuthService();
-		private Realm _realm = Realm.GetInstance();
+		private readonly Realm _realm = Realm.GetInstance();
 		private bool _permissionGranted;
+		private bool _isValid;
 		#endregion
 		#endregion
 
 		#region .ctor
 		public LcViewModel(User user)
 		{
+			var con = RealmConfiguration.DefaultConfiguration;
+			con.SchemaVersion = 2;
+			_realm = Realm.GetInstance(con);
 
 			UserPictureSource = "user1.png";
 			Organization = user.Organization;
@@ -48,6 +52,7 @@ namespace itmit.asb.app.ViewModels
 													  UpdatePhotoCommandExecute();
 												  },
 												  obj => CanUpdatePhotoCommandExecute());
+
 		}
 
 		private bool CanUpdatePhotoCommandExecute()
@@ -56,7 +61,9 @@ namespace itmit.asb.app.ViewModels
 			{
 				CheckPermission();
 			}
-			return CrossMedia.IsSupported && _permissionGranted;
+
+			IsValid = CrossMedia.IsSupported && _permissionGranted;
+			return IsValid;
 		}
 
 		private async void CheckPermission()
@@ -73,7 +80,13 @@ namespace itmit.asb.app.ViewModels
 
 				status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
 			}
+
 			_permissionGranted = status == PermissionStatus.Granted;
+
+			if (status == PermissionStatus.Granted)
+			{
+				UpdatePhotoCommand.CanExecute(null);
+			}
 		}
 		#endregion
 
@@ -81,6 +94,12 @@ namespace itmit.asb.app.ViewModels
 		public ICommand UpdatePhotoCommand
 		{
 			get;
+		}
+
+		public bool IsValid
+		{
+			get => _isValid;
+			set => SetProperty(ref _isValid, value);
 		}
 
 		public string Note
@@ -141,16 +160,16 @@ namespace itmit.asb.app.ViewModels
 
 			UserPictureSource = image.Path;
 
+			_realm.Write(() =>
+			{
+				App.User.UserPictureSource = image.Path;
+			});
+
 			using (var memoryStream = new MemoryStream())
 			{
 				image.GetStream().CopyTo(memoryStream);
 				image.Dispose();
 				_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
-
-				_realm.Write(() =>
-				{
-					App.User.UserPictureSource = image.Path;
-				});
 			}
 		}
 		#endregion

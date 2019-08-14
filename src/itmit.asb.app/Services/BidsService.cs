@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using itmit.asb.app.Models;
 using Newtonsoft.Json;
@@ -32,8 +33,7 @@ namespace itmit.asb.app.Services
 		{
 			using (var client = new HttpClient())
 			{
-				var user = App.User;
-				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(user.UserToken.TokenType, user.UserToken.Token);
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_token.TokenType, _token.Token);
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				var data = new Dictionary<string, string>
 				{
@@ -77,6 +77,14 @@ namespace itmit.asb.app.Services
 				if (jsonString != null)
 				{
 					var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<List<Bid>>>(jsonString);
+
+					foreach (Bid bid in jsonData.Data)
+					{
+						bid.Client.UserPictureSource = "http://asb.itmit-studio.ru/" + bid.Client.UserPictureSource;
+
+
+					}
+
 					return await Task.FromResult(jsonData.Data);
 				}
 			}
@@ -111,9 +119,7 @@ namespace itmit.asb.app.Services
 				return;
 			}
 
-			// TODO: Выбрасывать исключение при неудачи.
-
-			throw new Exception();
+			throw new AuthenticationException($"Пользователь с таким токеном, не найден. Токен: {_token.Token}");
 		}
 		#endregion
 	}

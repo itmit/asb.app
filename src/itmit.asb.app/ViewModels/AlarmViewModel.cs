@@ -15,15 +15,15 @@ namespace itmit.asb.app.ViewModels
 		{
 			AlarmAndCallCommand = new RelayCommand(obj =>
 												   {
-													   SendAlarm(new BidsService(App.User.UserToken));
+													   SendAlarm(BidType.Call);
 													   App.Call("+7 911 447-11-83");
 												   },
 												   obj => CheckNetworkAccess());
 			AlarmCommand = new RelayCommand(obj =>
 											{
-												SendAlarm(new BidsService(App.User.UserToken));
+												SendAlarm(BidType.Alert);
 												
-												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога успешна отправлена", "Ok");
+												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога успешна отправлена", "OK");
 												
 											},
 											obj => CheckNetworkAccess());
@@ -43,13 +43,15 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Private
-		private async void SendAlarm(IBidsService service)
+		private async void SendAlarm(BidType type)
 		{
+			var service = new BidsService(App.User.UserToken);
 			service.CreateBid(new Bid
 			{
 				Client = App.User,
 				Location = await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Best),
-				Status = BidStatus.PendingAcceptance
+				Status = BidStatus.PendingAcceptance,
+				Type = type
 			});
 		}
 		#endregion

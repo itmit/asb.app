@@ -35,7 +35,7 @@
                             </Frame>
                         </StackLayout>
                         <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
-                            <Button Style="{StaticResource ButtonPhoto}" Command="{Binding UpdatePhotoCommand}" />
+                            <Button Style="{StaticResource ButtonPhoto}" Command="{Binding UpdatePhotoCommand}" IsEnabled="{Binding IsValid}" />
                             <Label Text="{Binding Organization}" Style="{StaticResource LabelOrganization}" />
                             <Label Text="{Binding PhoneNumber}" Style="{StaticResource LabelOrganization}" />
                         </StackLayout>
