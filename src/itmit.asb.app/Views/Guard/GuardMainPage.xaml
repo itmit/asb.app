@@ -5,25 +5,36 @@
              xmlns:guard="clr-namespace:itmit.asb.app.Views.Guard"
              x:Class="itmit.asb.app.Views.Guard.GuardMainPage"
              NavigationPage.HasNavigationBar="True"
-             Title="Активные заявки">
+             Title="Активные заявки"
+             BackgroundColor="#1f1f1f"
+             >
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Выход" Command="{Binding ExitCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ScrollView>
-            <ListView ItemsSource="{Binding Bids}"
+        <StackLayout>
+            <Picker Title="Статус" x:Name="Cat" Margin="15" TextColor="Red" FontSize="40" TitleColor="Red">
+                <Picker.Items>
+                    <x:String>Принят</x:String>
+                    <x:String>Не принят</x:String>
+                </Picker.Items>
+            </Picker>
+            <BoxView HeightRequest="1" BackgroundColor="White"/>
+            <ScrollView>
+                <ListView ItemsSource="{Binding Bids}"
                       IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                       RefreshCommand="{Binding RefreshCommand}"
                       SelectedItem="{Binding SelectedBid, Mode=TwoWay}"
                       IsPullToRefreshEnabled="True"
                       HasUnevenRows="True"
                       VerticalOptions="StartAndExpand">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <guard:BidViewCell />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ScrollView>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <guard:BidViewCell />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

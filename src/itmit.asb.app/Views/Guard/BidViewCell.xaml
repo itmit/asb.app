@@ -5,11 +5,9 @@
           x:Class="itmit.asb.app.Views.Guard.BidViewCell">
     <ViewCell.View>
         <StackLayout BackgroundColor="#1f1f1f">
-            <Label HorizontalTextAlignment="End" 
-                   Text="{Binding Status, Converter={StaticResource BidStatusConverter}}" 
-                   FontSize="Medium" HorizontalOptions="End" TextColor="White" />
             <Label Text="{Binding Client.Name}" FontSize="30" HorizontalOptions="Center" TextColor="#ef2b2e" />
             <Label Text="{Binding CreatedAt}" FontSize="25" HorizontalOptions="Center" TextColor="White" />
+            <BoxView HeightRequest="1" BackgroundColor="White"/>
         </StackLayout>
     </ViewCell.View>
 </ViewCell>

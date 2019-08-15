@@ -20,7 +20,6 @@
                            IsVisible="{Binding AuthNotSuccess}" />
 
                     <Image Source="logo" HorizontalOptions="Center" HeightRequest="200"/>
-                    <Label x:Name="test" Text=""/>
                     <controls:LoginEntry x:Name="Login" Placeholder="ТЕЛЕФОН" Text="{Binding Login}"
                                          Style="{StaticResource EntryLoginPageNumber}">
                         <controls:LoginEntry.Behaviors>
