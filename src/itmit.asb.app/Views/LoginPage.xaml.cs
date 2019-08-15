@@ -22,6 +22,7 @@ namespace itmit.asb.app.Views
 
             if (Application.Current.MainPage.Width >= 600)
             {
+                Logo.HeightRequest = 400;
                 Login.WidthRequest = 400;
                 Login.HorizontalOptions = LayoutOptions.Center;
                 Password.WidthRequest = 400;
@@ -29,6 +30,7 @@ namespace itmit.asb.app.Views
             }
             else
             {
+                Logo.HeightRequest = 200;
                 Login.WidthRequest = Application.Current.MainPage.Width;
                 Login.HorizontalOptions = LayoutOptions.Fill;
                 Password.WidthRequest = Application.Current.MainPage.Width;
