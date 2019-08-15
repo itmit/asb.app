@@ -120,8 +120,8 @@ namespace itmit.asb.app.ViewModels
 			List<Bid> bidsList = (await bidsService.GetBidsAsync(SelectedStatus)).ToList();
 			foreach (var bid in bidsList)
 			{
-				bid.UpdatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
-				bid.CreatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
+				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3,0,0));
+				bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
 			}
 
 			Bids = new ObservableCollection<Bid>(bidsList);
