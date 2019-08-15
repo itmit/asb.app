@@ -13,10 +13,11 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
-            <Picker Title="Статус" x:Name="Cat" Margin="15" TextColor="Red" FontSize="40" TitleColor="Red">
+            <Label Text="Статус" Margin="10" FontSize="Large" TextColor="Red"/>
+            <Picker Title="Статус" SelectedItem="{Binding SelectedStatus, Converter={StaticResource BidStatusConverter}}" x:Name="Cat" Margin="15" TextColor="Red" FontSize="40" TitleColor="Red">
                 <Picker.Items>
                     <x:String>Принят</x:String>
-                    <x:String>Не принят</x:String>
+                    <x:String>Ожидает принятия</x:String>
                 </Picker.Items>
             </Picker>
             <BoxView HeightRequest="1" BackgroundColor="White"/>

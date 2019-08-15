@@ -8,6 +8,7 @@ namespace itmit.asb.app.Converters
 	public class BidStatusConverter : IValueConverter
 	{
 		private string _accepted = "Принят";
+		private string _pendingAcceptance = "Ожидает принятия";
 
 		/// <param name="value">The value to convert.</param>
 		/// <param name="targetType">The type to which to convert the value.</param>
@@ -25,7 +26,7 @@ namespace itmit.asb.app.Converters
 					case BidStatus.Accepted:
 						return _accepted;
 					case BidStatus.PendingAcceptance:
-						return string.Empty;
+						return _pendingAcceptance;
 				}
 			}
 			return "";
@@ -45,6 +46,10 @@ namespace itmit.asb.app.Converters
 				if (status.Equals(_accepted))
 				{
 					return BidStatus.Accepted;
+				}
+				if (status.Equals(_pendingAcceptance))
+				{
+					return BidStatus.PendingAcceptance;
 				}
 			}
 			return BidStatus.PendingAcceptance;

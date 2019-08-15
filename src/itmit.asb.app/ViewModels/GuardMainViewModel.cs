@@ -21,6 +21,7 @@ namespace itmit.asb.app.ViewModels
 		private readonly INavigation _navigation;
 		private Bid _selectedBid;
 		private readonly Timer _timer;
+		private BidStatus _selectedStatus;
 		#endregion
 		#endregion
 
@@ -28,6 +29,7 @@ namespace itmit.asb.app.ViewModels
 		public GuardMainViewModel(INavigation navigation)
 		{
 			_navigation = navigation;
+			SelectedStatus = BidStatus.Accepted;
 			Task.Run(() =>
 			{
 				UpdateBids();
@@ -61,6 +63,12 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Properties
+		public BidStatus SelectedStatus
+		{
+			get => _selectedStatus;
+			set => SetProperty(ref _selectedStatus, value);
+		}
+
 		public ICommand RefreshCommand
 		{
 			get;
@@ -69,7 +77,14 @@ namespace itmit.asb.app.ViewModels
 		public ObservableCollection<Bid> Bids
 		{
 			get => _bids;
-			set => SetProperty(ref _bids, value);
+			set
+			{
+				if (!IsBusy)
+				{
+					UpdateBids();
+				}
+				SetProperty(ref _bids, value);
+			}
 		}
 
 		public Bid SelectedBid
@@ -100,8 +115,9 @@ namespace itmit.asb.app.ViewModels
 		#region Public
 		public async void UpdateBids(object obj = null)
 		{
+			IsBusy = true;
 			IBidsService bidsService = new BidsService(App.User.UserToken);
-			List<Bid> bidsList = (await bidsService.GetBidsAsync(BidStatus.PendingAcceptance)).ToList();
+			List<Bid> bidsList = (await bidsService.GetBidsAsync(SelectedStatus)).ToList();
 			foreach (var bid in bidsList)
 			{
 				bid.UpdatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);
