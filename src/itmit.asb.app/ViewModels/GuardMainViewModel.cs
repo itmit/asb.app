@@ -91,7 +91,7 @@ namespace itmit.asb.app.ViewModels
 		public async void UpdateBids(object obj = null)
 		{
 			IBidsService bidsService = new BidsService(App.User.UserToken);
-			List<Bid> bidsList = (await bidsService.GetBidsAsync()).ToList();
+			List<Bid> bidsList = (await bidsService.GetBidsAsync(BidStatus.PendingAcceptance)).ToList();
 			foreach (var bid in bidsList)
 			{
 				bid.UpdatedAt = new DateTime(bid.CreatedAt.Ticks + 10800);

@@ -46,9 +46,9 @@
                         </Frame>
                     </Frame>
                 </StackLayout>
-                <Button Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY"
+                <Button x:Name="Subscribe" Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY"
                         Style="{StaticResource ButtonSubscribe}" />
-                <StackLayout Margin="30,0" Grid.Row="3" Grid.Column="0">
+                <StackLayout Margin="30,0" Grid.Row="3" Grid.Column="0" x:Name="OpisSubscribe">
                     <Frame Style="{StaticResource FrameSubscribeTwo}">
                         <Frame Style="{StaticResource FrameSubscribeOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">

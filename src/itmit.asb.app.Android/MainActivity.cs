@@ -25,8 +25,9 @@ namespace itmit.asb.app.Droid
 		Icon = "@mipmap/icon2",
 		Theme = "@style/MainTheme",
 		MainLauncher = true,
-		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-	public class MainActivity : FormsAppCompatActivity
+		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+        ScreenOrientation = ScreenOrientation.Portrait)]
+    public class MainActivity : FormsAppCompatActivity
 	{
 		#region Data
 		#region Consts

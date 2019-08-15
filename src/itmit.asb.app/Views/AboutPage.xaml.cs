@@ -14,11 +14,31 @@ namespace itmit.asb.app.Views
 		public AboutPage()
 		{
 			InitializeComponent();
-		}
-		#endregion
+            SizeChanged += OnSizeChanged;
+        }
+        #endregion
 
-		#region Private
-		private void ImageButton_Clicked(object sender, EventArgs e)
+        void OnSizeChanged(object sender, EventArgs e)
+        {
+
+            if (Application.Current.MainPage.Width >= 600)
+            {
+                Subscribe.WidthRequest = 400;
+                Subscribe.HorizontalOptions = LayoutOptions.Center;
+                OpisSubscribe.WidthRequest = 400;
+                OpisSubscribe.HorizontalOptions = LayoutOptions.Center;
+            }
+            else
+            {
+                Subscribe.WidthRequest = Application.Current.MainPage.Width;
+                Subscribe.HorizontalOptions = LayoutOptions.Fill;
+                OpisSubscribe.WidthRequest = Application.Current.MainPage.Width;
+                OpisSubscribe.HorizontalOptions = LayoutOptions.Fill;
+            }
+        }
+
+        #region Private
+        private void ImageButton_Clicked(object sender, EventArgs e)
 		{
 			Application.Current.MainPage = new NavigationPage(new AlarmPage());
 		}
