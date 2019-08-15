@@ -7,7 +7,7 @@
              NavigationPage.HasNavigationBar="True"
              Title="Активные заявки">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Выход" Clicked="MenuItem_OnClicked" />
+        <ToolbarItem Text="Выход" Command="{Binding ExitCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>

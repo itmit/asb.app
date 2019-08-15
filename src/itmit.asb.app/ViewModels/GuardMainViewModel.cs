@@ -20,6 +20,7 @@ namespace itmit.asb.app.ViewModels
 		private ObservableCollection<Bid> _bids;
 		private readonly INavigation _navigation;
 		private Bid _selectedBid;
+		private readonly Timer _timer;
 		#endregion
 		#endregion
 
@@ -42,11 +43,20 @@ namespace itmit.asb.app.ViewModels
 											  },
 											  obj => !IsBusy);
 
-
-			TimerCallback tm = new TimerCallback(UpdateBids);
+			ExitCommand = new RelayCommand(obj =>
+			{
+				App.Logout();
+				_timer.Change(Timeout.Infinite, Timeout.Infinite);
+			}, obj => !IsBusy);
 
 			// создаем таймер
-			Timer timer = new Timer(tm, null, 0, 5000);
+			_timer = new Timer(UpdateBids, null, 0, 5000);
+		}
+
+		public ICommand ExitCommand
+		{
+			get;
+			set;
 		}
 		#endregion
 

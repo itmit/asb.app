@@ -18,12 +18,5 @@ namespace itmit.asb.app.Views.Guard
 			BindingContext = new GuardMainViewModel(Navigation);
 		}
 		#endregion
-
-		#region Private
-		private void MenuItem_OnClicked(object sender, EventArgs e)
-		{
-			App.Logout();
-		}
-		#endregion
 	}
 }
