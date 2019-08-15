@@ -30,10 +30,7 @@ namespace itmit.asb.app.ViewModels
 		{
 			_navigation = navigation;
 			SelectedStatus = BidStatus.Accepted;
-			Task.Run(() =>
-			{
-				UpdateBids();
-			});
+
 			_bids = new ObservableCollection<Bid>();
 			RefreshCommand = new RelayCommand(obj =>
 											  {
@@ -49,7 +46,7 @@ namespace itmit.asb.app.ViewModels
 			{
 				App.Logout();
 				_timer.Change(Timeout.Infinite, Timeout.Infinite);
-			}, obj => !IsBusy);
+			}, obj => true);
 
 			// создаем таймер
 			_timer = new Timer(UpdateBids, null, 0, 5000);
@@ -66,7 +63,12 @@ namespace itmit.asb.app.ViewModels
 		public BidStatus SelectedStatus
 		{
 			get => _selectedStatus;
-			set => SetProperty(ref _selectedStatus, value);
+            set
+            {
+                SetProperty(ref _selectedStatus, value);
+                UpdateBids();
+                
+            } 
 		}
 
 		public ICommand RefreshCommand
@@ -79,10 +81,6 @@ namespace itmit.asb.app.ViewModels
 			get => _bids;
 			set
 			{
-				if (!IsBusy)
-				{
-					UpdateBids();
-				}
 				SetProperty(ref _bids, value);
 			}
 		}
@@ -115,7 +113,6 @@ namespace itmit.asb.app.ViewModels
 		#region Public
 		public async void UpdateBids(object obj = null)
 		{
-			IsBusy = true;
 			IBidsService bidsService = new BidsService(App.User.UserToken);
 			List<Bid> bidsList = (await bidsService.GetBidsAsync(SelectedStatus)).ToList();
 			foreach (var bid in bidsList)
