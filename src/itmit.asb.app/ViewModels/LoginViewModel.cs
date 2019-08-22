@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using itmit.asb.app.Models;
@@ -86,6 +87,13 @@ namespace itmit.asb.app.ViewModels
 				transaction.Commit();
 			}
 
+			var app = Application.Current as App;
+
+			if (app == null)
+			{
+				return;
+			}
+
 			Realm.Write(() =>
 			{
 				Realm.Add(user, true);
@@ -93,11 +101,11 @@ namespace itmit.asb.app.ViewModels
 
 			if (user.IsGuard)
 			{
-				Application.Current.MainPage = new NavigationPage(new GuardMainPage());
+				app.MainPage = new NavigationPage(new GuardMainPage());
 				return;
 			}
-
-			Application.Current.MainPage = new AlarmPage();
+			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
+			app.MainPage = new AlarmPage();
 		}
 		#endregion
 	}

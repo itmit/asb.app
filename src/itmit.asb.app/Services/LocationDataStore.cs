@@ -9,48 +9,79 @@ using itmit.asb.app.Models;
 
 namespace itmit.asb.app.Services
 {
-	public class LocationDataStore : IDataStore<Location>
+	public class LocationDataStore : ILocationService
 	{
 		#region Data
 		#region Consts
 		private const string Uri = "http://asb.itmit-studio.ru/api/bid";
+
+		private const string UpdateCurrentLocationUri = "http://asb.itmit-studio.ru/api/client/updateCurrentLocation"; 
 		#endregion
 		#endregion
 
-		#region IDataStore<Location> members
-		public async Task<bool> AddItemAsync(Location item)
+		public async Task<bool> AddPointOnMapTask(Location location, UserToken token)
 		{
-			var client = new HttpClient();
-
-			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(App.User.UserToken.TokenType, App.User.UserToken.Token);
-
-			var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+			using (var client = new HttpClient())
 			{
-				{
-					"latitude", item.Latitude.ToString(CultureInfo.InvariantCulture)
-				},
-				{
-					"longitude", item.Longitude.ToString(CultureInfo.InvariantCulture)
-				}
-			});
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-			var response = await client.PostAsync(new Uri(Uri), encodedContent);
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
+					},
+					{
+						"longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
+					}
+				});
 
+				var response = await client.PostAsync(new Uri(Uri), encodedContent);
 #if DEBUG
-			var jsonString = await response.Content.ReadAsStringAsync();
-			Debug.WriteLine(jsonString);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
 #endif
-
-			return await Task.FromResult(true);
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
 		}
 
-		public Task<bool> DeleteItemAsync(string id) => throw new NotImplementedException();
+		public async Task<bool> UpdateCurrentLocationTask(Location location, UserToken token)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-		public Task<Location> GetItemAsync(string id) => throw new NotImplementedException();
+				var response = await client.PostAsync(
+								   UpdateCurrentLocationUri, 
+								   new FormUrlEncodedContent(new Dictionary<string, string>
+								   {
+									   {
+										   "latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
+									   },
+									   {
+										   "longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
+									   }
+								   }));
+#if DEBUG
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+#endif
+				bool result = await Task.FromResult(response.IsSuccessStatusCode);
 
-		public Task<IEnumerable<Location>> GetItemsAsync(bool forceRefresh = false) => throw new NotImplementedException();
+				if (!result)
+				{
+					LastError = jsonString;
+				}
 
-		public Task<bool> UpdateItemAsync(Location item) => throw new NotImplementedException();
-		#endregion
+				return result;
+			}
+		}
+
+		public string LastError
+		{
+			get;
+			private set;
+		}
 	}
 }

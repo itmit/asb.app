@@ -6,6 +6,7 @@ using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using itmit.asb.app.Views.Guard;
+using Matcha.BackgroundService;
 using Realms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -17,6 +18,8 @@ namespace itmit.asb.app
 {
 	public partial class App : Application
 	{
+		private readonly ILocationUpdatesService _updatesService = DependencyService.Get<ILocationUpdatesService>();
+
 		#region .ctor
 		public App()
 		{
@@ -36,9 +39,18 @@ namespace itmit.asb.app
 				return;
 			}
 
+			StartBackgroundService(new TimeSpan(0, 0, 0, 5));
+
 			MainPage = new AlarmPage();
 		}
 		#endregion
+
+		public void StartBackgroundService(TimeSpan timeSpan)
+		{
+			_updatesService.StartService();
+			//BackgroundAggregatorService.Add(() => new PeriodicWebCall(timeSpan));
+			//BackgroundAggregatorService.StartBackgroundService();
+		}
 
 		#region Properties
 		public static User User

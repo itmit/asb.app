@@ -1,4 +1,5 @@
-﻿using Android;
+﻿using System;
+using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -9,8 +10,11 @@ using Android.Provider;
 using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
+using AndroidX.Work;
+using itmit.asb.app.Droid;
 using ImageCircle.Forms.Plugin.Droid;
 using itmit.asb.app.Services;
+using Matcha.BackgroundService.Droid;
 using Plugin.Permissions;
 using Xamarin;
 using Xamarin.Forms;
@@ -18,7 +22,6 @@ using Xamarin.Forms.Platform.Android;
 
 [assembly: Dependency(typeof(AuthService))]
 [assembly: Dependency(typeof(BidsService))]
-
 namespace itmit.asb.app.Droid
 {
 	[Activity(Label = "itmit.asb.app",
@@ -27,7 +30,7 @@ namespace itmit.asb.app.Droid
 		MainLauncher = true,
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
         ScreenOrientation = ScreenOrientation.Portrait)]
-    public class MainActivity : FormsAppCompatActivity
+	public class MainActivity : FormsAppCompatActivity
 	{
 		#region Data
 		#region Consts
@@ -50,6 +53,8 @@ namespace itmit.asb.app.Droid
 
             TabLayoutResource = Resource.Layout.Tabbar;
 			ToolbarResource = Resource.Layout.Toolbar;
+
+			BackgroundAggregator.Init(this);
 
 			base.OnCreate(savedInstanceState);
 			Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -125,16 +130,6 @@ namespace itmit.asb.app.Droid
 			{
 				CheckPermission(Manifest.Permission.AccessCoarseLocation, PermissionsRequestAccessCoarseLocation);
 			}
-
-			//if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != Permission.Granted)
-			//{
-			//	CheckPermission(Manifest.Permission.ReadExternalStorage, PermissionsRequestAccessReadStorage);
-			//}
-
-			//if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
-			//{
-			//	CheckPermission(Manifest.Permission.WriteExternalStorage, PermissionsRequestAccessWriteStorage);
-			//}
 		}
 
 		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

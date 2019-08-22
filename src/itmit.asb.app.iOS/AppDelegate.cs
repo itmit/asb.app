@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using itmit.asb.app.Services;
+using Matcha.BackgroundService.iOS;
 using UIKit;
 using Xamarin;
 using Xamarin.Forms;
@@ -29,6 +30,8 @@ namespace itmit.asb.app.iOS
 			Forms.Init();
 			FormsMaps.Init();
 			LoadApplication(new App());
+
+			BackgroundAggregator.Init(this);
 
 			return base.FinishedLaunching(app, options);
 		}
