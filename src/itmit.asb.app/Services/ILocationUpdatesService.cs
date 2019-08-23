@@ -2,7 +2,7 @@
 {
 	public interface ILocationUpdatesService
 	{
-		void EndService();
+		void StopService();
 
 		void StartService();
 	}

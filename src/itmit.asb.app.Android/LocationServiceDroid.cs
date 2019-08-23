@@ -19,7 +19,7 @@ namespace itmit.asb.app.Droid
 		public LocationServiceDroid()
 		{ }
 
-		public void EndService()
+		public void StopService()
 		{
 			WorkManager.Instance.CancelWorkById(_workId);
 		}
@@ -28,7 +28,7 @@ namespace itmit.asb.app.Droid
 		{
 			PeriodicWorkRequest taxWorkRequest = PeriodicWorkRequest
 												 .Builder
-												 .From<LocationUpdatesService>(TimeSpan.FromHours(0.5)
+												 .From<LocationUpdatesService>(TimeSpan.FromMinutes(5)
 												 ).Build();
 			WorkManager.Instance.Enqueue(taxWorkRequest);
 			_workId = taxWorkRequest.Id;

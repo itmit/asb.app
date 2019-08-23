@@ -62,11 +62,12 @@ namespace itmit.asb.app.Services
 									   {
 										   "longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
 									   }
+
 								   }));
-#if DEBUG
+
 				var jsonString = await response.Content.ReadAsStringAsync();
 				Debug.WriteLine(jsonString);
-#endif
+
 				bool result = await Task.FromResult(response.IsSuccessStatusCode);
 
 				if (!result)

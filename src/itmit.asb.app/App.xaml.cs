@@ -48,8 +48,6 @@ namespace itmit.asb.app
 		public void StartBackgroundService(TimeSpan timeSpan)
 		{
 			_updatesService.StartService();
-			//BackgroundAggregatorService.Add(() => new PeriodicWebCall(timeSpan));
-			//BackgroundAggregatorService.StartBackgroundService();
 		}
 
 		#region Properties
@@ -64,7 +62,7 @@ namespace itmit.asb.app
 		}
 		#endregion
 
-		public static void Logout()
+		public void Logout()
 		{
 			var realm = Realm.GetInstance();
 			using (var transaction = realm.BeginWrite())
@@ -72,6 +70,8 @@ namespace itmit.asb.app
 				realm.RemoveAll<User>();
 				transaction.Commit();
 			}
+
+			_updatesService.StopService();
 
 			Current.MainPage = new LoginPage();
 		}

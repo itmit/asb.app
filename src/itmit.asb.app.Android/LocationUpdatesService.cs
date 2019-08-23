@@ -53,6 +53,7 @@ namespace itmit.asb.app.Droid
 			var res = await _locationService.UpdateCurrentLocationTask(
 						  new Location(location.Latitude, location.Longitude), App.User.UserToken);
 
+
 			if (res)
 			{
 				_result = Result.InvokeSuccess();

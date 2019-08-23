@@ -46,7 +46,9 @@ namespace itmit.asb.app.Views
 
 		private void ImageButton_Clicked_4(object sender, EventArgs e)
 		{
-			App.Logout();
+			var app = Application.Current as App;
+
+			app?.Logout();
 		}
 		#endregion
 	}

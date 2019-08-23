@@ -44,7 +44,14 @@ namespace itmit.asb.app.ViewModels
 
 			ExitCommand = new RelayCommand(obj =>
 			{
-				App.Logout();
+				var app = Application.Current as App;
+				if (app == null)
+				{
+					return;
+				}
+
+				app.Logout();
+
 				_timer.Change(Timeout.Infinite, Timeout.Infinite);
 			}, obj => true);
 
