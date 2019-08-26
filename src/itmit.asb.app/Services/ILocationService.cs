@@ -8,5 +8,10 @@ namespace itmit.asb.app.Services
 		Task<bool> AddPointOnMapTask(Location location, UserToken token);
 
 		Task<bool> UpdateCurrentLocationTask(Location location, UserToken token);
+
+		string LastError
+		{
+			get;
+		}
 	}
 }

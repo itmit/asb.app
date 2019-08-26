@@ -16,6 +16,7 @@ namespace itmit.asb.app.Droid
 	{
 		#region Data
 		#region Fields
+		private readonly string _tag = typeof(LocationTrackingService).FullName;
 		private readonly LocationDataStore _locationService = new LocationDataStore();
 		private Result _result = Result.InvokeSuccess();
 		#endregion
@@ -39,7 +40,7 @@ namespace itmit.asb.app.Droid
 		#region Private
 		private async void Update()
 		{
-			Log.Debug("WM-WorkerWrapper", $"Begin update at {DateTime.Now};");
+			Log.Debug(_tag, $"Begin update at {DateTime.Now};");
 
 			var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Default));
 
@@ -48,21 +49,20 @@ namespace itmit.asb.app.Droid
 				return;
 			}
 
-			Log.Debug("WM-WorkerWrapper", $"SUCCESS location received; latitude: {location.Latitude}; longitude:{location.Longitude}");
+			Log.Debug(_tag, $"SUCCESS location received; latitude: {location.Latitude}; longitude:{location.Longitude}");
 
 			var res = await _locationService.UpdateCurrentLocationTask(
 						  new Location(location.Latitude, location.Longitude), App.User.UserToken);
 
-
 			if (res)
 			{
 				_result = Result.InvokeSuccess();
-				Log.Debug("WM-WorkerWrapper", $"Update location is SUCCESS at {DateTime.Now};");
+				Log.Debug(_tag, $"Update location is SUCCESS at {DateTime.Now};");
 			}
 			else
 			{
 				_result = Result.InvokeFailure();
-				Log.Debug("WM-WorkerWrapper", $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
+				Log.Debug(_tag, $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
 			}
 		}
 		#endregion

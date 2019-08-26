@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CloseAplication.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="LocationServiceDroid.cs" />
     <Compile Include="LocationUpdatesService.cs" />
     <Compile Include="MainActivity.cs" />
@@ -80,6 +81,8 @@
     <Compile Include="Renderers\LoginEntryRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LocationTrackingService.cs" />
+    <Compile Include="UtcTimestamper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

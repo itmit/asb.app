@@ -62,6 +62,8 @@ namespace itmit.asb.app.Droid
 
 			CheckPermissions();
 
+			// StartForegroundServiceCompat<LocationTrackingService>(this);
+
 			Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
 			DisplayLocationSettingsRequest();
@@ -69,6 +71,24 @@ namespace itmit.asb.app.Droid
 			LoadApplication(new App());
 		}
 		#endregion
+
+		public static void StartForegroundServiceCompat<T>(Context context, Bundle args = null) where T : Service
+		{
+			var intent = new Intent(context, typeof(T));
+			if (args != null)
+			{
+				intent.PutExtras(args);
+			}
+			intent.SetAction(Constants.ActionStartService);
+			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+			{
+				context.StartForegroundService(intent);
+			}
+			else
+			{
+				context.StartService(intent);
+			}
+		}
 
 		#region Private
 		private void DisplayLocationSettingsRequest()
