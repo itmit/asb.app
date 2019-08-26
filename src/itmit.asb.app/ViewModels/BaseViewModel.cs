@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -33,6 +35,24 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Protected
+		protected async Task<bool> CheckPermission(Permission permission, string message)
+		{
+			var status = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
+			if (status != PermissionStatus.Granted)
+			{
+				if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(permission))
+				{
+					await Application.Current.MainPage.DisplayAlert("Внимание", message, "OK");
+				}
+
+				await CrossPermissions.Current.RequestPermissionsAsync(permission);
+
+				status = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
+			}
+			
+			return await Task.FromResult(status == PermissionStatus.Granted);
+		}
+
 		protected bool CheckNetworkAccess()
 		{
 			if (Connectivity.NetworkAccess == NetworkAccess.Internet)

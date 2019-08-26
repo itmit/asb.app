@@ -10,7 +10,7 @@ namespace itmit.asb.app
 {
 	public class PeriodicWebCall : IPeriodicTask
 	{
-		private readonly ILocationService _locationService = new LocationDataStore();
+		private readonly ILocationService _locationService = new LocationService();
 
 		public PeriodicWebCall(TimeSpan interval)
 		{

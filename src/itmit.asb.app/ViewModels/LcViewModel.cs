@@ -68,22 +68,10 @@ namespace itmit.asb.app.ViewModels
 
 		private async void CheckPermission()
 		{
-			var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
-			if (status != PermissionStatus.Granted)
-			{
-				if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Storage))
-				{
-					await Application.Current.MainPage.DisplayAlert("Внимание", "Для загрузки фотографии необходимо разрешение на использование хранилища.", "OK");
-				}
+			_permissionGranted = 
+				await CheckPermission(Permission.Storage, "Для загрузки фотографии необходимо разрешение на использование хранилища.");
 
-				await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage);
-
-				status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
-			}
-
-			_permissionGranted = status == PermissionStatus.Granted;
-
-			if (status == PermissionStatus.Granted)
+			if (_permissionGranted)
 			{
 				UpdatePhotoCommand.CanExecute(null);
 			}
@@ -162,7 +150,7 @@ namespace itmit.asb.app.ViewModels
 
 			_realm.Write(() =>
 			{
-				App.User.UserPictureSource = image.Path;
+				App.User.UserPictureSource = UserPictureSource;
 			});
 
 			using (var memoryStream = new MemoryStream())

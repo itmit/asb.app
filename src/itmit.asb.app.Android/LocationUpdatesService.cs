@@ -17,7 +17,7 @@ namespace itmit.asb.app.Droid
 		#region Data
 		#region Fields
 		private readonly string _tag = typeof(LocationTrackingService).FullName;
-		private readonly LocationDataStore _locationService = new LocationDataStore();
+		private readonly LocationService _locationService = new LocationService();
 		private Result _result = Result.InvokeSuccess();
 		#endregion
 		#endregion

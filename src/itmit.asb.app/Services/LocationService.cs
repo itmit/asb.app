@@ -9,24 +9,27 @@ using itmit.asb.app.Models;
 
 namespace itmit.asb.app.Services
 {
-	public class LocationDataStore : ILocationService
+	public class LocationService : ILocationService
 	{
 		#region Data
 		#region Consts
-		private const string Uri = "http://asb.itmit-studio.ru/api/bid";
+		private const string CreatePointUri = "http://asb.itmit-studio.ru/api/pointOnMap";
 
 		private const string UpdateCurrentLocationUri = "http://asb.itmit-studio.ru/api/client/updateCurrentLocation"; 
 		#endregion
 		#endregion
 
-		public async Task<bool> AddPointOnMapTask(Location location, UserToken token)
+		public Task<bool> AddPointOnMapTask(Location location, UserToken token) 
+			=> AddPointOnMapTask(location, token, Guid.Empty);
+
+		public async Task<bool> AddPointOnMapTask(Location location, UserToken token, Guid guid)
 		{
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				var encodedContent = new Dictionary<string, string>
 				{
 					{
 						"latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
@@ -34,9 +37,14 @@ namespace itmit.asb.app.Services
 					{
 						"longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
 					}
-				});
+				};
 
-				var response = await client.PostAsync(new Uri(Uri), encodedContent);
+				if (guid != Guid.Empty)
+				{
+					encodedContent.Add("uid", guid.ToString());
+				}
+
+				var response = await client.PostAsync(CreatePointUri, new FormUrlEncodedContent(encodedContent));
 #if DEBUG
 				var jsonString = await response.Content.ReadAsStringAsync();
 				Debug.WriteLine(jsonString);

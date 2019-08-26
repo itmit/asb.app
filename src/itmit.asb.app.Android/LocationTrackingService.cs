@@ -27,7 +27,8 @@ namespace itmit.asb.app.Droid
 		private Action _runnable;
 		private bool _wasReset;
 		private DateTime _startTime;
-		private readonly ILocationService _locationService = new LocationDataStore();
+		private readonly ILocationService _locationService = new LocationService();
+		private Guid _bidGuid;
 		#endregion
 		#endregion
 
@@ -40,7 +41,6 @@ namespace itmit.asb.app.Droid
 			Log.Info(_tag, "OnCreate: the service is initializing.");
 
 			_handler = new Handler();
-
 			_startTime = DateTime.UtcNow;
 
 			// This Action is only for demonstration purposes.
@@ -87,6 +87,8 @@ namespace itmit.asb.app.Droid
 
 		public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
 		{
+			Guid.TryParse(intent.GetStringExtra("BidGuid"), out _bidGuid);
+
 			if (intent.Action.Equals(Constants.ActionStartService))
 			{
 				if (_isStarted)
@@ -125,27 +127,19 @@ namespace itmit.asb.app.Droid
 
 		private async void Update()
 		{
-			Log.Debug(_tag, $"Begin update at {DateTime.Now};");
-
-			var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Default));
-
-			if (location == null)
+			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
 			{
-				return;
-			}
+				var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
 
-			Log.Debug(_tag, $"SUCCESS location received; latitude: {location.Latitude}; longitude:{location.Longitude}");
+				if (location == null)
+				{
+					return;
+				}
 
-			var res = await _locationService.UpdateCurrentLocationTask(
-						  new Location(location.Latitude, location.Longitude), App.User.UserToken);
+				var res = await _locationService.AddPointOnMapTask(
+							  new Location(location.Latitude, location.Longitude), App.User.UserToken, _bidGuid);
 
-			if (res)
-			{
-				Log.Debug(_tag, $"Update location is SUCCESS at {DateTime.Now};");
-			}
-			else
-			{
-				Log.Debug(_tag, $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
+				Log.Debug(_tag, res ? $"Update location is SUCCESS at {DateTime.Now};" : $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
 			}
 		}
 
@@ -224,7 +218,6 @@ namespace itmit.asb.app.Droid
 															 .SetSmallIcon(Android.Resource.Drawable.ButtonStar)
 															 .SetContentIntent(BuildIntentToShowMainActivity())
 															 .SetOngoing(true)
-															 .AddAction(BuildRestartTimerAction())
 															 .AddAction(BuildStopServiceAction())
 															 .Build();
 

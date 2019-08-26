@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
@@ -10,19 +11,23 @@ namespace itmit.asb.app.ViewModels
 {
 	public class AlarmViewModel : BaseViewModel
 	{
+
 		#region .ctor
 		public AlarmViewModel()
 		{
 			AlarmAndCallCommand = new RelayCommand(obj =>
 												   {
-													   SendAlarm(BidType.Call);
+													   var bidId = Guid.NewGuid();
+													   SendAlarm(BidType.Call, bidId);
+													   DependencyService.Get<ILocationTrackingService>().StartService(bidId);
 													   App.Call("+7 911 447-11-83");
 												   },
 												   obj => CheckNetworkAccess());
 			AlarmCommand = new RelayCommand(obj =>
 											{
-												SendAlarm(BidType.Alert);
-												
+												var bidId = Guid.NewGuid();
+												SendAlarm(BidType.Alert, bidId);
+												DependencyService.Get<ILocationTrackingService>().StartService(bidId);
 												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога успешна отправлена", "OK");
 												
 											},
@@ -43,11 +48,17 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Private
-		private async void SendAlarm(BidType type)
+		private async void SendAlarm(BidType type, Guid guid)
 		{
+			if (guid == Guid.Empty)
+			{
+				guid = Guid.NewGuid();
+			}
+
 			var service = new BidsService(App.User.UserToken);
 			service.CreateBid(new Bid
 			{
+				Guid = guid,
 				Client = App.User,
 				Location = await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Best),
 				Status = BidStatus.PendingAcceptance,

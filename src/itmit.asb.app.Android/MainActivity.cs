@@ -80,7 +80,8 @@ namespace itmit.asb.app.Droid
 				intent.PutExtras(args);
 			}
 			intent.SetAction(Constants.ActionStartService);
-			if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+			context.StopService(intent);
+			if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
 			{
 				context.StartForegroundService(intent);
 			}

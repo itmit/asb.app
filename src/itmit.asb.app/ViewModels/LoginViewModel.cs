@@ -6,6 +6,7 @@ using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using itmit.asb.app.Views.Guard;
+using Plugin.Permissions.Abstractions;
 using Realms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -69,6 +70,8 @@ namespace itmit.asb.app.ViewModels
 
 		private async void LoginCommandExecute()
 		{
+			await CheckPermission(Permission.Location, "Для отслеживания вашего местоположения необходимо разрешение на использование геоданных.");
+
 			User user;
 			try
 			{
@@ -104,6 +107,7 @@ namespace itmit.asb.app.ViewModels
 				app.MainPage = new NavigationPage(new GuardMainPage());
 				return;
 			}
+			
 			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 			app.MainPage = new AlarmPage();
 		}

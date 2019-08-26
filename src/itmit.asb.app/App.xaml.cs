@@ -40,7 +40,7 @@ namespace itmit.asb.app
 			}
 
 			StartBackgroundService(new TimeSpan(0, 0, 0, 5));
-
+			
 			MainPage = new AlarmPage();
 		}
 		#endregion

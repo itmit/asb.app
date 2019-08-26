@@ -72,6 +72,7 @@
     <Compile Include="CloseAplication.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="LocationServiceDroid.cs" />
+    <Compile Include="LocationTrackingServiceDroid.cs" />
     <Compile Include="LocationUpdatesService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\BorderAlarmRenderer.cs" />
