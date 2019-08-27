@@ -13,10 +13,8 @@ namespace itmit.asb.app.Views.Guard
 		#region .ctor
 		public GuardMainPage()
 		{
-
 			InitializeComponent();
-
-			//BindingContext = new GuardMainViewModel(Navigation);
+			Master = new MenuGuardPage();
 		}
         #endregion
     }

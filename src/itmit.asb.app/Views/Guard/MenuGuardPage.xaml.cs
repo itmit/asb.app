@@ -12,19 +12,45 @@ namespace itmit.asb.app.Views.Guard
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuGuardPage : ContentPage
     {
-        public MenuGuardPage()
-        {
+
+		public MenuGuardPage()
+		{
             InitializeComponent();
-        }
+
+		}
 
         private void Button_Clicked(object sender, EventArgs e)
-        {
-            Application.Current.MainPage = new NavigationPage(new Apply());
-        }
+		{
+			NavigateFromMenu(new ApplyBidsPage());
+		}
 
         private void Button_Clicked_1(object sender, EventArgs e)
-        {
-            Application.Current.MainPage = new NavigationPage(new WaitApply());
-        }
+		{
+			NavigateFromMenu(new WaitApplyBidsPage());
+		}
+
+		private async void NavigateFromMenu(Page page)
+		{
+			if (Application.Current.MainPage is MasterDetailPage masterDetailPage)
+			{
+				var navPage = new NavigationPage(page);
+				ToolbarItem item = new ToolbarItem()
+				{
+					Text = "Выход"
+				};
+
+				item.SetBinding(MenuItem.CommandProperty, "ExitCommand");
+
+				navPage.ToolbarItems.Add(item);
+				masterDetailPage.Detail = navPage;
+
+				if (Device.RuntimePlatform == Device.Android)
+				{
+					await Task.Delay(100);
+				}
+
+				masterDetailPage.IsPresented = false;
+			}
+		}
     }
 }

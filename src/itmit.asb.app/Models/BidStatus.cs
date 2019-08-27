@@ -13,6 +13,11 @@
 		/// <summary>
 		/// Заявка ожидает принятия охранником.
 		/// </summary>
-		PendingAcceptance
+		PendingAcceptance,
+
+		/// <summary>
+		/// Заявка отработана охранником.
+		/// </summary>
+		Processed
 	}
 }

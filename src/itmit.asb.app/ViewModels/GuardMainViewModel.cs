@@ -21,15 +21,16 @@ namespace itmit.asb.app.ViewModels
 		private readonly INavigation _navigation;
 		private Bid _selectedBid;
 		private readonly Timer _timer;
-		private BidStatus _selectedStatus;
+		private readonly BidStatus _selectedStatus;
 		#endregion
 		#endregion
 
 		#region .ctor
 		public GuardMainViewModel(INavigation navigation)
 		{
+			_selectedStatus = BidStatus.Accepted;
+
 			_navigation = navigation;
-			SelectedStatus = BidStatus.Accepted;
 
 			_bids = new ObservableCollection<Bid>();
 			RefreshCommand = new RelayCommand(obj =>
@@ -59,23 +60,47 @@ namespace itmit.asb.app.ViewModels
 			_timer = new Timer(UpdateBids, null, 0, 5000);
 		}
 
-		public ICommand ExitCommand
+		public GuardMainViewModel(INavigation navigation, BidStatus status)
 		{
-			get;
-			set;
+			_selectedStatus = status;
+
+			_navigation = navigation;
+
+			_bids = new ObservableCollection<Bid>();
+			RefreshCommand = new RelayCommand(obj =>
+											  {
+												  IsBusy = true;
+												  Task.Run(() =>
+												  {
+													  UpdateBids();
+												  });
+											  },
+											  obj => !IsBusy);
+
+			ExitCommand = new RelayCommand(obj =>
+			{
+				var app = Application.Current as App;
+				if (app == null)
+				{
+					return;
+				}
+
+				app.Logout();
+
+				_timer.Change(Timeout.Infinite, Timeout.Infinite);
+			}, obj => true);
+
+			// создаем таймер
+			_timer = new Timer(UpdateBids, null, 0, 5000);
 		}
 		#endregion
 
 		#region Properties
-		public BidStatus SelectedStatus
+
+		public ICommand ExitCommand
 		{
-			get => _selectedStatus;
-            set
-            {
-                SetProperty(ref _selectedStatus, value);
-                UpdateBids();
-                
-            } 
+			get;
+			set;
 		}
 
 		public ICommand RefreshCommand
@@ -121,7 +146,7 @@ namespace itmit.asb.app.ViewModels
 		public async void UpdateBids(object obj = null)
 		{
 			IBidsService bidsService = new BidsService(App.User.UserToken);
-			List<Bid> bidsList = (await bidsService.GetBidsAsync(SelectedStatus)).ToList();
+			List<Bid> bidsList = (await bidsService.GetBidsAsync(_selectedStatus)).ToList();
 			foreach (var bid in bidsList)
 			{
 				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3,0,0));

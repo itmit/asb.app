@@ -35,7 +35,7 @@ namespace itmit.asb.app
 
 			if (User.IsGuard)
 			{
-				MainPage = new NavigationPage(new GuardMainPage());
+				MainPage = new GuardMainPage();
 				return;
 			}
 
@@ -64,7 +64,9 @@ namespace itmit.asb.app
 
 		public void Logout()
 		{
-			var realm = Realm.GetInstance();
+			var con = RealmConfiguration.DefaultConfiguration;
+			con.SchemaVersion = 2;
+			var realm = Realm.GetInstance(con);
 			using (var transaction = realm.BeginWrite())
 			{
 				realm.RemoveAll<User>();
