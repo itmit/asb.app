@@ -1,30 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace itmit.asb.app.Views.Guard
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MenuGuardPage : ContentPage
-    {
-
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class MenuGuardPage : ContentPage
+	{
+		#region .ctor
 		public MenuGuardPage()
 		{
-            InitializeComponent();
-
+			InitializeComponent();
 		}
+		#endregion
 
-        private void Button_Clicked(object sender, EventArgs e)
+		#region Private
+		private void Button_Clicked(object sender, EventArgs e)
 		{
 			NavigateFromMenu(new ApplyBidsPage());
 		}
 
-        private void Button_Clicked_1(object sender, EventArgs e)
+		private void Button_Clicked_1(object sender, EventArgs e)
 		{
 			NavigateFromMenu(new WaitApplyBidsPage());
 		}
@@ -34,7 +31,7 @@ namespace itmit.asb.app.Views.Guard
 			if (Application.Current.MainPage is MasterDetailPage masterDetailPage)
 			{
 				var navPage = new NavigationPage(page);
-				ToolbarItem item = new ToolbarItem()
+				var item = new ToolbarItem
 				{
 					Text = "Выход"
 				};
@@ -52,5 +49,6 @@ namespace itmit.asb.app.Views.Guard
 				masterDetailPage.IsPresented = false;
 			}
 		}
-    }
+		#endregion
+	}
 }

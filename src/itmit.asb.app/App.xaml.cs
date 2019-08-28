@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using itmit.asb.app.Views.Guard;
-using Matcha.BackgroundService;
 using Realms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -18,7 +16,11 @@ namespace itmit.asb.app
 {
 	public partial class App : Application
 	{
+		#region Data
+		#region Fields
 		private readonly ILocationUpdatesService _updatesService = DependencyService.Get<ILocationUpdatesService>();
+		#endregion
+		#endregion
 
 		#region .ctor
 		public App()
@@ -36,19 +38,13 @@ namespace itmit.asb.app
 			if (User.IsGuard)
 			{
 				MainPage = new GuardMainPage();
+
 				return;
 			}
 
-			StartBackgroundService(new TimeSpan(0, 0, 0, 5));
-			
 			MainPage = new AlarmPage();
 		}
 		#endregion
-
-		public void StartBackgroundService(TimeSpan timeSpan)
-		{
-			_updatesService.StartService();
-		}
 
 		#region Properties
 		public static User User
@@ -57,10 +53,33 @@ namespace itmit.asb.app
 			{
 				var con = RealmConfiguration.DefaultConfiguration;
 				con.SchemaVersion = 2;
-				return Realm.GetInstance(con).All<User>().SingleOrDefault();
+				return Realm.GetInstance(con)
+							.All<User>()
+							.SingleOrDefault();
 			}
 		}
 		#endregion
+
+		#region Public
+		public static void Call(string number)
+		{
+			try
+			{
+				PhoneDialer.Open(number);
+			}
+			catch (ArgumentNullException anEx)
+			{
+				Debug.WriteLine(anEx);
+			}
+			catch (FeatureNotSupportedException ex)
+			{
+				Debug.WriteLine(ex);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine(ex);
+			}
+		}
 
 		public void Logout()
 		{
@@ -78,26 +97,11 @@ namespace itmit.asb.app
 			Current.MainPage = new LoginPage();
 		}
 
-		public static void Call(string number)
+		public void StartBackgroundService(TimeSpan timeSpan)
 		{
-			try
-			{
-				PhoneDialer.Open(number);
-			}
-			catch (ArgumentNullException anEx)
-			{
-				Debug.WriteLine(anEx);
-			}
-			catch (FeatureNotSupportedException ex)
-			{
-				Debug.WriteLine(ex);
-
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine(ex);
-			}
+			_updatesService.StartService();
 		}
+		#endregion
 
 		#region Overrided
 		protected override void OnResume()
@@ -111,8 +115,15 @@ namespace itmit.asb.app
 		}
 
 		protected override void OnStart()
-		{ 
+		{
 			// Handle when your app starts
+			if (User != null)
+			{
+				if (!User.IsGuard)
+				{
+					StartBackgroundService(new TimeSpan(0, 0, 0, 5));
+				}
+			}
 		}
 		#endregion
 	}

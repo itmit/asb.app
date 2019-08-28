@@ -1,16 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Title ="Меню"
+             Title="Меню"
              BackgroundColor="#1f1f1f"
              x:Class="itmit.asb.app.Views.Guard.MenuGuardPage">
     <ContentPage.Content>
         <StackLayout Margin="25">
-            <Button BackgroundColor="Transparent" BorderColor="Red" BorderWidth="2" Padding="5" Margin="0,0,0,20" TextColor="White" Text="Принятые заявки" Clicked="Button_Clicked"/>
-            <Button BackgroundColor="Transparent" BorderColor="Red" BorderWidth="2" Padding="5" TextColor="White" Text="Ожидающие принятия" Clicked="Button_Clicked_1"/>
+            <Button BackgroundColor="Transparent" BorderColor="Red" BorderWidth="2" Padding="5" Margin="0,0,0,20"
+                    TextColor="White" Text="Принятые заявки" Clicked="Button_Clicked" />
+            <Button BackgroundColor="Transparent" BorderColor="Red" BorderWidth="2" Padding="5" TextColor="White"
+                    Text="Ожидающие принятия" Clicked="Button_Clicked_1" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

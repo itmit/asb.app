@@ -35,6 +35,18 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Protected
+		protected bool CheckNetworkAccess()
+		{
+			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+			{
+				return true;
+			}
+
+			Application.Current.MainPage.DisplayAlert("Внимание", "Нет подключения к сети", "Ok");
+
+			return false;
+		}
+
 		protected async Task<bool> CheckPermission(Permission permission, string message)
 		{
 			var status = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
@@ -49,20 +61,8 @@ namespace itmit.asb.app.ViewModels
 
 				status = await CrossPermissions.Current.CheckPermissionStatusAsync(permission);
 			}
-			
+
 			return await Task.FromResult(status == PermissionStatus.Granted);
-		}
-
-		protected bool CheckNetworkAccess()
-		{
-			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
-			{
-				return true;
-			}
-
-			Application.Current.MainPage.DisplayAlert("Внимание", "Нет подключения к сети", "Ok");
-			
-			return false;
 		}
 
 		protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action onChanged = null)

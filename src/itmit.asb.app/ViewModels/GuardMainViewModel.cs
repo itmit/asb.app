@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -20,8 +19,8 @@ namespace itmit.asb.app.ViewModels
 		private ObservableCollection<Bid> _bids;
 		private readonly INavigation _navigation;
 		private Bid _selectedBid;
-		private readonly Timer _timer;
 		private readonly BidStatus _selectedStatus;
+		private readonly Timer _timer;
 		#endregion
 		#endregion
 
@@ -44,17 +43,18 @@ namespace itmit.asb.app.ViewModels
 											  obj => !IsBusy);
 
 			ExitCommand = new RelayCommand(obj =>
-			{
-				var app = Application.Current as App;
-				if (app == null)
-				{
-					return;
-				}
+										   {
+											   var app = Application.Current as App;
+											   if (app == null)
+											   {
+												   return;
+											   }
 
-				app.Logout();
+											   app.Logout();
 
-				_timer.Change(Timeout.Infinite, Timeout.Infinite);
-			}, obj => true);
+											   _timer.Change(Timeout.Infinite, Timeout.Infinite);
+										   },
+										   obj => true);
 
 			// создаем таймер
 			_timer = new Timer(UpdateBids, null, 0, 5000);
@@ -78,17 +78,18 @@ namespace itmit.asb.app.ViewModels
 											  obj => !IsBusy);
 
 			ExitCommand = new RelayCommand(obj =>
-			{
-				var app = Application.Current as App;
-				if (app == null)
-				{
-					return;
-				}
+										   {
+											   var app = Application.Current as App;
+											   if (app == null)
+											   {
+												   return;
+											   }
 
-				app.Logout();
+											   app.Logout();
 
-				_timer.Change(Timeout.Infinite, Timeout.Infinite);
-			}, obj => true);
+											   _timer.Change(Timeout.Infinite, Timeout.Infinite);
+										   },
+										   obj => true);
 
 			// создаем таймер
 			_timer = new Timer(UpdateBids, null, 0, 5000);
@@ -96,7 +97,6 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Properties
-
 		public ICommand ExitCommand
 		{
 			get;
@@ -111,10 +111,7 @@ namespace itmit.asb.app.ViewModels
 		public ObservableCollection<Bid> Bids
 		{
 			get => _bids;
-			set
-			{
-				SetProperty(ref _bids, value);
-			}
+			set => SetProperty(ref _bids, value);
 		}
 
 		public Bid SelectedBid
@@ -146,10 +143,10 @@ namespace itmit.asb.app.ViewModels
 		public async void UpdateBids(object obj = null)
 		{
 			IBidsService bidsService = new BidsService(App.User.UserToken);
-			List<Bid> bidsList = (await bidsService.GetBidsAsync(_selectedStatus)).ToList();
+			var bidsList = (await bidsService.GetBidsAsync(_selectedStatus)).ToList();
 			foreach (var bid in bidsList)
 			{
-				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3,0,0));
+				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
 				bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
 			}
 

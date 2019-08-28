@@ -7,7 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <converters:BidStatusConverter x:Key="BidStatusConverter"/>
+            <converters:BidStatusConverter x:Key="BidStatusConverter" />
 
             <!--Global Styles-->
             <Style TargetType="NavigationPage">
@@ -214,7 +214,7 @@
             <Style x:Key="FrameLcPageUser" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="100" />
                 <Setter Property="BackgroundColor" Value="#222222" />
-                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Padding" Value="0" />
             </Style>
             <Style x:Key="FrameLcPageUserTwo" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="#ef2b2e" />

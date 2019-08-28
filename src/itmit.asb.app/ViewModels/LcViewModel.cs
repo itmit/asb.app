@@ -1,16 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
-using Plugin.FilePicker;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
-using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Realms;
-using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -18,14 +13,14 @@ namespace itmit.asb.app.ViewModels
 	{
 		#region Data
 		#region Fields
+		private bool _isValid;
 		private string _note = string.Empty;
 		private string _organization = string.Empty;
-		private string _phoneNumber = string.Empty;
-		private string _userPictureSource = "user1.png";
-		private readonly AuthService _service = new AuthService();
-		private readonly Realm _realm;
 		private bool _permissionGranted;
-		private bool _isValid;
+		private string _phoneNumber = string.Empty;
+		private readonly Realm _realm;
+		private readonly AuthService _service = new AuthService();
+		private string _userPictureSource = "user1.png";
 		#endregion
 		#endregion
 
@@ -52,29 +47,6 @@ namespace itmit.asb.app.ViewModels
 													  UpdatePhotoCommandExecute();
 												  },
 												  obj => CanUpdatePhotoCommandExecute());
-
-		}
-
-		private bool CanUpdatePhotoCommandExecute()
-		{
-			if (!_permissionGranted)
-			{
-				CheckPermission();
-			}
-
-			IsValid = CrossMedia.IsSupported && _permissionGranted;
-			return IsValid;
-		}
-
-		private async void CheckPermission()
-		{
-			_permissionGranted = 
-				await CheckPermission(Permission.Storage, "Для загрузки фотографии необходимо разрешение на использование хранилища.");
-
-			if (_permissionGranted)
-			{
-				UpdatePhotoCommand.CanExecute(null);
-			}
 		}
 		#endregion
 
@@ -98,11 +70,12 @@ namespace itmit.asb.app.ViewModels
 				if (value != null)
 				{
 					_realm.Write(() =>
-									 {
-										 App.User.Note = value;
-									 });
+					{
+						App.User.Note = value;
+					});
 					_service.SetNode(value, App.User.UserToken);
 				}
+
 				SetProperty(ref _note, value);
 			}
 		}
@@ -127,6 +100,27 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Private
+		private bool CanUpdatePhotoCommandExecute()
+		{
+			if (!_permissionGranted)
+			{
+				CheckPermission();
+			}
+
+			IsValid = CrossMedia.IsSupported && _permissionGranted;
+			return IsValid;
+		}
+
+		private async void CheckPermission()
+		{
+			_permissionGranted = await CheckPermission(Permission.Storage, "Для загрузки фотографии необходимо разрешение на использование хранилища.");
+
+			if (_permissionGranted)
+			{
+				UpdatePhotoCommand.CanExecute(null);
+			}
+		}
+
 		private async void UpdatePhotoCommandExecute()
 		{
 			await CrossMedia.Current.Initialize();
@@ -136,7 +130,7 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
-			MediaFile image = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
+			var image = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
 			{
 				PhotoSize = PhotoSize.Medium
 			});
@@ -155,7 +149,8 @@ namespace itmit.asb.app.ViewModels
 
 			using (var memoryStream = new MemoryStream())
 			{
-				image.GetStream().CopyTo(memoryStream);
+				image.GetStream()
+					 .CopyTo(memoryStream);
 				image.Dispose();
 				_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
 			}

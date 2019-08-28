@@ -10,9 +10,8 @@ namespace itmit.asb.app.Models
 	{
 		#region Data
 		#region Static
-		
 		/// <summary>
-		/// Последнее сохраненное место клиента. 
+		/// Последнее сохраненное место клиента.
 		/// </summary>
 		private static Location _currentGeolocation;
 		#endregion

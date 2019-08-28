@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
@@ -14,14 +12,14 @@ namespace itmit.asb.app.ViewModels
 	{
 		#region Data
 		#region Fields
-		private Bid _bid;
+		private readonly Bid _bid;
 		private string _email;
+		private bool _isValid;
 		private string _name;
 		private string _note;
 		private string _organization;
 		private string _phoneNumber;
 		private string _userPictureSource;
-		private bool _isValid;
 		#endregion
 		#endregion
 
@@ -47,9 +45,10 @@ namespace itmit.asb.app.ViewModels
 			IsValid = !CanExecuteAcceptBidCommand(null);
 
 			OpenMapCommand = new RelayCommand(obj =>
-			{
-				OpenMapCommandExecute();
-			}, obj => true);
+											  {
+												  OpenMapCommandExecute();
+											  },
+											  obj => true);
 
 			UserPictureSource = "user1.png";
 			Organization = bid.Client.Organization;
@@ -62,15 +61,6 @@ namespace itmit.asb.app.ViewModels
 				UserPictureSource = bid.Client.UserPictureSource;
 			}
 		}
-
-		private async void OpenMapCommandExecute()
-		{
-			await Map.OpenAsync(_bid.Location.Latitude, _bid.Location.Longitude, new MapLaunchOptions
-			{
-				Name = "Тревога",
-				NavigationMode = NavigationMode.None
-			});
-		}
 		#endregion
 
 		#region Properties
@@ -79,10 +69,21 @@ namespace itmit.asb.app.ViewModels
 			get;
 		}
 
+		public ICommand OpenMapCommand
+		{
+			get;
+		}
+
 		public string Email
 		{
 			get => _email;
 			set => SetProperty(ref _email, value);
+		}
+
+		public bool IsValid
+		{
+			get => _isValid;
+			set => SetProperty(ref _isValid, value);
 		}
 
 		public string Name
@@ -97,21 +98,10 @@ namespace itmit.asb.app.ViewModels
 			set => SetProperty(ref _note, value);
 		}
 
-		public ICommand OpenMapCommand
-		{
-			get;
-		}
-
 		public string Organization
 		{
 			get => _organization;
 			set => SetProperty(ref _organization, value);
-		}
-
-		public bool IsValid
-		{
-			get => _isValid;
-			set => SetProperty(ref _isValid, value);
 		}
 
 		public string PhoneNumber
@@ -128,17 +118,10 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Public
-		public void AcceptBidCommandExecute(Bid bid)
+		public async void AcceptBidCommandExecute(Bid bid)
 		{
-			try
-			{
-				var bidService = new BidsService(App.User.UserToken);
-				bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
-			}
-			catch (AuthenticationException e)
-			{
-				Debug.WriteLine(e);
-			}
+			IBidsService bidService = new BidsService(App.User.UserToken);
+			await bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
 		}
 		#endregion
 
@@ -156,6 +139,17 @@ namespace itmit.asb.app.ViewModels
 			}
 
 			return false;
+		}
+
+		private async void OpenMapCommandExecute()
+		{
+			await Map.OpenAsync(_bid.Location.Latitude,
+								_bid.Location.Longitude,
+								new MapLaunchOptions
+								{
+									Name = "Тревога",
+									NavigationMode = NavigationMode.None
+								});
 		}
 		#endregion
 	}

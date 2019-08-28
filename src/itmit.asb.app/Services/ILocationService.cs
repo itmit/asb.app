@@ -6,14 +6,19 @@ namespace itmit.asb.app.Services
 {
 	public interface ILocationService
 	{
-		Task<bool> AddPointOnMapTask(Location location, UserToken token);
-		Task<bool> AddPointOnMapTask(Location location, UserToken token, Guid guid);
-
-		Task<bool> UpdateCurrentLocationTask(Location location, UserToken token);
-
+		#region Properties
 		string LastError
 		{
 			get;
 		}
+		#endregion
+
+		#region Overridable
+		Task<bool> AddPointOnMapTask(Location location, UserToken token);
+
+		Task<bool> AddPointOnMapTask(Location location, UserToken token, Guid guid);
+
+		Task<bool> UpdateCurrentLocationTask(Location location, UserToken token);
+		#endregion
 	}
 }

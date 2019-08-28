@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using itmit.asb.app.Models;
 using itmit.asb.app.ViewModels;
-using Realms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

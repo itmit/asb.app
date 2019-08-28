@@ -69,7 +69,6 @@
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloseAplication.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="LocationServiceDroid.cs" />
     <Compile Include="LocationTrackingServiceDroid.cs" />

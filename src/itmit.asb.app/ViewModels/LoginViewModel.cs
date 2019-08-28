@@ -104,10 +104,10 @@ namespace itmit.asb.app.ViewModels
 
 			if (user.IsGuard)
 			{
-				app.MainPage = new NavigationPage(new GuardMainPage());
+				app.MainPage = new GuardMainPage();
 				return;
 			}
-			
+
 			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 			app.MainPage = new AlarmPage();
 		}

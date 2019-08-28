@@ -10,26 +10,28 @@ namespace itmit.asb.app
 {
 	public class PeriodicWebCall : IPeriodicTask
 	{
+		#region Data
+		#region Fields
 		private readonly ILocationService _locationService = new LocationService();
+		#endregion
+		#endregion
 
-		public PeriodicWebCall(TimeSpan interval)
+		#region .ctor
+		public PeriodicWebCall(TimeSpan interval) => Interval = interval;
+		#endregion
+
+		#region IPeriodicTask members
+		public TimeSpan Interval
 		{
-			Interval = interval;
+			get;
 		}
 
 		public async Task<bool> StartJob()
 		{
 			Debug.WriteLine($"Update location at {DateTime.Now};");
 
-			return await _locationService.UpdateCurrentLocationTask(
-				await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Medium),
-				App.User.UserToken
-			);
+			return await _locationService.UpdateCurrentLocationTask(await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Medium), App.User.UserToken);
 		}
-
-		public TimeSpan Interval
-		{
-			get;
-		}
+		#endregion
 	}
 }

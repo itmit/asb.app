@@ -1,8 +1,4 @@
-﻿using System;
-using itmit.asb.app.Models;
-using itmit.asb.app.ViewModels;
-using Realms;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace itmit.asb.app.Views.Guard
@@ -16,6 +12,6 @@ namespace itmit.asb.app.Views.Guard
 			InitializeComponent();
 			Master = new MenuGuardPage();
 		}
-        #endregion
-    }
+		#endregion
+	}
 }

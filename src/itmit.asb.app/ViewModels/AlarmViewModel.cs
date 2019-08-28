@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
@@ -11,7 +10,6 @@ namespace itmit.asb.app.ViewModels
 {
 	public class AlarmViewModel : BaseViewModel
 	{
-
 		#region .ctor
 		public AlarmViewModel()
 		{
@@ -19,7 +17,8 @@ namespace itmit.asb.app.ViewModels
 												   {
 													   var bidId = Guid.NewGuid();
 													   SendAlarm(BidType.Call, bidId);
-													   DependencyService.Get<ILocationTrackingService>().StartService(bidId);
+													   DependencyService.Get<ILocationTrackingService>()
+																		.StartService(bidId);
 													   App.Call("+7 911 447-11-83");
 												   },
 												   obj => CheckNetworkAccess());
@@ -27,9 +26,9 @@ namespace itmit.asb.app.ViewModels
 											{
 												var bidId = Guid.NewGuid();
 												SendAlarm(BidType.Alert, bidId);
-												DependencyService.Get<ILocationTrackingService>().StartService(bidId);
+												DependencyService.Get<ILocationTrackingService>()
+																 .StartService(bidId);
 												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога успешна отправлена", "OK");
-												
 											},
 											obj => CheckNetworkAccess());
 		}
@@ -55,8 +54,8 @@ namespace itmit.asb.app.ViewModels
 				guid = Guid.NewGuid();
 			}
 
-			var service = new BidsService(App.User.UserToken);
-			service.CreateBid(new Bid
+			IBidsService service = new BidsService(App.User.UserToken);
+			await service.CreateBid(new Bid
 			{
 				Guid = guid,
 				Client = App.User,

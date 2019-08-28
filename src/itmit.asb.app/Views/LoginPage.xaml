@@ -19,7 +19,7 @@
                     <Label Text="Неправильные логин или пароль" TextColor="#b20e0b"
                            IsVisible="{Binding AuthNotSuccess}" />
 
-                    <Image x:Name="Logo" Source="logo" HorizontalOptions="Center" HeightRequest="200"/>
+                    <Image x:Name="Logo" Source="logo" HorizontalOptions="Center" HeightRequest="200" />
                     <controls:LoginEntry x:Name="Login" Placeholder="ТЕЛЕФОН" Text="{Binding Login}"
                                          Style="{StaticResource EntryLoginPageNumber}">
                         <controls:LoginEntry.Behaviors>

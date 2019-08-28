@@ -16,29 +16,30 @@ namespace itmit.asb.app.Views.Guard
 
 			BindingContext = new BidDetailViewModel(bid);
 			AcceptBidButton.CommandParameter = bid;
-            SizeChanged += OnSizeChanged;
-        }
-        #endregion
+			SizeChanged += OnSizeChanged;
+		}
+		#endregion
 
-        void OnSizeChanged(object sender, EventArgs e)
-        {
-
-            if (Application.Current.MainPage.Width >= 600)
-            {
-                Name.FontSize = 40;
-                Organization.FontSize = 40;
-                PhoneNumber.FontSize = 40;
-                Email.FontSize = 40;
-                Note.FontSize = 40;
-            }
-            else
-            {
-                Name.FontSize = 20;
-                Organization.FontSize = 20;
-                PhoneNumber.FontSize = 20;
-                Email.FontSize = 20;
-                Note.FontSize = 20;
-            }
-        }
-    }
+		#region Private
+		private void OnSizeChanged(object sender, EventArgs e)
+		{
+			if (Application.Current.MainPage.Width >= 600)
+			{
+				Name.FontSize = 40;
+				Organization.FontSize = 40;
+				PhoneNumber.FontSize = 40;
+				Email.FontSize = 40;
+				Note.FontSize = 40;
+			}
+			else
+			{
+				Name.FontSize = 20;
+				Organization.FontSize = 20;
+				PhoneNumber.FontSize = 20;
+				Email.FontSize = 20;
+				Note.FontSize = 20;
+			}
+		}
+		#endregion
+	}
 }
