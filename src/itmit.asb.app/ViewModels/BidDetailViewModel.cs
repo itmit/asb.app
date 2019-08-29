@@ -146,7 +146,7 @@ namespace itmit.asb.app.ViewModels
 
 		private async void OpenMapCommandExecute()
 		{
-			await _navigation.PushAsync(new MapPage(_bid.Location));
+			await _navigation.PushAsync(new MapPage(_bid));
 			//await Map.OpenAsync(_bid.Location.Latitude,
 			//					_bid.Location.Longitude,
 			//					new MapLaunchOptions

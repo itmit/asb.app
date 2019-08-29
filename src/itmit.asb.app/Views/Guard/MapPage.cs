@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Threading;
 using itmit.asb.app.Models;
+using itmit.asb.app.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
@@ -10,8 +12,15 @@ namespace itmit.asb.app.Views.Guard
 	public class MapPage : ContentPage
 	{
 		private readonly Map _map;
-		public MapPage(Location location)
+		private readonly IBidsService _bidsService;
+
+		public MapPage(Bid bid)
 		{
+			_bidsService = new BidsService(new UserToken
+			{
+				Token = (string) App.User.UserToken.Token.Clone()
+			});
+
 			_map = new Map
 			{
 				IsShowingUser = true,
@@ -24,14 +33,14 @@ namespace itmit.asb.app.Views.Guard
 			_map.Pins.Add(new Pin
 			{
 				Label = "Тревога",
-				Position = new Position(location.Latitude, location.Longitude)
+				Position = new Position(bid.Location.Latitude, bid.Location.Longitude)
 			});
 
 			// You can use MapSpan.FromCenterAndRadius 
 			//map.MoveToRegion (MapSpan.FromCenterAndRadius (new Position (37, -122), Distance.FromMiles (0.3)));
 			// or create a new MapSpan object directly
 			double degrees = 360 / Math.Pow(2, 14);
-			_map.MoveToRegion(new MapSpan(new Position(location.Latitude, location.Longitude), degrees, degrees));
+			_map.MoveToRegion(new MapSpan(new Position(bid.Location.Latitude, bid.Location.Longitude), degrees, degrees));
 
 			// create map style buttons
 			var street = new Button { Text = "Street" };
@@ -53,6 +62,18 @@ namespace itmit.asb.app.Views.Guard
 			stack.Children.Add(_map);
 			stack.Children.Add(segments);
 			Content = stack;
+
+			Timer timer = new Timer(UpdateAlertLocation, bid, 0, 10000);
+		}
+
+		private async void UpdateAlertLocation(object obj)
+		{
+			if (obj is Bid bid)
+			{
+				await _bidsService.SyncBidLocation(bid);
+				_map.Pins[0]
+					.Position = new Position(bid.Location.Latitude, bid.Location.Longitude);
+			}
 		}
 
 		private void HandleClicked(object sender, EventArgs e)
@@ -73,7 +94,6 @@ namespace itmit.asb.app.Views.Guard
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// In response to this forum question http://forums.xamarin.com/discussion/22493/maps-visibleregion-bounds

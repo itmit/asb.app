@@ -40,7 +40,7 @@ namespace itmit.asb.app.Services
 		/// </summary>
 		/// <param name="bid">Синхронизируемая тревога.</param>
 		/// <returns>Возвращает <c>true</c> в случае успеха, иначе <c>false</c>.</returns>
-		Task<bool> SyncBidLocation(Bid bid);
+		Task<Bid> SyncBidLocation(Bid bid);
 		#endregion
 	}
 }
