@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using itmit.asb.app.ViewModels;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace itmit.asb.app.Views.Guard
@@ -11,6 +12,7 @@ namespace itmit.asb.app.Views.Guard
 		{
 			InitializeComponent();
 			Master = new MenuGuardPage();
+			BindingContext = new GuardMainViewModel(Navigation);
 		}
 		#endregion
 	}

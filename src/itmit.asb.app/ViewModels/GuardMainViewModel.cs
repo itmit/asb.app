@@ -20,7 +20,8 @@ namespace itmit.asb.app.ViewModels
 		private readonly INavigation _navigation;
 		private Bid _selectedBid;
 		private readonly BidStatus _selectedStatus;
-		private readonly Timer _timer;
+		private Timer _timer;
+		private App _app = Application.Current as App;
 		#endregion
 		#endregion
 
@@ -52,10 +53,13 @@ namespace itmit.asb.app.ViewModels
 
 											   app.Logout();
 
-											   _timer.Change(Timeout.Infinite, Timeout.Infinite);
+											   _timer?.Change(Timeout.Infinite, Timeout.Infinite);
 										   },
 										   obj => true);
+		}
 
+		public void StartUpdateTimer()
+		{
 			// создаем таймер
 			_timer = new Timer(UpdateBids, null, 0, 5000);
 		}
@@ -87,12 +91,9 @@ namespace itmit.asb.app.ViewModels
 
 											   app.Logout();
 
-											   _timer.Change(Timeout.Infinite, Timeout.Infinite);
+											   _timer?.Change(Timeout.Infinite, Timeout.Infinite);
 										   },
 										   obj => true);
-
-			// создаем таймер
-			_timer = new Timer(UpdateBids, null, 0, 5000);
 		}
 		#endregion
 
@@ -140,18 +141,32 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Public
-		public async void UpdateBids(object obj = null)
+		private async void UpdateBids(object obj = null)
 		{
-			IBidsService bidsService = new BidsService(App.User.UserToken);
-			var bidsList = (await bidsService.GetBidsAsync(_selectedStatus)).ToList();
-			foreach (var bid in bidsList)
+			if (_app == null)
 			{
-				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
-				bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
+				_timer.Change(Timeout.Infinite, Timeout.Infinite);
+				return;
 			}
 
-			Bids = new ObservableCollection<Bid>(bidsList);
-			IsBusy = false;
+			if (_app.MainPage is GuardMainPage)
+			{
+				IBidsService bidsService = new BidsService(App.User.UserToken);
+				var bidsList = (await bidsService.GetBidsAsync(_selectedStatus)).ToList();
+				foreach (var bid in bidsList)
+				{
+					bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
+					bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
+				}
+
+				Bids = new ObservableCollection<Bid>(bidsList);
+				IsBusy = false;
+			}
+			else
+			{
+				_timer.Change(Timeout.Infinite, Timeout.Infinite);
+
+			}
 		}
 		#endregion
 

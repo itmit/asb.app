@@ -12,7 +12,9 @@ namespace itmit.asb.app.Views.Guard
 		public WaitApplyBidsPage()
 		{
 			InitializeComponent();
-			BindingContext = new GuardMainViewModel(Navigation, BidStatus.PendingAcceptance);
+			var vm = new GuardMainViewModel(Navigation, BidStatus.PendingAcceptance);
+			vm.StartUpdateTimer();
+			BindingContext = vm;
 		}
 		#endregion
 	}

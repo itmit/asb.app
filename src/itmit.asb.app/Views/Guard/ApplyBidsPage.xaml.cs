@@ -11,7 +11,9 @@ namespace itmit.asb.app.Views.Guard
 		public ApplyBidsPage()
 		{
 			InitializeComponent();
-			BindingContext = new GuardMainViewModel(Navigation);
+			var vm = new GuardMainViewModel(Navigation);
+			vm.StartUpdateTimer();
+			BindingContext = vm;
 		}
 		#endregion
 	}
