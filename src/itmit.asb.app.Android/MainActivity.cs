@@ -5,6 +5,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Gms.Common.Apis;
 using Android.Gms.Location;
+using Android.Gms.Maps;
 using Android.OS;
 using Android.Provider;
 using Android.Runtime;
@@ -12,6 +13,7 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using AndroidX.Work;
 using itmit.asb.app.Droid;
+using itmit.asb.app.Droid.Services;
 using ImageCircle.Forms.Plugin.Droid;
 using itmit.asb.app.Services;
 using Matcha.BackgroundService.Droid;
@@ -50,24 +52,22 @@ namespace itmit.asb.app.Droid
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
             ImageCircleRenderer.Init();
-
-            TabLayoutResource = Resource.Layout.Tabbar;
-			ToolbarResource = Resource.Layout.Toolbar;
-
 			BackgroundAggregator.Init(this);
-
-			base.OnCreate(savedInstanceState);
 			Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 			Forms.Init(this, savedInstanceState);
+			FormsMaps.Init(this, savedInstanceState);
+
+			TabLayoutResource = Resource.Layout.Tabbar;
+			ToolbarResource = Resource.Layout.Toolbar;
+
+			base.OnCreate(savedInstanceState);
 
 			CheckPermissions();
-
-			// StartForegroundServiceCompat<LocationTrackingService>(this);
 
 			Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
 			DisplayLocationSettingsRequest();
-			FormsMaps.Init(this, savedInstanceState);
+
 			LoadApplication(new App());
 		}
 		#endregion

@@ -69,10 +69,10 @@
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="LocationServiceDroid.cs" />
-    <Compile Include="LocationTrackingServiceDroid.cs" />
-    <Compile Include="LocationUpdatesService.cs" />
+    <Compile Include="Services\Constants.cs" />
+    <Compile Include="Services\LocationServiceDroid.cs" />
+    <Compile Include="Services\LocationTrackingServiceDroid.cs" />
+    <Compile Include="Services\LocationUpdatesService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\BorderAlarmRenderer.cs" />
     <Compile Include="Renderers\EditorLcPageRenderer.cs" />
@@ -81,8 +81,8 @@
     <Compile Include="Renderers\LoginEntryRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LocationTrackingService.cs" />
-    <Compile Include="UtcTimestamper.cs" />
+    <Compile Include="Services\LocationTrackingService.cs" />
+    <Compile Include="Services\UtcTimestamper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

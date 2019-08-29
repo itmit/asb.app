@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using itmit.asb.app.Views.Guard;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -20,13 +21,15 @@ namespace itmit.asb.app.ViewModels
 		private string _organization;
 		private string _phoneNumber;
 		private string _userPictureSource;
+		private readonly INavigation _navigation;
 		#endregion
 		#endregion
 
 		#region .ctor
-		public BidDetailViewModel(Bid bid)
+		public BidDetailViewModel(Bid bid, INavigation navigation)
 		{
 			_bid = bid;
+			_navigation = navigation;
 
 			AcceptBidCommand = new RelayCommand(obj =>
 												{
@@ -143,13 +146,14 @@ namespace itmit.asb.app.ViewModels
 
 		private async void OpenMapCommandExecute()
 		{
-			await Map.OpenAsync(_bid.Location.Latitude,
-								_bid.Location.Longitude,
-								new MapLaunchOptions
-								{
-									Name = "Тревога",
-									NavigationMode = NavigationMode.None
-								});
+			await _navigation.PushAsync(new MapPage(_bid.Location));
+			//await Map.OpenAsync(_bid.Location.Latitude,
+			//					_bid.Location.Longitude,
+			//					new MapLaunchOptions
+			//					{
+			//						Name = "Тревога",
+			//						NavigationMode = NavigationMode.None
+			//					});
 		}
 		#endregion
 	}

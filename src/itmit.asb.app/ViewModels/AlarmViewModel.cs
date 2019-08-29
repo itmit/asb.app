@@ -28,7 +28,7 @@ namespace itmit.asb.app.ViewModels
 												SendAlarm(BidType.Alert, bidId);
 												DependencyService.Get<ILocationTrackingService>()
 																 .StartService(bidId);
-												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога успешна отправлена", "OK");
+												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога отправлена", "OK");
 											},
 											obj => CheckNetworkAccess());
 		}

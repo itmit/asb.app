@@ -1,12 +1,13 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Realms;
 
 namespace itmit.asb.app.Models
 {
 	/// <summary>
 	/// Представляет токен доступа пользователя.
 	/// </summary>
-	public struct UserToken
+	public class UserToken : RealmObject
 	{
 		#region Properties
 		/// <summary>
@@ -27,7 +28,7 @@ namespace itmit.asb.app.Models
 		{
 			get;
 			set;
-		}
+		} = string.Empty;
 
 		/// <summary>
 		/// Возвращает или устанавливает тип токена для авторизации.
@@ -37,7 +38,7 @@ namespace itmit.asb.app.Models
 		{
 			get;
 			set;
-		}
+		} = "Bearer";
 		#endregion
 	}
 }

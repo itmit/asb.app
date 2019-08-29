@@ -1,8 +1,9 @@
-﻿using System;
+﻿
+using System;
 using Android.Content;
 using Android.Util;
 using AndroidX.Work;
-using itmit.asb.app.Droid;
+using itmit.asb.app.Droid.Services;
 using itmit.asb.app.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -10,7 +11,7 @@ using Location = itmit.asb.app.Models.Location;
 
 [assembly: Dependency(typeof(LocationUpdatesService))]
 
-namespace itmit.asb.app.Droid
+namespace itmit.asb.app.Droid.Services
 {
 	public class LocationUpdatesService : Worker
 	{

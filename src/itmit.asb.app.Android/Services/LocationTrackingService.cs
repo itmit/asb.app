@@ -4,12 +4,11 @@ using Android.Content;
 using Android.OS;
 using Android.Support.V4.Content;
 using Android.Util;
-using AndroidX.Work;
 using itmit.asb.app.Services;
 using Xamarin.Essentials;
 using Location = itmit.asb.app.Models.Location;
 
-namespace itmit.asb.app.Droid
+namespace itmit.asb.app.Droid.Services
 {
 	/// <summary>
 	/// This is a sample started service. When the service is started, it will log a string that details how long
@@ -124,7 +123,6 @@ namespace itmit.asb.app.Droid
 		#endregion
 
 		#region Private
-
 		private async void Update()
 		{
 			if (Connectivity.NetworkAccess == NetworkAccess.Internet)

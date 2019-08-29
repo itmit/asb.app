@@ -34,6 +34,13 @@ namespace itmit.asb.app.Services
 		/// <param name="status">Новый статус тервоги.</param>
 		/// <returns>Возвращает <c>true</c> в случае успеха, иначе <c>false</c>.</returns>
 		Task<bool> SetBidStatusAsync(Bid bid, BidStatus status);
+
+		/// <summary>
+		/// Синхронизирует текущее местоположение тревоги с сервером.
+		/// </summary>
+		/// <param name="bid">Синхронизируемая тревога.</param>
+		/// <returns>Возвращает <c>true</c> в случае успеха, иначе <c>false</c>.</returns>
+		Task<bool> SyncBidLocation(Bid bid);
 		#endregion
 	}
 }

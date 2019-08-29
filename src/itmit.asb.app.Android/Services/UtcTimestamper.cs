@@ -1,6 +1,6 @@
 using System;
 
-namespace itmit.asb.app.Droid
+namespace itmit.asb.app.Droid.Services
 {
 	public class UtcTimestamper
 	{
