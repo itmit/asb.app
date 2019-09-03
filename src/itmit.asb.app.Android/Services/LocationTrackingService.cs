@@ -4,6 +4,7 @@ using Android.Content;
 using Android.OS;
 using Android.Support.V4.Content;
 using Android.Util;
+using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Essentials;
 using Location = itmit.asb.app.Models.Location;
@@ -28,6 +29,7 @@ namespace itmit.asb.app.Droid.Services
 		private DateTime _startTime;
 		private readonly ILocationService _locationService = new LocationService();
 		private Guid _bidGuid;
+		private UserToken _token;
 		#endregion
 		#endregion
 
@@ -41,6 +43,11 @@ namespace itmit.asb.app.Droid.Services
 
 			_handler = new Handler();
 			_startTime = DateTime.UtcNow;
+
+			_token = new UserToken
+			{
+				Token = App.User.UserToken.Token.Clone() as string
+			};
 
 			// This Action is only for demonstration purposes.
 			_runnable = () =>
@@ -135,7 +142,7 @@ namespace itmit.asb.app.Droid.Services
 				}
 
 				var res = await _locationService.AddPointOnMapTask(
-							  new Location(location.Latitude, location.Longitude), App.User.UserToken, _bidGuid);
+							  new Location(location.Latitude, location.Longitude), _token, _bidGuid);
 
 				Log.Debug(_tag, res ? $"Update location is SUCCESS at {DateTime.Now};" : $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
 			}

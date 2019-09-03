@@ -22,6 +22,7 @@ namespace itmit.asb.app.ViewModels
 		private string _phoneNumber;
 		private string _userPictureSource;
 		private readonly INavigation _navigation;
+		private bool _isVisible;
 		#endregion
 		#endregion
 
@@ -44,6 +45,19 @@ namespace itmit.asb.app.ViewModels
 													}
 												},
 												CanExecuteAcceptBidCommand);
+			CloseBidCommand = new RelayCommand(obj =>
+											   {
+												   if (obj is Bid bidParam)
+												   {
+													   Task.Run(() =>
+													   {
+														   CloseBidCommandExecute(bidParam);
+													   });
+
+													   Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
+												   }
+											   },
+											   CanExecuteCloseBidCommand);
 
 			IsValid = !CanExecuteAcceptBidCommand(null);
 
@@ -71,6 +85,10 @@ namespace itmit.asb.app.ViewModels
 		{
 			get;
 		}
+		public ICommand CloseBidCommand
+		{
+			get;
+		}
 
 		public ICommand OpenMapCommand
 		{
@@ -87,6 +105,12 @@ namespace itmit.asb.app.ViewModels
 		{
 			get => _isValid;
 			set => SetProperty(ref _isValid, value);
+		}
+
+		public bool IsVisible
+		{
+			get => _isVisible;
+			set => SetProperty(ref _isVisible, value);
 		}
 
 		public string Name
@@ -126,6 +150,12 @@ namespace itmit.asb.app.ViewModels
 			IBidsService bidService = new BidsService(App.User.UserToken);
 			await bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
 		}
+
+		public async void CloseBidCommandExecute(Bid bid)
+		{
+			IBidsService bidService = new BidsService(App.User.UserToken);
+			await bidService.SetBidStatusAsync(bid, BidStatus.Processed);
+		}
 		#endregion
 
 		#region Private
@@ -144,16 +174,26 @@ namespace itmit.asb.app.ViewModels
 			return false;
 		}
 
+		private bool CanExecuteCloseBidCommand(object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+
+			if (obj is Bid bid)
+			{
+				IsVisible = bid.Guid != Guid.Empty && bid.Status == BidStatus.Accepted;
+				return IsVisible;
+			}
+
+			IsVisible = false;
+			return IsVisible;
+		}
+
 		private async void OpenMapCommandExecute()
 		{
 			await _navigation.PushAsync(new MapPage(_bid));
-			//await Map.OpenAsync(_bid.Location.Latitude,
-			//					_bid.Location.Longitude,
-			//					new MapLaunchOptions
-			//					{
-			//						Name = "Тревога",
-			//						NavigationMode = NavigationMode.None
-			//					});
 		}
 		#endregion
 	}

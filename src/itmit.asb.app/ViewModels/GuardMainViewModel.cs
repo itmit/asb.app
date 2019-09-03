@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -19,16 +20,16 @@ namespace itmit.asb.app.ViewModels
 		private ObservableCollection<Bid> _bids;
 		private readonly INavigation _navigation;
 		private Bid _selectedBid;
-		private readonly BidStatus _selectedStatus;
 		private Timer _timer;
 		private App _app = Application.Current as App;
+		private bool _isShowActiveBids;
 		#endregion
 		#endregion
 
 		#region .ctor
 		public GuardMainViewModel(INavigation navigation)
 		{
-			_selectedStatus = BidStatus.Accepted;
+			_isShowActiveBids = true;
 
 			_navigation = navigation;
 
@@ -64,9 +65,9 @@ namespace itmit.asb.app.ViewModels
 			_timer = new Timer(UpdateBids, null, 0, 5000);
 		}
 
-		public GuardMainViewModel(INavigation navigation, BidStatus status)
+		public GuardMainViewModel(INavigation navigation, bool isShowActiveBids)
 		{
-			_selectedStatus = status;
+			_isShowActiveBids = isShowActiveBids;
 
 			_navigation = navigation;
 
@@ -152,14 +153,19 @@ namespace itmit.asb.app.ViewModels
 			if (_app.MainPage is GuardMainPage)
 			{
 				IBidsService bidsService = new BidsService(App.User.UserToken);
-				var bidsList = (await bidsService.GetBidsAsync(_selectedStatus)).ToList();
+				var bidsList = (await bidsService.GetBidsAsync()).OrderBy(x => x.Status).ToList();
+				var newBidsList = new List<Bid>();
 				foreach (var bid in bidsList)
 				{
 					bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
 					bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
+					if (CheckStatusBids(bid))
+					{
+						newBidsList.Add(bid);
+					}
 				}
 
-				Bids = new ObservableCollection<Bid>(bidsList);
+				Bids = new ObservableCollection<Bid>(newBidsList);
 				IsBusy = false;
 			}
 			else
@@ -171,6 +177,8 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Private
+		private bool CheckStatusBids(Bid bid) => _isShowActiveBids && (bid.Status == BidStatus.Accepted || bid.Status == BidStatus.PendingAcceptance);
+
 		private async void PushPage(Page page)
 		{
 			await _navigation.PushAsync(page);

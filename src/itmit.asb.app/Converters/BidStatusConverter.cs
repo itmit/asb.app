@@ -12,8 +12,9 @@ namespace itmit.asb.app.Converters
 	{
 		#region Data
 		#region Fields
-		private readonly string _accepted = "Принят";
-		private readonly string _pendingAcceptance = "Ожидает принятия";
+		private readonly Color _acceptedColor = Color.DarkRed;
+		private readonly Color _pendingAcceptanceColor = Color.Default;
+		private readonly Color _processedAcceptanceColor = Color.Default;
 		#endregion
 		#endregion
 
@@ -35,13 +36,15 @@ namespace itmit.asb.app.Converters
 				switch (status)
 				{
 					case BidStatus.Accepted:
-						return _accepted;
+						return _acceptedColor;
 					case BidStatus.PendingAcceptance:
-						return _pendingAcceptance;
+						return _pendingAcceptanceColor;
+					case BidStatus.Processed:
+						return _processedAcceptanceColor;
 				}
 			}
 
-			return "";
+			throw new ArgumentOutOfRangeException(nameof(value));
 		}
 
 		/// <param name="value">The value to convert.</param>
@@ -56,20 +59,25 @@ namespace itmit.asb.app.Converters
 		/// <remarks>To be added.</remarks>
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (value is string status)
+			if (value is Color status)
 			{
-				if (status.Equals(_accepted))
+				if (status.Equals(_acceptedColor))
 				{
 					return BidStatus.Accepted;
 				}
 
-				if (status.Equals(_pendingAcceptance))
+				if (status.Equals(_pendingAcceptanceColor))
 				{
 					return BidStatus.PendingAcceptance;
 				}
+
+				if (status.Equals(_processedAcceptanceColor))
+				{
+					return BidStatus.Processed;
+				}
 			}
 
-			return BidStatus.PendingAcceptance;
+			throw new ArgumentOutOfRangeException(nameof(value));
 		}
 		#endregion
 	}

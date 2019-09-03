@@ -4,7 +4,7 @@
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           x:Class="itmit.asb.app.Views.Guard.BidViewCell">
     <ViewCell.View>
-        <StackLayout BackgroundColor="#1f1f1f">
+        <StackLayout BackgroundColor="{Binding Status, Converter={StaticResource BidStatusConverter}}">
             <Label Text="{Binding Client.Name}" FontSize="30" HorizontalOptions="Center" TextColor="#ef2b2e" />
             <Label Text="{Binding CreatedAt, StringFormat='{0:dd.MM.yyyy HH:mm:ss}'}" FontSize="25"
                    HorizontalOptions="Center" TextColor="White" />

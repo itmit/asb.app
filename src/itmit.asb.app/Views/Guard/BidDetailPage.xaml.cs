@@ -16,6 +16,7 @@ namespace itmit.asb.app.Views.Guard
 
 			BindingContext = new BidDetailViewModel(bid, Navigation);
 			AcceptBidButton.CommandParameter = bid;
+			CloseBidButton.CommandParameter = bid;
 			SizeChanged += OnSizeChanged;
 		}
 		#endregion

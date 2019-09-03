@@ -48,6 +48,9 @@
                     <Button x:Name="AcceptBidButton" Text="Принять заявку" Command="{Binding AcceptBidCommand}"
                             IsVisible="{Binding IsValid}"
                             Margin="0,0,0,5" Style="{StaticResource ButtonBidDetail}" />
+                    <Button x:Name="CloseBidButton" Text="Закрыть заявку" Command="{Binding CloseBidCommand}"
+                            IsVisible="{Binding IsValid}"
+                            Margin="0,0,0,5" Style="{StaticResource ButtonBidDetail}" />
                     <Button Text="Открыть карту" Command="{Binding OpenMapCommand}"
                             Style="{StaticResource ButtonBidDetail}" />
                 </StackLayout>
