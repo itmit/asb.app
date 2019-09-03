@@ -21,8 +21,7 @@ namespace itmit.asb.app.ViewModels
 		private readonly INavigation _navigation;
 		private Bid _selectedBid;
 		private Timer _timer;
-		private App _app = Application.Current as App;
-		private bool _isShowActiveBids;
+		private readonly bool _isShowActiveBids;
 		#endregion
 		#endregion
 
@@ -144,40 +143,34 @@ namespace itmit.asb.app.ViewModels
 		#region Public
 		private async void UpdateBids(object obj = null)
 		{
-			if (_app == null)
+			if (_timer == null || App.User == null)
 			{
-				_timer.Change(Timeout.Infinite, Timeout.Infinite);
 				return;
 			}
 
-			if (_app.MainPage is GuardMainPage)
+			IBidsService bidsService = new BidsService(App.User.UserToken);
+			var bidsList = (await bidsService.GetBidsAsync())
+			               .OrderByDescending(x => x.Status)
+						   .ThenByDescending(x => x.CreatedAt)
+						   .ToList();
+			var newBidsList = new List<Bid>();
+			foreach (var bid in bidsList)
 			{
-				IBidsService bidsService = new BidsService(App.User.UserToken);
-				var bidsList = (await bidsService.GetBidsAsync()).OrderBy(x => x.Status).ToList();
-				var newBidsList = new List<Bid>();
-				foreach (var bid in bidsList)
+				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
+				bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
+				if (CheckStatusBids(bid))
 				{
-					bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
-					bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
-					if (CheckStatusBids(bid))
-					{
-						newBidsList.Add(bid);
-					}
+					newBidsList.Add(bid);
 				}
-
-				Bids = new ObservableCollection<Bid>(newBidsList);
-				IsBusy = false;
 			}
-			else
-			{
-				_timer.Change(Timeout.Infinite, Timeout.Infinite);
 
-			}
+			Bids = new ObservableCollection<Bid>(newBidsList);
+			IsBusy = false;
 		}
 		#endregion
 
 		#region Private
-		private bool CheckStatusBids(Bid bid) => _isShowActiveBids && (bid.Status == BidStatus.Accepted || bid.Status == BidStatus.PendingAcceptance);
+		private bool CheckStatusBids(Bid bid) => _isShowActiveBids ^ (bid.Status == BidStatus.Processed);
 
 		private async void PushPage(Page page)
 		{

@@ -85,6 +85,7 @@ namespace itmit.asb.app.ViewModels
 		{
 			get;
 		}
+
 		public ICommand CloseBidCommand
 		{
 			get;

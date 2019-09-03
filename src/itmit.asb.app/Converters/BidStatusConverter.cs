@@ -12,8 +12,8 @@ namespace itmit.asb.app.Converters
 	{
 		#region Data
 		#region Fields
-		private readonly Color _acceptedColor = Color.DarkRed;
-		private readonly Color _pendingAcceptanceColor = Color.Default;
+		private readonly Color _acceptedColor = Color.Default;
+		private readonly Color _pendingAcceptanceColor = Color.DarkRed;
 		private readonly Color _processedAcceptanceColor = Color.Default;
 		#endregion
 		#endregion

@@ -11,9 +11,9 @@
     <ContentPage.Content>
         <StackLayout Margin="25">
             <Button BackgroundColor="Transparent" BorderColor="Red" BorderWidth="2" Padding="5" Margin="0,0,0,20"
-                    TextColor="White" Text="Принятые заявки" Clicked="Button_Clicked" />
+                    TextColor="White" Text="Активные заявки" Clicked="Button_Clicked" />
             <Button BackgroundColor="Transparent" BorderColor="Red" BorderWidth="2" Padding="5" TextColor="White"
-                    Text="Ожидающие принятия" Clicked="Button_Clicked_1" />
+                    Text="Архив" Clicked="Button_Clicked_1" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

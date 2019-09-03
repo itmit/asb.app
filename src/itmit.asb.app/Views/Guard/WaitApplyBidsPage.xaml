@@ -6,7 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:guard="clr-namespace:itmit.asb.app.Views.Guard"
              mc:Ignorable="d"
-             Title="Ожидающие принятия заявки"
+             Title="Архив"
              BackgroundColor="#1f1f1f"
              x:Class="itmit.asb.app.Views.Guard.WaitApplyBidsPage">
     <ContentPage.Content>
