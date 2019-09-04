@@ -22,6 +22,9 @@ namespace itmit.asb.app.ViewModels
 		private Bid _selectedBid;
 		private Timer _timer;
 		private readonly bool _isShowActiveBids;
+		private bool _hasWaitApplyAlerts;
+		private bool _isPlaySound;
+		private readonly IPlaySoundService _soundService = DependencyService.Get<IPlaySoundService>();
 		#endregion
 		#endregion
 
@@ -153,11 +156,14 @@ namespace itmit.asb.app.ViewModels
 			               .OrderByDescending(x => x.Status)
 						   .ThenByDescending(x => x.CreatedAt)
 						   .ToList();
+
+			_hasWaitApplyAlerts = false;
 			var newBidsList = new List<Bid>();
 			foreach (var bid in bidsList)
 			{
 				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
 				bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
+
 				if (CheckStatusBids(bid))
 				{
 					newBidsList.Add(bid);
@@ -165,7 +171,40 @@ namespace itmit.asb.app.ViewModels
 			}
 
 			Bids = new ObservableCollection<Bid>(newBidsList);
+
+			await Task.Run(async () =>
+			{
+				await Task.Delay(1000);
+				if (Bids.Any(x => x.Status != BidStatus.Processed))
+				{
+					PlaybackAlertSound();
+				}
+				else
+				{
+					StopPlayAlertSound();
+				}
+			});
+			
+
 			IsBusy = false;
+		}
+
+		private void StopPlayAlertSound()
+		{
+			if (_isPlaySound)
+			{
+				_isPlaySound = false;
+				_soundService.StopAudio();
+			}
+		}
+
+		private void PlaybackAlertSound()
+		{
+			if (!_isPlaySound)
+			{
+				_isPlaySound = true;
+				_soundService.PlayAudio("alarm.mp3", true);
+			}
 		}
 		#endregion
 

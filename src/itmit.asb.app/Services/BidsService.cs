@@ -215,7 +215,6 @@ namespace itmit.asb.app.Services
 				}
 				return await Task.FromResult(bid);
 			}
-
 		}
 
 		public string SyncLocationUri = "http://asb.itmit-studio.ru/api/bid/updateCoordinates";

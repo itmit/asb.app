@@ -3,6 +3,7 @@ using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Content.Res;
 using Android.Gms.Common.Apis;
 using Android.Gms.Location;
 using Android.Gms.Maps;

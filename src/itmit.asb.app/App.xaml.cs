@@ -119,10 +119,7 @@ namespace itmit.asb.app
 			// Handle when your app starts
 			if (User != null)
 			{
-				if (!User.IsGuard)
-				{
-					StartBackgroundService(new TimeSpan(0, 0, 0, 5));
-				}
+				StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 			}
 		}
 		#endregion

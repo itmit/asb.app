@@ -102,13 +102,14 @@ namespace itmit.asb.app.ViewModels
 				Realm.Add(user, true);
 			});
 
+			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
+
 			if (user.IsGuard)
 			{
 				app.MainPage = new GuardMainPage();
 				return;
 			}
 
-			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 			app.MainPage = new AlarmPage();
 		}
 		#endregion
