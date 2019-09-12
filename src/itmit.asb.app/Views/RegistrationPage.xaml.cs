@@ -16,5 +16,9 @@ namespace itmit.asb.app.Views
         {
             InitializeComponent();
         }
+        private void BackButton_Clicked(object sender, EventArgs e)
+        {
+            Application.Current.MainPage = new NavigationPage(new LoginPage());
+        }
     }
 }

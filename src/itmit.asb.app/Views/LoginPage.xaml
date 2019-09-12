@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:itmit.asb.app.Controls"
              xmlns:app="clr-namespace:itmit.asb.app"
              x:Class="itmit.asb.app.Views.LoginPage"
+             NavigationPage.HasNavigationBar="False"
              BackgroundImageSource="mainf.png">
 
     <ContentPage.Content>

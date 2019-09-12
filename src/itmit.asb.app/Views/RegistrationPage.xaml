@@ -11,6 +11,9 @@
              x:Class="itmit.asb.app.Views.RegistrationPage">
     <ContentPage.Content>
         <StackLayout>
+            <StackLayout BackgroundColor="#ef2b2e">
+                <ImageButton x:Name="BackButton" Source="arrow_left" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" HorizontalOptions="Start" Margin="5,15" Clicked="BackButton_Clicked"/>
+            </StackLayout>
             <Label Text="Ваш номер:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
             <controls:LoginEntry Placeholder="ТЕЛЕФОН" Margin="30,0,30,0" Style="{StaticResource EntryLoginPageNumber}">
                 <controls:LoginEntry.Behaviors>
