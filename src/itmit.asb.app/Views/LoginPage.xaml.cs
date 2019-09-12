@@ -13,12 +13,12 @@ namespace itmit.asb.app.Views
 		{
 			InitializeComponent();
 			BindingContext = new LoginViewModel();
-			SizeChanged += OnSizeChanged;
+            
+            SizeChanged += OnSizeChanged;
 		}
-		#endregion
-
-		#region Private
-		private void OnSizeChanged(object sender, EventArgs e)
+        #endregion
+        #region Private
+        private void OnSizeChanged(object sender, EventArgs e)
 		{
 			if (Application.Current.MainPage.Width >= 600)
 			{
@@ -41,6 +41,17 @@ namespace itmit.asb.app.Views
                 Registration.WidthRequest = default;
             }
 		}
-		#endregion
-	}
+
+        #endregion
+
+        private void ForgetPass_Clicked(object sender, EventArgs e)
+        {
+            Application.Current.MainPage = new NavigationPage(new ForgetPasswordPage());
+        }
+
+        private void Registration_Clicked(object sender, EventArgs e)
+        {
+            Application.Current.MainPage = new NavigationPage(new RegistrationPage());
+        }
+    }
 }

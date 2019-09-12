@@ -20,7 +20,7 @@ namespace itmit.asb.app.ViewModels
 		private bool _authNotSuccess;
 		private readonly IAuthService _authService = DependencyService.Get<IAuthService>();
 		private string _login;
-		private string _password;
+        private string _password;
 		#endregion
 		#endregion
 
@@ -34,7 +34,7 @@ namespace itmit.asb.app.ViewModels
 											obj => CanLoginCommandExecute());
 
 			AuthNotSuccess = false;
-		}
+    }
 		#endregion
 
 		#region Properties
@@ -44,7 +44,7 @@ namespace itmit.asb.app.ViewModels
 			set;
 		}
 
-		public bool AuthNotSuccess
+        public bool AuthNotSuccess
 		{
 			get => _authNotSuccess;
 			set => SetProperty(ref _authNotSuccess, value);

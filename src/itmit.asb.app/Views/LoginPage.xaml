@@ -41,8 +41,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Grid.Column="0" x:Name="ForgetPass" Text="Восстановить пароль ?" Style="{StaticResource ButtonLoginTwo}"/>
-                <Button Grid.Row="0" Grid.Column="1" x:Name="Registration" Text="Регистрация" Style="{StaticResource ButtonLoginTwo}"/>
+                <Button Grid.Row="0" Grid.Column="0" x:Name="ForgetPass" Text="Восстановить пароль ?" Style="{StaticResource ButtonLoginTwo}" Clicked="ForgetPass_Clicked"/>
+                <Button Grid.Row="0" Grid.Column="1" x:Name="Registration" Text="Регистрация" Style="{StaticResource ButtonLoginTwo}" Clicked="Registration_Clicked"/>
             </Grid>
         </Grid>
     </ContentPage.Content>
