@@ -238,6 +238,14 @@
                 <Setter Property="Margin" Value="0,15,0,0" />
                 <Setter Property="HorizontalOptions" Value="Center" />
             </Style>
+            <Style x:Key="ButtonLoginTwo" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#b20e0b" />
+                <Setter Property="Margin" Value="15" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="60"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

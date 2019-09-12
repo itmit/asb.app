@@ -27,6 +27,8 @@ namespace itmit.asb.app.Views
 				Login.HorizontalOptions = LayoutOptions.Center;
 				Password.WidthRequest = 400;
 				Password.HorizontalOptions = LayoutOptions.Center;
+                ForgetPass.WidthRequest = 230;
+                Registration.WidthRequest = 230;
 			}
 			else
 			{
@@ -35,7 +37,9 @@ namespace itmit.asb.app.Views
 				Login.HorizontalOptions = LayoutOptions.Fill;
 				Password.WidthRequest = Application.Current.MainPage.Width;
 				Password.HorizontalOptions = LayoutOptions.Fill;
-			}
+                ForgetPass.WidthRequest = default;
+                Registration.WidthRequest = default;
+            }
 		}
 		#endregion
 	}
