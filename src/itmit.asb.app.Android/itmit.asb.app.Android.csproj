@@ -69,6 +69,7 @@
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Renderers\NativePickerRenderer.cs" />
     <Compile Include="Services\Constants.cs" />
     <Compile Include="Services\LocationServiceDroid.cs" />
     <Compile Include="Services\LocationTrackingServiceDroid.cs" />

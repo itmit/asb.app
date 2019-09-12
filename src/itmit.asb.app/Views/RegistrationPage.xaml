@@ -3,13 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:itmit.asb.app.Controls"
+             xmlns:app="clr-namespace:itmit.asb.app"
              mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundImageSource="mainf.png"
              x:Class="itmit.asb.app.Views.RegistrationPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Label Text="Ваш номер:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+            <controls:LoginEntry Placeholder="ТЕЛЕФОН" Margin="30,0,30,0" Style="{StaticResource EntryLoginPageNumber}">
+                <controls:LoginEntry.Behaviors>
+                    <app:MaskedBehavior Mask="+X (XXX) XXX-XX-XX" />
+                </controls:LoginEntry.Behaviors>
+            </controls:LoginEntry>
+            <Label Text="Тип лица:" FontSize="Large" TextColor="#f4e213" Margin="30,0"/>
+            <Picker x:Name="Login" Title="Выбрать тип" TextColor="#b20e0b" TitleColor="#b20e0b" FontSize="Large" Margin="30,0">
+                <Picker.Items>
+                    <x:String>Юридическое</x:String>
+                    <x:String>Физическое</x:String>
+                </Picker.Items>
+            </Picker>
+            <Label Text="Пароль:" FontSize="Large" TextColor="#f4e213" Margin="30,0,30,0"/>
+            <controls:LoginEntry Placeholder="Пароль" Margin="30,0" Keyboard="Text" Style="{StaticResource EntryLoginPageNumber}"/>
+            <Button Text="Зарегистрироваться" WidthRequest="300" Style="{StaticResource ButtonLoginPage}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
