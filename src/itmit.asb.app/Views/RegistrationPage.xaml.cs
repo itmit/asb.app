@@ -20,5 +20,10 @@ namespace itmit.asb.app.Views
         {
             Application.Current.MainPage = new NavigationPage(new LoginPage());
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            DisplayAlert("Уведомление", "Регистрация окончена", "ОK");
+        }
     }
 }

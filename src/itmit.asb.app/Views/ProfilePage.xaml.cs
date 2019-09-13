@@ -47,6 +47,11 @@ namespace itmit.asb.app.Views
 
 			app?.Logout();
 		}
-		#endregion
-	}
+        #endregion
+
+        private void ImageButton_Clicked_5(object sender, EventArgs e)
+        {
+            Application.Current.MainPage = new NavigationPage(new EditProfilePage());
+        }
+    }
 }
