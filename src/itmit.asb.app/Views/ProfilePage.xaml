@@ -17,6 +17,9 @@
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="0">
                 <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="Center" Margin="0,30">
+                    <StackLayout HorizontalOptions="FillAndExpand" Margin="50,0">
+                        <ImageButton Source="r_user.png" WidthRequest="40" HeightRequest="40" BackgroundColor="Transparent" HorizontalOptions="End" Clicked="ImageButton_Clicked_5"/>
+                    </StackLayout>
                     <Grid ColumnSpacing="0" RowSpacing="0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
