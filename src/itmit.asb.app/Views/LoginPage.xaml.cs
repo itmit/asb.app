@@ -12,7 +12,7 @@ namespace itmit.asb.app.Views
 		public LoginPage()
 		{
 			InitializeComponent();
-			BindingContext = new LoginViewModel();
+			BindingContext = new LoginViewModel(Navigation);
             
             SizeChanged += OnSizeChanged;
 		}
@@ -43,15 +43,5 @@ namespace itmit.asb.app.Views
 		}
 
         #endregion
-
-        private void ForgetPass_Clicked(object sender, EventArgs e)
-        {
-            Application.Current.MainPage = new NavigationPage(new ForgetPasswordPage());
-        }
-
-        private void Registration_Clicked(object sender, EventArgs e)
-        {
-            Application.Current.MainPage = new NavigationPage(new RegistrationPage());
-        }
     }
 }

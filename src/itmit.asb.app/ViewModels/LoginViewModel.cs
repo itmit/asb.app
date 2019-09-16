@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Security.Authentication;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
@@ -25,13 +26,25 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region .ctor
-		public LoginViewModel()
+		public LoginViewModel(INavigation navigation)
 		{
 			LoginCommand = new RelayCommand(obj =>
 											{
 												Task.Run(LoginCommandExecute);
 											},
 											obj => CanLoginCommandExecute());
+
+			OpenForgotPassPage = new RelayCommand(obj =>
+												  {
+													  navigation.PushAsync(new ForgetPasswordPage());
+												  },
+												  obj => !IsBusy);
+
+			OpenRegistrationPage = new RelayCommand(obj =>
+													{
+														navigation.PushAsync(new RegistrationPage());
+													},
+													obj => !IsBusy);
 
 			AuthNotSuccess = false;
     }
@@ -48,6 +61,22 @@ namespace itmit.asb.app.ViewModels
 		{
 			get => _authNotSuccess;
 			set => SetProperty(ref _authNotSuccess, value);
+		}
+
+		/// <summary>
+		/// Возвращает команду для открытия страницы восстановления пароля.
+		/// </summary>
+		public ICommand OpenForgotPassPage
+		{
+			get;
+		}
+
+		/// <summary>
+		/// Возвращает команду для открытия страницы регистрации.
+		/// </summary>
+		public ICommand OpenRegistrationPage
+		{
+			get;
 		}
 
 		public string Login

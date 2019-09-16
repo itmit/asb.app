@@ -23,6 +23,11 @@ namespace itmit.asb.app.Services
 		private const string AuthUri = "http://asb.itmit-studio.ru/api/login";
 
 		/// <summary>
+		/// Задает адрес для регистрации.
+		/// </summary>
+		private const string RegisterUri = "http://asb.itmit-studio.ru/api/register";
+
+		/// <summary>
 		/// Задает адрес для получения картинок.
 		/// </summary>
 		private const string BasePictureUri = "http://asb.itmit-studio.ru/";
@@ -181,6 +186,50 @@ namespace itmit.asb.app.Services
 			}
 
 			throw new AuthenticationException($"Возникла ошибка при авторизации. Логин: {login}");
+		}
+
+		public async Task<UserToken> RegisterAsync(User user, string password, string cPassword)
+		{
+			if (password.Equals(cPassword))
+			{
+				using (var client = new HttpClient())
+				{
+					client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+					client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+					var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+					{
+						{
+							"phone_number", user.PhoneNumber
+						},
+						{
+							"clientType", user.UserType.ToString()
+						},
+						{
+							"password", password
+						},
+						{
+							"c_password", cPassword
+						}
+					});
+
+					HttpResponseMessage response = await client.PostAsync(RegisterUri, encodedContent);
+					var jsonString = await response.Content.ReadAsStringAsync();
+					Debug.WriteLine(jsonString);
+
+					if (response.IsSuccessStatusCode)
+					{
+						if (jsonString != null)
+						{
+							var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<UserToken>>(jsonString);
+							return await Task.FromResult(jsonData.Data);
+						}
+					}
+					return await Task.FromResult(new UserToken());
+				}
+			}
+
+			return await Task.FromResult(new UserToken());
 		}
 		#endregion
 	}
