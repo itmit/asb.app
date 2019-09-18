@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using itmit.asb.app.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,6 +14,7 @@ namespace itmit.asb.app.Views
 		{
 			InitializeComponent();
 			SizeChanged += OnSizeChanged;
+			BindingContext = new AboutViewModel(Navigation);
 		}
 		#endregion
 

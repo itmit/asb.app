@@ -12,27 +12,24 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <StackLayout BackgroundColor="#ef2b2e">
-                    <ImageButton x:Name="BackButton" Source="arrow_left" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" HorizontalOptions="Start" Margin="5,15" Clicked="BackButton_Clicked"/>
-                </StackLayout>
                 <Label Text="Ваш номер:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Margin="30,0,30,0" Style="{StaticResource EntryLoginPageNumber}">
+                <controls:LoginEntry Text="{Binding PhoneNumber}" Placeholder="Введите данные..." Margin="30,0,30,0" Style="{StaticResource EntryLoginPageNumber}">
                     <controls:LoginEntry.Behaviors>
                         <app:MaskedBehavior Mask="+X (XXX) XXX-XX-XX" />
                     </controls:LoginEntry.Behaviors>
                 </controls:LoginEntry>
                 <Label Text="Тип лица:" FontSize="Large" TextColor="#f4e213" Margin="30,0"/>
-                <Picker x:Name="Login" Title="Выбрать тип" TextColor="#b20e0b" TitleColor="#b20e0b" FontSize="Large" Margin="30,0">
+                <Picker x:Name="Login" SelectedItem="{Binding UserType}" Title="Выбрать тип" TextColor="#b20e0b" TitleColor="#b20e0b" FontSize="Large" Margin="30,0">
                     <Picker.Items>
                         <x:String>Юридическое</x:String>
                         <x:String>Физическое</x:String>
                     </Picker.Items>
                 </Picker>
                 <Label Text="Пароль:" FontSize="Large" TextColor="#f4e213" Margin="30,0,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Margin="30,0" Keyboard="Text" Style="{StaticResource EntryLoginPageNumber}"/>
+                <controls:LoginEntry Text="{Binding Password}" Placeholder="Введите данные..." IsPassword="True" Margin="30,0" Keyboard="Text" Style="{StaticResource EntryLoginPageNumber}"/>
                 <Label Text="Подтвердить пароль:" FontSize="Large" TextColor="#f4e213" Margin="30,0,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Margin="30,0" Keyboard="Text" Style="{StaticResource EntryLoginPageNumber}"/>
-                <Button Text="Зарегистрироваться" WidthRequest="300" Style="{StaticResource ButtonLoginPage}" Clicked="Button_Clicked"/>
+                <controls:LoginEntry Text="{Binding ConfirmPassword}" Placeholder="Введите данные..." IsPassword="True" Margin="30,0" Keyboard="Text" Style="{StaticResource EntryLoginPageNumber}"/>
+                <Button Text="Зарегистрироваться" WidthRequest="300" Style="{StaticResource ButtonLoginPage}" Command="{Binding Register}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

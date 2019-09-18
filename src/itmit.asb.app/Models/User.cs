@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Realms;
 
 namespace itmit.asb.app.Models
@@ -8,6 +9,8 @@ namespace itmit.asb.app.Models
 	/// </summary>
 	public class User : RealmObject
 	{
+		private string _userType;
+
 		#region Properties
 		/// <summary>
 		/// Возвращает или устанавливает email пользователя.
@@ -73,6 +76,17 @@ namespace itmit.asb.app.Models
 		{
 			get;
 			set;
+		}
+
+		/// <summary>
+		/// Возвращает или устанавливает тип пользователя.
+		/// </summary>
+		[JsonProperty("clientType")]
+		[Ignored]
+		public UserType UserType
+		{
+			get => (UserType)Enum.Parse(typeof(UserType), _userType);
+			set => _userType = value.ToString();
 		}
 
 		/// <summary>

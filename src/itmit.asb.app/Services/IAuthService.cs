@@ -25,6 +25,8 @@ namespace itmit.asb.app.Services
 		/// <returns>Токен авторизованного пользователя.</returns>
 		/// <exception cref="AuthenticationException">Возникает при неудачной авторизации.</exception>
 		Task<UserToken> LoginAsync(string login, string pass);
+
+		Task<UserToken> RegisterAsync(User client, string password, string cPassword);
 		#endregion
 	}
 }

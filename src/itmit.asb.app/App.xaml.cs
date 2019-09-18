@@ -31,7 +31,7 @@ namespace itmit.asb.app
 
 			if (User == null)
 			{
-				MainPage = new LoginPage();
+				MainPage = new NavigationPage(new LoginPage());
 				return;
 			}
 
@@ -52,7 +52,7 @@ namespace itmit.asb.app
 			get
 			{
 				var con = RealmConfiguration.DefaultConfiguration;
-				con.SchemaVersion = 2;
+				con.SchemaVersion = 3;
 				return Realm.GetInstance(con)
 							.All<User>()
 							.SingleOrDefault();
@@ -84,7 +84,7 @@ namespace itmit.asb.app
 		public void Logout()
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 2;
+			con.SchemaVersion = 3;
 			var realm = Realm.GetInstance(con);
 			using (var transaction = realm.BeginWrite())
 			{
@@ -94,7 +94,7 @@ namespace itmit.asb.app
 
 			_updatesService.StopService();
 
-			Current.MainPage = new LoginPage();
+			Current.MainPage = new NavigationPage(new LoginPage());
 		}
 
 		public void StartBackgroundService(TimeSpan timeSpan)
@@ -119,10 +119,7 @@ namespace itmit.asb.app
 			// Handle when your app starts
 			if (User != null)
 			{
-				if (!User.IsGuard)
-				{
-					StartBackgroundService(new TimeSpan(0, 0, 0, 5));
-				}
+				StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 			}
 		}
 		#endregion
