@@ -31,6 +31,8 @@ namespace itmit.asb.app.Services
 		Task<bool> ForgotPassword(string phoneNumber);
 
 		Task<bool> CheckCode(string phoneNumber, string code);
+
+		Task<bool> ResetPassword(string phoneNumber, string code, string password);
 		#endregion
 	}
 }

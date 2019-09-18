@@ -22,11 +22,11 @@ namespace itmit.asb.app.ViewModels
 
 		private async void VerifyPhoneCodeExecute(string phoneNumber, string code)
 		{
-			AuthService service = new AuthService();
+			IAuthService service = new AuthService();
 
 			if (await service.CheckCode(phoneNumber, code))
 			{
-				await _navigation.PushAsync(new ChangePasswordPage());
+				await _navigation.PushAsync(new ChangePasswordPage(phoneNumber, code));
 			}
 		}
 

@@ -31,6 +31,8 @@ namespace itmit.asb.app.Services
 
 		private const string CheckCodeUri = "http://asb.itmit-studio.ru/api/checkCode";
 
+		private const string ResetPasswordUri = "http://asb.itmit-studio.ru/api/resetPassword";
+
 		/// <summary>
 		/// Задает адрес для получения картинок.
 		/// </summary>
@@ -278,6 +280,34 @@ namespace itmit.asb.app.Services
 				});
 
 				HttpResponseMessage response = await client.PostAsync(CheckCodeUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<bool> ResetPassword(string phoneNumber, string code, string password)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"phone_number", phoneNumber
+					},
+					{
+						"secret_code", code
+					},
+					{
+						"new_password", password
+					}
+				});
+
+				HttpResponseMessage response = await client.PostAsync(ResetPasswordUri, encodedContent);
 				var jsonString = await response.Content.ReadAsStringAsync();
 				Debug.WriteLine(jsonString);
 
