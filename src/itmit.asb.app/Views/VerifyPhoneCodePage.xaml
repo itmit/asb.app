@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:itmit.asb.app.Controls"
              xmlns:app="clr-namespace:itmit.asb.app"
-             x:Class="itmit.asb.app.Views.VerifyPhoneCodePage">
+             x:Class="itmit.asb.app.Views.VerifyPhoneCodePage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundImageSource="mainf.png">
     <ContentPage.Content>
         <StackLayout>
+            <Label Text="Введите проверочный код, который пришел проверочный код" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
             <controls:LoginEntry Text="{Binding PhoneCode}" Placeholder="Введите данные..." Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
             <Button Text="Отправить" Style="{StaticResource ButtonLoginPage}" Command="{Binding VerifyPhoneCode}"/>
         </StackLayout>
