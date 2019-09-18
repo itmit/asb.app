@@ -27,6 +27,10 @@ namespace itmit.asb.app.Services
 		/// </summary>
 		private const string RegisterUri = "http://asb.itmit-studio.ru/api/register";
 
+		private const string ForgotPasswordUri = "http://asb.itmit-studio.ru/api/forgotPassword";
+
+		private const string CheckCodeUri = "http://asb.itmit-studio.ru/api/checkCode";
+
 		/// <summary>
 		/// Задает адрес для получения картинок.
 		/// </summary>
@@ -230,6 +234,55 @@ namespace itmit.asb.app.Services
 			}
 
 			return await Task.FromResult(new UserToken());
+		}
+
+		public async Task<bool> ForgotPassword(string phoneNumber)
+		{
+			return await Task.FromResult(true);
+
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"phone_number", phoneNumber
+					}
+				});
+
+				HttpResponseMessage response = await client.PostAsync(ForgotPasswordUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<bool> CheckCode(string phoneNumber, string code)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"phone_number", phoneNumber
+					},
+					{
+						"secret_code", code
+					}
+				});
+
+				HttpResponseMessage response = await client.PostAsync(CheckCodeUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
 		}
 		#endregion
 	}
