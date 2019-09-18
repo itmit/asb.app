@@ -16,12 +16,7 @@ namespace itmit.asb.app.Views
         {
             InitializeComponent();
         }
-
-        private void BackButton_Clicked(object sender, EventArgs e)
-        {
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
-        }
-
+		
         private void Button_Clicked(object sender, EventArgs e)
         {
             DisplayAlert("Уведомление", "Отправлено SMS с новым паролем", "ОK");
