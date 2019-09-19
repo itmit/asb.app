@@ -90,6 +90,16 @@ namespace itmit.asb.app.Models
 		}
 
 		/// <summary>
+		/// Возвращает или устанавливает тип пользователя.
+		/// </summary>
+		[JsonProperty("is_active")]
+		public bool IsActive
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Возвращает или устанавливает токен пользователя.
 		/// </summary>
 		public UserToken UserToken

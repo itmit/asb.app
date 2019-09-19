@@ -15,6 +15,11 @@ namespace itmit.asb.app.ViewModels
 		{
 			AlarmAndCallCommand = new RelayCommand(obj =>
 												   {
+													   if (!App.User.IsActive)
+													   {
+														   Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+														   return;
+													   }
 													   var bidId = Guid.NewGuid();
 													   SendAlarm(BidType.Call, bidId);
 													   DependencyService.Get<ILocationTrackingService>()
@@ -24,6 +29,11 @@ namespace itmit.asb.app.ViewModels
 												   obj => CheckNetworkAccess());
 			AlarmCommand = new RelayCommand(obj =>
 											{
+												if (!App.User.IsActive)
+												{
+													Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+													return;
+												}
 												var bidId = Guid.NewGuid();
 												SendAlarm(BidType.Alert, bidId);
 												DependencyService.Get<ILocationTrackingService>()

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
+using Realms;
 using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
@@ -46,6 +47,14 @@ namespace itmit.asb.app.ViewModels
 			if (path == "www.asb-security.ru/")
 			{
 				Application.Current.MainPage = new NavigationPage(new AlarmPage());
+
+				var con = RealmConfiguration.DefaultConfiguration;
+				con.SchemaVersion = 4;
+				Realm.GetInstance(con).Write(() =>
+				{
+					App.User.IsActive = true;
+				});
+
 				IAuthService service = new AuthService();
 				await service.SetActivityFrom(App.User.UserToken);
 				await Task.Delay(150);

@@ -28,7 +28,7 @@ namespace itmit.asb.app.ViewModels
 		public LcViewModel(User user)
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 3;
+			con.SchemaVersion = 4;
 			_realm = Realm.GetInstance(con);
 
 			UserPictureSource = "user1.png";

@@ -52,7 +52,7 @@ namespace itmit.asb.app
 			get
 			{
 				var con = RealmConfiguration.DefaultConfiguration;
-				con.SchemaVersion = 3;
+				con.SchemaVersion = 4;
 				return Realm.GetInstance(con)
 							.All<User>()
 							.SingleOrDefault();
@@ -84,7 +84,7 @@ namespace itmit.asb.app
 		public void Logout()
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 3;
+			con.SchemaVersion = 4;
 			var realm = Realm.GetInstance(con);
 			using (var transaction = realm.BeginWrite())
 			{

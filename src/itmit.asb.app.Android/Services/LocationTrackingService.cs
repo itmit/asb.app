@@ -46,14 +46,13 @@ namespace itmit.asb.app.Droid.Services
 
 			_token = new UserToken
 			{
-				Token = App.User.UserToken.Token.Clone() as string
+				Token = (string)App.User.UserToken.Token.Clone()
 			};
 
 			// This Action is only for demonstration purposes.
 			_runnable = () =>
 			{
 				var duration = DateTime.UtcNow.Subtract(_startTime);
-
 				var msg = _wasReset ? $"Service restarted at {_startTime} ({duration:c} ago)."
 							  : $"Service started at {_startTime} ({duration:c} ago).";
 
@@ -136,7 +135,7 @@ namespace itmit.asb.app.Droid.Services
 			{
 				var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
 
-				if (location == null)
+				if (location == null || _token == null)
 				{
 					return;
 				}

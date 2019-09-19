@@ -70,9 +70,16 @@ namespace itmit.asb.app.Views.Guard
 		{
 			if (obj is Bid bid)
 			{
-				await _bidsService.SyncBidLocation(bid);
-				_map.Pins[0]
-					.Position = new Position(bid.Location.Latitude, bid.Location.Longitude);
+				try
+				{
+					await _bidsService.SyncBidLocation(bid);
+					_map.Pins[0]
+						.Position = new Position(bid.Location.Latitude, bid.Location.Longitude);
+				}
+				catch (Exception e)
+				{
+					Debug.WriteLine(e);
+				}
 			}
 		}
 

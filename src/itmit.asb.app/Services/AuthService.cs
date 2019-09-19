@@ -205,7 +205,7 @@ namespace itmit.asb.app.Services
 					client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
 					client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-					var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+					var encodedContent = new Dictionary<string, string>
 					{
 						{
 							"phone_number", user.PhoneNumber
@@ -219,9 +219,19 @@ namespace itmit.asb.app.Services
 						{
 							"c_password", cPassword
 						}
-					});
+					};
 
-					HttpResponseMessage response = await client.PostAsync(RegisterUri, encodedContent);
+					if (user.UserType == UserType.Entity)
+					{
+						encodedContent.Add("organization", user.Organization);
+					}
+
+					if (user.UserType == UserType.Individual)
+					{
+						encodedContent.Add("name", user.Name);
+					}
+
+					HttpResponseMessage response = await client.PostAsync(RegisterUri, new FormUrlEncodedContent(encodedContent));
 					var jsonString = await response.Content.ReadAsStringAsync();
 					Debug.WriteLine(jsonString);
 

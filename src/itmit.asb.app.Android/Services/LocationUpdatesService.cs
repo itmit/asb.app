@@ -33,6 +33,11 @@ namespace itmit.asb.app.Droid.Services
 		#region Overrided
 		public override Result DoWork()
 		{
+			if (App.User == null)
+			{
+				return Result.InvokeFailure();
+			}
+
 			Update();
 			return Result.InvokeSuccess();
 		}
