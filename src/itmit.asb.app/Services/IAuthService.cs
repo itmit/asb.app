@@ -27,6 +27,12 @@ namespace itmit.asb.app.Services
 		Task<UserToken> LoginAsync(string login, string pass);
 
 		Task<UserToken> RegisterAsync(User client, string password, string cPassword);
+
+		Task<bool> ForgotPassword(string phoneNumber);
+
+		Task<bool> CheckCode(string phoneNumber, string code);
+
+		Task<bool> ResetPassword(string phoneNumber, string code, string password);
 		#endregion
 	}
 }

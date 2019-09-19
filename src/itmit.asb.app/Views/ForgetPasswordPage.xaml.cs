@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using itmit.asb.app.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,7 +15,8 @@ namespace itmit.asb.app.Views
         public ForgetPasswordPage()
         {
             InitializeComponent();
-        }
+			BindingContext = new ForgetPasswordModel(Navigation);
+		}
 		
         private void Button_Clicked(object sender, EventArgs e)
         {
