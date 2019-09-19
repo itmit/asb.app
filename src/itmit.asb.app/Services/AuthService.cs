@@ -33,6 +33,8 @@ namespace itmit.asb.app.Services
 
 		private const string ResetPasswordUri = "http://asb.itmit-studio.ru/api/resetPassword";
 
+		private const string SetActivityFromUri = "http://asb.itmit-studio.ru/api/client/setActivityFrom";
+
 		/// <summary>
 		/// Задает адрес для получения картинок.
 		/// </summary>
@@ -240,8 +242,6 @@ namespace itmit.asb.app.Services
 
 		public async Task<bool> ForgotPassword(string phoneNumber)
 		{
-			return await Task.FromResult(true);
-
 			using (var client = new HttpClient())
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
@@ -308,6 +308,23 @@ namespace itmit.asb.app.Services
 				});
 
 				HttpResponseMessage response = await client.PostAsync(ResetPasswordUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<bool> SetActivityFrom(UserToken token)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>());
+
+				HttpResponseMessage response = await client.PostAsync(SetActivityFromUri, encodedContent);
 				var jsonString = await response.Content.ReadAsStringAsync();
 				Debug.WriteLine(jsonString);
 
