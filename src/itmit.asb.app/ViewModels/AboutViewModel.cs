@@ -14,14 +14,27 @@ namespace itmit.asb.app.ViewModels
 	public class AboutViewModel : BaseViewModel
 	{
 		private INavigation _navigation;
+		private DateTime _activeTo;
 
 		public AboutViewModel(INavigation navigation)
 		{
+			var user = App.User;
+			if (user != null)
+			{
+				ActiveTo = user.ActiveFrom.DateTime.Add(new TimeSpan(30,3,0,0));
+			}
+
 			_navigation = navigation;
 			OpenRobokassa = new RelayCommand(obj =>
 			{
 				OpenRobokassaExecute();
 			}, obj => true);
+		}
+
+		public DateTime ActiveTo
+		{
+			get => _activeTo;
+			set => SetProperty(ref _activeTo, value);
 		}
 
 		private async void OpenRobokassaExecute()
@@ -49,7 +62,7 @@ namespace itmit.asb.app.ViewModels
 				Application.Current.MainPage = new NavigationPage(new AlarmPage());
 
 				var con = RealmConfiguration.DefaultConfiguration;
-				con.SchemaVersion = 4;
+				con.SchemaVersion = 5;
 				Realm.GetInstance(con).Write(() =>
 				{
 					App.User.IsActive = true;

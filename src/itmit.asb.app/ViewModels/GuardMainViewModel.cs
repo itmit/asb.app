@@ -53,7 +53,7 @@ namespace itmit.asb.app.ViewModels
 											   {
 												   return;
 											   }
-
+											   StopPlayAlertSound();
 											   app.Logout();
 
 											   _timer?.Change(Timeout.Infinite, Timeout.Infinite);
@@ -175,7 +175,7 @@ namespace itmit.asb.app.ViewModels
 			await Task.Run(async () =>
 			{
 				await Task.Delay(1000);
-				if (Bids.Any(x => x.Status != BidStatus.Processed))
+				if (Bids.Any(x => x.Status == BidStatus.PendingAcceptance))
 				{
 					PlaybackAlertSound();
 				}
@@ -191,11 +191,7 @@ namespace itmit.asb.app.ViewModels
 
 		private void StopPlayAlertSound()
 		{
-			if (_isPlaySound)
-			{
-				_isPlaySound = false;
-				_soundService.StopAudio();
-			}
+			_soundService.StopAudio();
 		}
 
 		private void PlaybackAlertSound()

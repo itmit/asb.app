@@ -15,30 +15,12 @@ namespace itmit.asb.app.ViewModels
 		{
 			AlarmAndCallCommand = new RelayCommand(obj =>
 												   {
-													   if (!App.User.IsActive)
-													   {
-														   Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
-														   return;
-													   }
-													   var bidId = Guid.NewGuid();
-													   SendAlarm(BidType.Call, bidId);
-													   DependencyService.Get<ILocationTrackingService>()
-																		.StartService(bidId);
-													   App.Call("+7 911 447-11-83");
+													   SendAlarm(BidType.Call);
 												   },
 												   obj => CheckNetworkAccess());
 			AlarmCommand = new RelayCommand(obj =>
 											{
-												if (!App.User.IsActive)
-												{
-													Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
-													return;
-												}
-												var bidId = Guid.NewGuid();
-												SendAlarm(BidType.Alert, bidId);
-												DependencyService.Get<ILocationTrackingService>()
-																 .StartService(bidId);
-												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога отправлена", "OK");
+												SendAlarm(BidType.Alert);
 											},
 											obj => CheckNetworkAccess());
 		}
@@ -57,15 +39,18 @@ namespace itmit.asb.app.ViewModels
 		#endregion
 
 		#region Private
-		private async void SendAlarm(BidType type, Guid guid)
+		private async void SendAlarm(BidType type)
 		{
-			if (guid == Guid.Empty)
+			if (!App.User.IsActive)
 			{
-				guid = Guid.NewGuid();
+				await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+				return;
 			}
 
+			var guid = Guid.NewGuid();
+
 			IBidsService service = new BidsService(App.User.UserToken);
-			await service.CreateBid(new Bid
+			var res = await service.CreateBid(new Bid
 			{
 				Guid = guid,
 				Client = App.User,
@@ -73,6 +58,28 @@ namespace itmit.asb.app.ViewModels
 				Status = BidStatus.PendingAcceptance,
 				Type = type
 			});
+
+			if (res)
+			{
+				DependencyService.Get<ILocationTrackingService>()
+								 .StartService(guid);
+
+				if (type == BidType.Call)
+				{
+					App.Call("+7 911 447-11-83");
+				}
+				else if (type == BidType.Alert)
+				{
+					await Application.Current.MainPage.DisplayAlert("Внимание", "Тревога отправлена", "OK");
+				}
+			}
+			else
+			{
+				if (service.LastError.Equals("Client is not active"))
+				{
+					await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+				}
+			}
 		}
 		#endregion
 	}

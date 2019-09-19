@@ -99,6 +99,19 @@ namespace itmit.asb.app.Models
 			set;
 		}
 
+		[JsonProperty("active_from")]
+		[Ignored]
+		public DateTime? ActiveFromDateTime
+		{
+			get;
+			set;
+		}
+
+		public DateTimeOffset ActiveFrom
+		{
+			get;
+			set;
+		}
 		/// <summary>
 		/// Возвращает или устанавливает токен пользователя.
 		/// </summary>

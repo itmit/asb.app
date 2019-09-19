@@ -146,6 +146,12 @@ namespace itmit.asb.app.Services
 					var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
 					jsonData.Data.UserToken = token;
 					jsonData.Data.UserPictureSource = BasePictureUri + jsonData.Data.UserPictureSource;
+
+					if (jsonData.Data.ActiveFromDateTime != null)
+					{
+						jsonData.Data.ActiveFrom = (DateTimeOffset) jsonData.Data.ActiveFromDateTime;
+					}
+
 					return await Task.FromResult(jsonData.Data);
 				}
 			}

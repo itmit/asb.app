@@ -42,5 +42,9 @@ namespace itmit.asb.app.Services
 		/// <returns>Возвращает <c>true</c> в случае успеха, иначе <c>false</c>.</returns>
 		Task<Bid> SyncBidLocation(Bid bid);
 		#endregion
+		string LastError
+		{
+			get;
+		}
 	}
 }

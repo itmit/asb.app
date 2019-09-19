@@ -72,10 +72,15 @@ namespace itmit.asb.app.Services
 					}
 				};
 				var response = await client.PostAsync(new Uri(BidApiUri), new FormUrlEncodedContent(data));
-#if DEBUG
+
 				var jsonString = await response.Content.ReadAsStringAsync();
 				Debug.WriteLine(jsonString);
-#endif
+
+				if (!response.IsSuccessStatusCode)
+				{
+					LastError = JsonConvert.DeserializeObject<JsonDataResponse<string>> (jsonString).Data;
+				}
+
 				return await Task.FromResult(response.IsSuccessStatusCode);
 			}
 		}
@@ -215,6 +220,12 @@ namespace itmit.asb.app.Services
 				}
 				return await Task.FromResult(bid);
 			}
+		}
+
+		public string LastError
+		{
+			get;
+			private set;
 		}
 
 		public string SyncLocationUri = "http://asb.itmit-studio.ru/api/bid/updateCoordinates";

@@ -34,19 +34,19 @@
                     <Frame Style="{StaticResource FrameBuyTwo}">
                         <Frame Style="{StaticResource FrameBuyOne}">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                <Label Text="АКТИВНА" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"
+                                <Label Text="АКТИВНА ДО" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"
                                        FontAttributes="Bold" />
-                                <Label Text="ОСТАЛОСЬ" FontSize="Medium" TextColor="#b20d0b" HorizontalOptions="Center" />
+                                <!--<Label Text="ДО" FontSize="Medium" TextColor="#b20d0b" HorizontalOptions="Center" />-->
                                 <FlexLayout HorizontalOptions="Center" Padding="20,0,0,0">
-                                    <Label Text="2992" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold"
+                                    <Label HorizontalTextAlignment="Center" Text="{Binding ActiveTo, StringFormat='{}{0:dd.MM.yyyy hh:mm}'}" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold"
                                            Margin="0,0,10,0" />
-                                    <Label Text="ДНЕЙ" FontSize="Medium" TextColor="#b20d0b" Margin="0,3,0,0" />
+                                    <!--<Label Text="ДНЕЙ" FontSize="Medium" TextColor="#b20d0b" Margin="0,3,0,0" />-->
                                 </FlexLayout>
                             </StackLayout>
                         </Frame>
                     </Frame>
                 </StackLayout>
-                <Button x:Name="Subscribe" Command="{Binding OpenRobokassa}" Grid.Row="2" Grid.Column="0" Text="КУПИТЬ ЧЕРЕЗ GOOGLE PLAY"
+                <Button x:Name="Subscribe" Command="{Binding OpenRobokassa}" Grid.Row="2" Grid.Column="0" Text="ОПЛАТИТЬ ПОДПИСКУ"
                         Style="{StaticResource ButtonSubscribe}" />
                 <StackLayout Margin="30,0" Grid.Row="3" Grid.Column="0" x:Name="OpisSubscribe">
                     <Frame Style="{StaticResource FrameSubscribeTwo}">
