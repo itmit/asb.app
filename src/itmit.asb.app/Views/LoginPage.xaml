@@ -25,7 +25,7 @@
                     <controls:LoginEntry x:Name="Login" Placeholder="ТЕЛЕФОН" Text="{Binding Login}"
                                          Style="{StaticResource EntryLoginPageNumber}">
                         <controls:LoginEntry.Behaviors>
-                            <app:MaskedBehavior Mask="+X (XXX) XXX-XX-XX" />
+                            <app:MaskedBehavior Mask="+7 (XXX) XXX-XX-XX" />
                         </controls:LoginEntry.Behaviors>
                     </controls:LoginEntry>
                     <controls:LoginEntry x:Name="Password" Placeholder="ПАРОЛЬ" Text="{Binding Password}"
