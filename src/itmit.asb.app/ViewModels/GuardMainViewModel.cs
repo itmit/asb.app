@@ -172,21 +172,19 @@ namespace itmit.asb.app.ViewModels
 
 			Bids = new ObservableCollection<Bid>(newBidsList);
 
-			if (!App.User.HasActiveBid)
+			await Task.Run(async () =>
 			{
-				await Task.Run(async () =>
+				await Task.Delay(1000);
+				if (Bids.Any(x => x.Status == BidStatus.PendingAcceptance && !App.User.HasActiveBid))
 				{
-					await Task.Delay(1000);
-					if (Bids.Any(x => x.Status == BidStatus.PendingAcceptance))
-					{
-						PlaybackAlertSound();
-					}
-					else
-					{
-						StopPlayAlertSound();
-					}
-				});
-			}
+					PlaybackAlertSound();
+				}
+				else
+				{
+					StopPlayAlertSound();
+				}
+			});
+			
 
 			IsBusy = false;
 		}

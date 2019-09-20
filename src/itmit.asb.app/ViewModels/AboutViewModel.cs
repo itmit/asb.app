@@ -62,7 +62,7 @@ namespace itmit.asb.app.ViewModels
 				Application.Current.MainPage = new NavigationPage(new AlarmPage());
 
 				var con = RealmConfiguration.DefaultConfiguration;
-				con.SchemaVersion = 6;
+				con.SchemaVersion = 7;
 				Realm.GetInstance(con).Write(() =>
 				{
 					App.User.IsActive = true;

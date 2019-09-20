@@ -133,8 +133,11 @@ namespace itmit.asb.app.Droid.Services
 		{
 			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
 			{
+				if (Looper.MyLooper() == null)
+				{
+					Looper.Prepare();
+				}
 
-				Looper.Prepare();
 				var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
 
 				if (location == null || _token == null)

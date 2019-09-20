@@ -38,6 +38,13 @@ namespace itmit.asb.app.Models
 			set;
 		}
 
+		[JsonProperty("bid_uuid")]
+		public string BidGuid
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Возвращает или устанавливает имя пользователя.
 		/// </summary>

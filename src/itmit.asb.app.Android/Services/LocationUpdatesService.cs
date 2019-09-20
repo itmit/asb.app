@@ -49,7 +49,11 @@ namespace itmit.asb.app.Droid.Services
 		{
 			Log.Debug(_tag, $"Begin update at {DateTime.Now};");
 
-			Looper.Prepare();
+			if (Looper.MyLooper() == null)
+			{
+				Looper.Prepare();
+			}
+
 			var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Default));
 
 			if (location == null)
