@@ -4,6 +4,7 @@ using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views.Guard;
+using Realms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -23,6 +24,7 @@ namespace itmit.asb.app.ViewModels
 		private string _userPictureSource;
 		private readonly INavigation _navigation;
 		private bool _isVisible;
+		private Realm _realm;
 		#endregion
 		#endregion
 
@@ -31,6 +33,10 @@ namespace itmit.asb.app.ViewModels
 		{
 			_bid = bid;
 			_navigation = navigation;
+			var con = RealmConfiguration.DefaultConfiguration;
+			con.SchemaVersion = 6;
+			_realm = Realm.GetInstance(con);
+			
 
 			AcceptBidCommand = new RelayCommand(obj =>
 												{
@@ -148,12 +154,20 @@ namespace itmit.asb.app.ViewModels
 		#region Public
 		public async void AcceptBidCommandExecute(Bid bid)
 		{
+			_realm.Write(() =>
+			{
+				App.User.HasActiveBid = true;
+			});
 			IBidsService bidService = new BidsService(App.User.UserToken);
 			await bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
 		}
 
 		public async void CloseBidCommandExecute(Bid bid)
 		{
+			_realm.Write(() =>
+			{
+				App.User.HasActiveBid = false;
+			});
 			IBidsService bidService = new BidsService(App.User.UserToken);
 			await bidService.SetBidStatusAsync(bid, BidStatus.Processed);
 		}
@@ -162,14 +176,14 @@ namespace itmit.asb.app.ViewModels
 		#region Private
 		private bool CanExecuteAcceptBidCommand(object obj)
 		{
-			if (obj == null)
+			if (obj == null || App.User == null)
 			{
 				return false;
 			}
 
 			if (obj is Bid bid)
 			{
-				return bid.Guid != Guid.Empty && bid.Status != BidStatus.Accepted;
+				return bid.Guid != Guid.Empty && bid.Status != BidStatus.Accepted && !App.User.HasActiveBid;
 			}
 
 			return false;
@@ -177,14 +191,14 @@ namespace itmit.asb.app.ViewModels
 
 		private bool CanExecuteCloseBidCommand(object obj)
 		{
-			if (obj == null)
+			if (obj == null || App.User == null)
 			{
 				return false;
 			}
 
 			if (obj is Bid bid)
 			{
-				IsVisible = bid.Guid != Guid.Empty && bid.Status == BidStatus.Accepted;
+				IsVisible = bid.Guid != Guid.Empty && bid.Status == BidStatus.Accepted && !App.User.HasActiveBid;
 				return IsVisible;
 			}
 

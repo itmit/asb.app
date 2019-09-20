@@ -31,6 +31,13 @@ namespace itmit.asb.app.Models
 			set;
 		}
 
+		[JsonProperty("on_duty")]
+		public bool HasActiveBid
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Возвращает или устанавливает имя пользователя.
 		/// </summary>

@@ -1,6 +1,7 @@
 ﻿
 using System;
 using Android.Content;
+using Android.OS;
 using Android.Util;
 using AndroidX.Work;
 using itmit.asb.app.Droid.Services;
@@ -48,6 +49,7 @@ namespace itmit.asb.app.Droid.Services
 		{
 			Log.Debug(_tag, $"Begin update at {DateTime.Now};");
 
+			Looper.Prepare();
 			var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Default));
 
 			if (location == null)
