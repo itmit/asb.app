@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Android;
 using Android.App;
 using Android.Content;
@@ -13,15 +14,20 @@ using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using AndroidX.Work;
+using Com.Xamarin.Formsviewgroup;
 using itmit.asb.app.Droid;
 using itmit.asb.app.Droid.Services;
 using ImageCircle.Forms.Plugin.Droid;
 using itmit.asb.app.Services;
+using Java.Math;
+using Java.Util;
 using Matcha.BackgroundService.Droid;
 using Plugin.Permissions;
+using RU.Yandex.Money.Android.Sdk;
 using Xamarin;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Xamarin.Forms.Platform.Android.AppCompat;
 
 [assembly: Dependency(typeof(AuthService))]
 [assembly: Dependency(typeof(BidsService))]
@@ -58,6 +64,8 @@ namespace itmit.asb.app.Droid
 			Forms.Init(this, savedInstanceState);
 			FormsMaps.Init(this, savedInstanceState);
 
+			Instance = this;
+
 			TabLayoutResource = Resource.Layout.Tabbar;
 			ToolbarResource = Resource.Layout.Toolbar;
 
@@ -69,9 +77,86 @@ namespace itmit.asb.app.Droid
 
 			DisplayLocationSettingsRequest();
 
+
 			LoadApplication(new App());
 		}
 		#endregion
+
+		public static MainActivity Instance
+		{
+			get;
+			private set;
+		}
+
+		private static int REQUEST_CODE_TOKENIZE = 33;
+		private static Currency RUB = Currency.GetInstance("RUB");
+		public void InitUi()
+		{
+			Settings settings = new Settings(this);
+
+			HashSet<PaymentMethodType> paymentMethodTypes = GetPaymentMethodTypes(settings);
+
+			BigDecimal amount = new BigDecimal(new BigInteger("11"));
+			PaymentParameters paymentParameters = new PaymentParameters(
+				new Amount(amount, RUB),
+				"prod_name",
+				"prod_desc",
+				"test_NjM5MDYw4_MI8X9BbkIMK20BqJ84Iw4gLyeWnXJrqrk",
+				"639060", 
+				paymentMethodTypes);
+
+			UiParameters uiParameters = new UiParameters(
+				settings.ShowYandexCheckoutLogo(), new ColorScheme(settings.GetPrimaryColor()));
+
+			MockConfiguration mockConfiguration;
+			if (settings.IsTestModeEnabled())
+			{
+				mockConfiguration = new MockConfiguration(settings.ShouldCompletePaymentWithError(),
+														  settings.IsPaymentAuthPassed(),
+														  settings.GetLinkedCardsCount(),
+														  new Amount(new BigDecimal(settings.GetServiceFee()), RUB));
+			}
+			else
+			{
+
+				mockConfiguration = null;
+			}
+			TestParameters testParameters = new TestParameters(true, false, mockConfiguration);
+			Intent intent = Checkout.CreateTokenizeIntent(this,
+														  paymentParameters,
+														  testParameters,
+														  uiParameters
+			);
+
+			StartActivityForResult(intent, REQUEST_CODE_TOKENIZE);
+		}
+
+		private static HashSet<PaymentMethodType> GetPaymentMethodTypes(Settings settings)
+		{
+			HashSet<PaymentMethodType> paymentMethodTypes = new HashSet<PaymentMethodType>();
+
+			if (settings.IsYandexMoneyAllowed())
+			{
+				paymentMethodTypes.Add(PaymentMethodType.YandexMoney);
+			}
+
+			if (settings.IsNewCardAllowed())
+			{
+				paymentMethodTypes.Add(PaymentMethodType.BankCard);
+			}
+
+			if (settings.IsSberbankOnlineAllowed())
+			{
+				paymentMethodTypes.Add(PaymentMethodType.Sberbank);
+			}
+
+			if (settings.IsGooglePayAllowed())
+			{
+				paymentMethodTypes.Add(PaymentMethodType.GooglePay);
+			}
+
+			return paymentMethodTypes;
+		}
 
 		public static void StartForegroundServiceCompat<T>(Context context, Bundle args = null) where T : Service
 		{
@@ -134,7 +219,7 @@ namespace itmit.asb.app.Droid
 					default:
 					{
 						// If all else fails, take the user to the android location settings
-						StartActivity(new Intent(Settings.ActionLocationSourceSettings));
+						StartActivity(new Intent(Android.Provider.Settings.ActionLocationSourceSettings));
 						break;
 					}
 				}

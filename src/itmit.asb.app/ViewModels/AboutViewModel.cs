@@ -27,7 +27,9 @@ namespace itmit.asb.app.ViewModels
 			_navigation = navigation;
 			OpenRobokassa = new RelayCommand(obj =>
 			{
-				OpenRobokassaExecute();
+				DependencyService.Get<IYandexCheckout>().Buy();
+
+				//OpenRobokassaExecute();
 			}, obj => true);
 		}
 
