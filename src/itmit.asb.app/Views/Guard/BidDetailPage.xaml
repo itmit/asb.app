@@ -36,7 +36,7 @@
                     </StackLayout>
                     <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
                         <StackLayout Padding="1" BackgroundColor="Black">
-                            <StackLayout HeightRequest="200" Margin="0" BackgroundColor="#2a2a2a" Padding="5">
+                            <StackLayout Margin="0" BackgroundColor="#2a2a2a" Padding="5">
                                 <Label x:Name="Note" Text="{Binding Note}" TextColor="#b2110d" FontSize="20"
                                        HorizontalOptions="Fill"
                                        VerticalOptions="Fill" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Android;
 using Android.App;
 using Android.Content;
@@ -13,12 +14,15 @@ using Android.Provider;
 using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
+using Android.Util;
+using Android.Widget;
 using AndroidX.Work;
 using Com.Xamarin.Formsviewgroup;
 using itmit.asb.app.Droid;
 using itmit.asb.app.Droid.Services;
 using ImageCircle.Forms.Plugin.Droid;
 using itmit.asb.app.Services;
+using Java.Lang;
 using Java.Math;
 using Java.Util;
 using Matcha.BackgroundService.Droid;
@@ -28,6 +32,12 @@ using Xamarin;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
+using Console = Java.IO.Console;
+using Environment = Android.OS.Environment;
+using File = Java.IO.File;
+using IOException = Java.IO.IOException;
+using Process = Android.OS.Process;
+using String = System.String;
 
 [assembly: Dependency(typeof(AuthService))]
 [assembly: Dependency(typeof(BidsService))]
@@ -77,8 +87,70 @@ namespace itmit.asb.app.Droid
 
 			DisplayLocationSettingsRequest();
 
-
 			LoadApplication(new App());
+
+			InitLog();
+		}
+
+		private void InitLog()
+		{
+			File appDirectory = new File($"{Environment.ExternalStorageDirectory}/MyPersonalAppFolder");
+			File logDirectory = new File(appDirectory + "/log");
+			var time = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))
+							   .TotalSeconds;
+			File logFile = new File(logDirectory,
+									$"logcat-{time}.txt");
+
+			if (IsExternalStorageWritable(logFile))
+			{
+				// create app folder
+				if (!appDirectory.Exists())
+				{
+					Directory.CreateDirectory(appDirectory.AbsolutePath);
+				}
+
+				// create log folder
+				if (!logDirectory.Exists())
+				{
+					Directory.CreateDirectory(logDirectory.AbsolutePath);
+				}
+
+				// clear the previous logcat and then write the new one to the file
+				try
+				{
+					Runtime.GetRuntime().Exec("logcat -c");
+					Runtime.GetRuntime().Exec($"logcat -f {logFile.AbsolutePath} *:E");
+				}
+				catch (IOException e)
+				{
+					e.PrintStackTrace();
+				}
+			}
+		}
+
+		/* Checks if external storage is available for read and write */
+		public bool IsExternalStorageWritable(File file)
+		{
+			string state = Environment.GetExternalStorageState(file);
+			if (Environment.MediaMounted.Equals(state))
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		/* Checks if external storage is available to at least read */
+		public bool IsExternalStorageReadable(File file)
+		{
+			string state = Environment.GetExternalStorageState(file);
+			if (Environment.MediaMounted.Equals(state) ||
+				Environment.MediaMountedReadOnly.Equals(state))
+			{
+				return true;
+			}
+
+			return false;
 		}
 		#endregion
 
@@ -88,8 +160,10 @@ namespace itmit.asb.app.Droid
 			private set;
 		}
 
-		private static int REQUEST_CODE_TOKENIZE = 33;
-		private static Currency RUB = Currency.GetInstance("RUB");
+		private const int RequestCodeTokenize = 33;
+
+		private static readonly Currency Rub = Currency.GetInstance("RUB");
+
 		public void InitUi()
 		{
 			Settings settings = new Settings(this);
@@ -98,59 +172,60 @@ namespace itmit.asb.app.Droid
 
 			BigDecimal amount = new BigDecimal(new BigInteger("11"));
 			PaymentParameters paymentParameters = new PaymentParameters(
-				new Amount(amount, RUB),
+				new Amount(amount, Rub),
 				"prod_name",
 				"prod_desc",
 				"test_NjM5MDYw4_MI8X9BbkIMK20BqJ84Iw4gLyeWnXJrqrk",
 				"639060", 
-				paymentMethodTypes);
+				paymentMethodTypes
+				);
 
 			UiParameters uiParameters = new UiParameters(
-				settings.ShowYandexCheckoutLogo(), new ColorScheme(settings.GetPrimaryColor()));
+				settings.ShowYandexCheckoutLogo, new ColorScheme(settings.GetPrimaryColor));
 
 			MockConfiguration mockConfiguration;
-			if (settings.IsTestModeEnabled())
+			if (settings.IsTestModeEnabled)
 			{
-				mockConfiguration = new MockConfiguration(settings.ShouldCompletePaymentWithError(),
-														  settings.IsPaymentAuthPassed(),
-														  settings.GetLinkedCardsCount(),
-														  new Amount(new BigDecimal(settings.GetServiceFee()), RUB));
+				mockConfiguration = new MockConfiguration(settings.ShouldCompletePaymentWithError,
+														  settings.IsPaymentAuthPassed,
+														  settings.GetLinkedCardsCount,
+														  new Amount(new BigDecimal(settings.GetServiceFee), Rub));
 			}
 			else
 			{
-
 				mockConfiguration = null;
 			}
+
 			TestParameters testParameters = new TestParameters(true, false, mockConfiguration);
-			Intent intent = Checkout.CreateTokenizeIntent(this,
+			var intent = Checkout.CreateTokenizeIntent(this,
 														  paymentParameters,
 														  testParameters,
 														  uiParameters
 			);
 
-			StartActivityForResult(intent, REQUEST_CODE_TOKENIZE);
+			StartActivityForResult(intent, RequestCodeTokenize);
 		}
 
 		private static HashSet<PaymentMethodType> GetPaymentMethodTypes(Settings settings)
 		{
 			HashSet<PaymentMethodType> paymentMethodTypes = new HashSet<PaymentMethodType>();
 
-			if (settings.IsYandexMoneyAllowed())
+			if (settings.IsYandexMoneyAllowed)
 			{
 				paymentMethodTypes.Add(PaymentMethodType.YandexMoney);
 			}
 
-			if (settings.IsNewCardAllowed())
+			if (settings.IsNewCardAllowed)
 			{
 				paymentMethodTypes.Add(PaymentMethodType.BankCard);
 			}
 
-			if (settings.IsSberbankOnlineAllowed())
+			if (settings.IsSberbankOnlineAllowed)
 			{
 				paymentMethodTypes.Add(PaymentMethodType.Sberbank);
 			}
 
-			if (settings.IsGooglePayAllowed())
+			if (settings.IsGooglePayAllowed)
 			{
 				paymentMethodTypes.Add(PaymentMethodType.GooglePay);
 			}
@@ -174,6 +249,70 @@ namespace itmit.asb.app.Droid
 			else
 			{
 				context.StartService(intent);
+			}
+		}
+
+		/// <param name="requestCode">The integer request code originally supplied to
+		/// startActivityForResult(), allowing you to identify who this
+		/// result came from.</param>
+		/// <param name="resultCode">The integer result code returned by the child activity
+		/// through its setResult().</param>
+		/// <param name="data">An Intent, which can return result data to the caller
+		/// (various data can be attached to Intent "extras").</param>
+		/// <summary>Called when an activity you launched exits, giving you the requestCode
+		/// you started it with, the resultCode it returned, and any additional
+		/// data from it.</summary>
+		/// <remarks>
+		///                <para tool="javadoc-to-mdoc">Called when an activity you launched exits, giving you the requestCode
+		/// you started it with, the resultCode it returned, and any additional
+		/// data from it.  The <format type="text/html"><var>resultCode</var></format> will be
+		/// <c><see cref="F:Android.App.Result.Canceled" tool="ReplaceLinkValue" /></c> if the activity explicitly returned that,
+		/// didn't return any result, or crashed during its operation.
+		/// </para>
+		///                <para tool="javadoc-to-mdoc">You will receive this call immediately before onResume() when your
+		/// activity is re-starting.
+		/// </para>
+		///                <para tool="javadoc-to-mdoc">This method is never invoked if your activity sets
+		/// <c><see cref="!:NoType:android/R$styleable;Href=../../../reference/android/R.styleable.html#AndroidManifestActivity_noHistory" /></c> to
+		/// <c>true</c>.</para>
+		///                <para tool="javadoc-to-mdoc">
+		///                    <format type="text/html">
+		///                        <a href="http://developer.android.com/reference/android/app/Activity.html#onActivityResult(int, int, android.content.Intent)" target="_blank">[Android Documentation]</a>
+		///                    </format>
+		///                </para>
+		///            </remarks>
+		/// <since version="Added in API level 1" />
+		/// <altmember cref="M:Android.App.Activity.StartActivityForResult(Android.Content.Intent, System.Int32)" />
+		/// <altmember cref="M:Android.App.Activity.CreatePendingResult(System.Int32, Android.Content.Intent, Android.Content.Intent)" />
+		/// <altmember cref="M:Android.App.Activity.SetResult(Android.App.Result)" />
+		protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+		{
+			base.OnActivityResult(requestCode, resultCode, data);
+
+			if (requestCode == RequestCodeTokenize)
+			{
+				TokenizationResult result = Checkout.CreateTokenizationResult(data);
+				switch (resultCode)
+				{
+					case Result.Ok:
+
+						// successful tokenization
+						Toast.MakeText(this, "Success!!))", ToastLength.Short).Show();
+
+						var token = result.PaymentToken;
+						var type = result.PaymentMethodType;
+
+						new AlertDialog.Builder(this)
+							.SetMessage("Token: " + token + "\nType: " + type)
+							.SetNegativeButton("Cancel", (dialog, which) => { }).Show();
+
+						break;
+					case Result.Canceled:
+
+						// user canceled tokenization
+						Toast.MakeText(this, "Tokenization canceled", ToastLength.Short).Show();
+						break;
+				}
 			}
 		}
 

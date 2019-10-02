@@ -10,19 +10,23 @@ namespace itmit.asb.app.ViewModels
 {
 	public class AlarmViewModel : BaseViewModel
 	{
+		private bool _isSentOut;
+
 		#region .ctor
 		public AlarmViewModel()
 		{
 			AlarmAndCallCommand = new RelayCommand(obj =>
 												   {
+													   IsSentOut = true;
 													   SendAlarm(BidType.Call);
 												   },
-												   obj => CheckNetworkAccess());
+												   obj => CheckNetworkAccess() && !IsSentOut);
 			AlarmCommand = new RelayCommand(obj =>
 											{
+												IsSentOut = true;
 												SendAlarm(BidType.Alert);
 											},
-											obj => CheckNetworkAccess());
+											obj => CheckNetworkAccess() && !IsSentOut);
 		}
 		#endregion
 
@@ -36,14 +40,23 @@ namespace itmit.asb.app.ViewModels
 		{
 			get;
 		}
+
+		public bool IsSentOut
+		{
+			get => _isSentOut;
+			set => SetProperty(ref _isSentOut, value);
+		}
 		#endregion
 
 		#region Private
 		private async void SendAlarm(BidType type)
 		{
+			IsBusy = true;
 			if (!App.User.IsActive)
 			{
 				await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+				IsBusy = false;
+				IsSentOut = false;
 				return;
 			}
 
@@ -77,9 +90,12 @@ namespace itmit.asb.app.ViewModels
 			{
 				if (service.LastError.Equals("Client is not active"))
 				{
+					IsSentOut = false;
 					await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
 				}
 			}
+
+			IsBusy = false;
 		}
 		#endregion
 	}
