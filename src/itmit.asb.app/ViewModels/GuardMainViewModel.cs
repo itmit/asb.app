@@ -151,7 +151,10 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
-			IBidsService bidsService = new BidsService(App.User.UserToken);
+			IBidsService bidsService = new BidsService
+			{
+				Token = App.User.UserToken
+			};
 			var bidsList = (await bidsService.GetBidsAsync())
 			               .OrderByDescending(x => x.Status)
 						   .ThenByDescending(x => x.CreatedAt)

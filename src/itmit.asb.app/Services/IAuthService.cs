@@ -35,6 +35,8 @@ namespace itmit.asb.app.Services
 		Task<bool> ResetPassword(string phoneNumber, string code, string password);
 
 		Task<bool> SetActivityFrom(UserToken token);
+
+		Task<User> SetActivityStatus(User user);
 		#endregion
 	}
 }

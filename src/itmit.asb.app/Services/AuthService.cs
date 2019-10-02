@@ -20,45 +20,47 @@ namespace itmit.asb.app.Services
 		/// <summary>
 		/// Задает адрес авторизации.
 		/// </summary>
-		private const string AuthUri = "http://asb.itmit-studio.ru/api/login";
+		private const string AuthUri = "http://lk.asb-security.ru/api/login";
 
 		/// <summary>
 		/// Задает адрес для регистрации.
 		/// </summary>
-		private const string RegisterUri = "http://asb.itmit-studio.ru/api/register";
+		private const string RegisterUri = "http://lk.asb-security.ru/api/register";
 
-		private const string ForgotPasswordUri = "http://asb.itmit-studio.ru/api/forgotPassword";
+		private const string ForgotPasswordUri = "http://lk.asb-security.ru/api/forgotPassword";
 
-		private const string CheckCodeUri = "http://asb.itmit-studio.ru/api/checkCode";
+		private const string CheckCodeUri = "http://lk.asb-security.ru/api/checkCode";
 
-		private const string ResetPasswordUri = "http://asb.itmit-studio.ru/api/resetPassword";
+		private const string ResetPasswordUri = "http://lk.asb-security.ru/api/resetPassword";
 
-		private const string SetActivityFromUri = "http://asb.itmit-studio.ru/api/client/setActivityFrom";
+		private const string SetActivityFromUri = "http://lk.asb-security.ru/api/client/setActivityFrom";
+
+		private const string CheckActivityStatusUri = "http://lk.asb-security.ru/api/client/chechClientActiveStatus";
 
 		/// <summary>
 		/// Задает адрес для получения картинок.
 		/// </summary>
-		private const string BasePictureUri = "http://asb.itmit-studio.ru/";
+		private const string BasePictureUri = "http://lk.asb-security.ru/";
 
 		/// <summary>
 		/// Задает адрес для получения пользователя.
 		/// </summary>
-		private const string DetailsUri = "http://asb.itmit-studio.ru/api/details";
+		private const string DetailsUri = "http://lk.asb-security.ru/api/details";
 
 		/// <summary>
 		/// Задает ключ к api для авторизации.
 		/// </summary>
-		private const string SecretKey = "znrAr76W8rN22aMAcAT0BbYFcF4ivR8j9GVAOgkD";
+		private const string SecretKey = "slYVEHsXme0pW4PoNzE9r2swGksXKb7VuKJF9DgO";
 
 		/// <summary>
 		/// Задает адрес для сохранения примечания.
 		/// </summary>
-		private const string SetNodeUri = "http://asb.itmit-studio.ru/api/client/note";
+		private const string SetNodeUri = "http://lk.asb-security.ru/api/client/note";
 
 		/// <summary>
 		/// Задает адрес для получения пользователя.
 		/// </summary>
-		private const string UploadImageUrl = "http://asb.itmit-studio.ru/api/client/changePhoto";
+		private const string UploadImageUrl = "http://lk.asb-security.ru/api/client/changePhoto";
 		#endregion
 		#endregion
 
@@ -345,6 +347,31 @@ namespace itmit.asb.app.Services
 				Debug.WriteLine(jsonString);
 
 				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<User> SetActivityStatus(User user)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{user.UserToken.TokenType} {user.UserToken.Token}");
+
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+				var response = await client.PostAsync(CheckActivityStatusUri, null);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				if (response.IsSuccessStatusCode)
+				{
+					if (jsonString != null)
+					{
+						var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
+						//return await Task.FromResult(jsonData.Data);
+					}
+				}
+				return await Task.FromResult(user);
 			}
 		}
 		#endregion

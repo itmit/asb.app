@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Android;
 using Android.App;
 using Android.Content;
@@ -20,15 +23,20 @@ using AndroidX.Work;
 using Com.Xamarin.Formsviewgroup;
 using itmit.asb.app.Droid;
 using itmit.asb.app.Droid.Services;
+using itmit.asb.app.Models;
 using ImageCircle.Forms.Plugin.Droid;
 using itmit.asb.app.Services;
+using itmit.asb.app.ViewModels;
 using Java.Lang;
 using Java.Math;
 using Java.Util;
 using Matcha.BackgroundService.Droid;
+using Newtonsoft.Json;
 using Plugin.Permissions;
+using Realms;
 using RU.Yandex.Money.Android.Sdk;
 using Xamarin;
+using Xamarin.Android.Net;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Xamarin.Forms.Platform.Android.AppCompat;
@@ -40,7 +48,6 @@ using Process = Android.OS.Process;
 using String = System.String;
 
 [assembly: Dependency(typeof(AuthService))]
-[assembly: Dependency(typeof(BidsService))]
 namespace itmit.asb.app.Droid
 {
 	[Activity(Label = "itmit.asb.app",
@@ -94,7 +101,7 @@ namespace itmit.asb.app.Droid
 
 		private void InitLog()
 		{
-			File appDirectory = new File($"{Environment.ExternalStorageDirectory}/MyPersonalAppFolder");
+			File appDirectory = new File($"{Environment.ExternalStorageDirectory}/Asb");
 			File logDirectory = new File(appDirectory + "/log");
 			var time = DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))
 							   .TotalSeconds;
@@ -297,14 +304,13 @@ namespace itmit.asb.app.Droid
 					case Result.Ok:
 
 						// successful tokenization
-						Toast.MakeText(this, "Success!!))", ToastLength.Short).Show();
-
 						var token = result.PaymentToken;
 						var type = result.PaymentMethodType;
 
-						new AlertDialog.Builder(this)
-							.SetMessage("Token: " + token + "\nType: " + type)
-							.SetNegativeButton("Cancel", (dialog, which) => { }).Show();
+						SendToken(token, new UserToken
+						{
+							Token = (string)App.User.UserToken.Token.Clone()
+						});
 
 						break;
 					case Result.Canceled:
@@ -313,6 +319,71 @@ namespace itmit.asb.app.Droid
 						Toast.MakeText(this, "Tokenization canceled", ToastLength.Short).Show();
 						break;
 				}
+			}
+		}
+
+		private const string SendTokenUri = "http://lk.asb-security.ru/api/client/setActivityFrom";
+
+		private async void SendToken(string token, UserToken userToken)
+		{
+			using (var client = new HttpClient(new AndroidClientHandler()))
+			{
+				var oldActivityTo = AboutViewModel.Instance.ActiveTo;
+				AboutViewModel.Instance.IsShowedIndicator = true;
+				AboutViewModel.Instance.IsShowedActivityTitle = false;
+				AboutViewModel.Instance.ActiveTo = "";
+
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{userToken.TokenType} {userToken.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				var data = new Dictionary<string, string>
+				{
+					{
+						"payment_token", token
+					}
+				};
+
+				var response = await client.PostAsync(SendTokenUri, new FormUrlEncodedContent(data));
+				var jsonString = await response.Content.ReadAsStringAsync();
+				System.Diagnostics.Debug.WriteLine(jsonString);
+				if (response.IsSuccessStatusCode)
+				{
+					if (jsonString != null)
+					{
+						var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<Payment>>(jsonString);
+						var con = RealmConfiguration.DefaultConfiguration;
+						con.SchemaVersion = 7;
+						var realm = Realm.GetInstance(con);
+
+						if (jsonData.Data.IsActive)
+						{
+							new AlertDialog.Builder(this)
+								.SetMessage("Подписка оплачена.")
+								.SetNegativeButton("Отмена", (dialog, which) => { }).Show();
+						}
+
+						using (realm)
+						{
+							var user = App.User;
+							using (var transaction = realm.BeginWrite())
+							{
+								user.IsActive = jsonData.Data.IsActive;
+								user.ActiveFrom = jsonData.Data.ActiveFrom;
+								transaction.Commit();
+							}
+						}
+						AboutViewModel.Instance.ActiveTo = jsonData.Data.ActiveFrom.Add(new TimeSpan(30, 3, 0, 0)).ToString("dd.MM.yyyy hh:mm");
+					}
+				}
+				else
+				{
+					AboutViewModel.Instance.ActiveTo = oldActivityTo;
+					new AlertDialog.Builder(this)
+						.SetMessage("Возникла ошибка при оплате.")
+						.SetNegativeButton("Отмена", (dialog, which) => { }).Show();
+				}
+
+				AboutViewModel.Instance.IsShowedActivityTitle = true;
+				AboutViewModel.Instance.IsShowedIndicator = false;
 			}
 		}
 
@@ -367,14 +438,17 @@ namespace itmit.asb.app.Droid
 
 		private void CheckPermissions()
 		{
-			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation) != Permission.Granted)
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessFineLocation) != Permission.Granted
+			    || ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
 			{
-				CheckPermission(Manifest.Permission.AccessFineLocation, PermissionsRequestAccessFineLocation);
-			}
+				CheckPermission(new[]
+				{
+					Manifest.Permission.AccessFineLocation,
+					Manifest.Permission.AccessCoarseLocation,
+					Manifest.Permission.ReadExternalStorage,
+					Manifest.Permission.WriteExternalStorage
 
-			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessCoarseLocation) != Permission.Granted)
-			{
-				CheckPermission(Manifest.Permission.AccessCoarseLocation, PermissionsRequestAccessCoarseLocation);
+				}, PermissionsRequestAccessFineLocation);
 			}
 		}
 
@@ -385,14 +459,10 @@ namespace itmit.asb.app.Droid
 			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 
-		private void CheckPermission(string permission, int permissionsRequestCode)
+		private void CheckPermission(string[] permissions, int permissionsRequestCode)
 		{
-			ActivityCompat.ShouldShowRequestPermissionRationale(this, permission);
 			ActivityCompat.RequestPermissions(this,
-											  new[]
-											  {
-												  permission
-											  },
+											  permissions,
 											  permissionsRequestCode);
 		}
 		#endregion

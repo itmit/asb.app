@@ -183,7 +183,7 @@ namespace itmit.asb.app.Droid.Services
 					encodedContent.Add("uid", bidGuid.ToString());
 				}
 
-				var response = await client.PostAsync("http://asb.itmit-studio.ru/api/pointOnMap", new FormUrlEncodedContent(encodedContent));
+				var response = await client.PostAsync("http://lk.asb-security.ru/api/pointOnMap", new FormUrlEncodedContent(encodedContent));
 				return await Task.FromResult(response.IsSuccessStatusCode);
 			}
 		}

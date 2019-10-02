@@ -1,10 +1,16 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Android.Content;
 using Android.OS;
 using Android.Util;
 using AndroidX.Work;
 using itmit.asb.app.Droid.Services;
+using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -63,7 +69,7 @@ namespace itmit.asb.app.Droid.Services
 
 			Log.Debug(_tag, $"SUCCESS location received; latitude: {location.Latitude}; longitude:{location.Longitude}");
 
-			var res = await _locationService.UpdateCurrentLocationTask(
+			var res = await UpdateCurrentLocationTask(
 						  new Location(location.Latitude, location.Longitude), App.User.UserToken);
 
 			if (res)
@@ -75,6 +81,40 @@ namespace itmit.asb.app.Droid.Services
 			{
 				_result = Result.InvokeFailure();
 				Log.Debug(_tag, $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
+			}
+		}
+
+		/// <summary>
+		/// Адрес для API обновления местоположения пользователя.
+		/// </summary>
+		private const string UpdateCurrentLocationUri = "http://lk.asb-security.ru/api/client/updateCurrentLocation";
+
+		private async Task<bool> UpdateCurrentLocationTask(Location location, UserToken token)
+		{
+
+			using (var client = new HttpClient(new CustomAndroidClientHandler()))
+			{
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var response = await client.PostAsync(UpdateCurrentLocationUri,
+													  new FormUrlEncodedContent(new Dictionary<string, string>
+													  {
+														  {
+															  "latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
+														  },
+														  {
+															  "longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
+														  }
+													  }));
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+
+				System.Diagnostics.Debug.WriteLine(jsonString);
+
+				var result = await Task.FromResult(response.IsSuccessStatusCode);
+
+				return result;
 			}
 		}
 		#endregion

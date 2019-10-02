@@ -162,8 +162,12 @@ namespace itmit.asb.app.ViewModels
 					user.BidGuid = bid.Guid.ToString();
 				});
 			}
-				
-			IBidsService bidService = new BidsService(App.User.UserToken);
+
+			IBidsService bidService = new BidsService
+			{
+				Token = App.User.UserToken
+			};
+
 			await bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
 		}
 
@@ -180,7 +184,11 @@ namespace itmit.asb.app.ViewModels
 					user.BidGuid = string.Empty;
 				});
 			}
-			IBidsService bidService = new BidsService(App.User.UserToken);
+			IBidsService bidService = new BidsService
+			{
+				Token = App.User.UserToken
+			};
+
 			await bidService.SetBidStatusAsync(bid, BidStatus.Processed);
 		}
 		#endregion

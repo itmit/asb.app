@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Threading;
+using itmit.asb.app.Controls;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Forms;
@@ -11,17 +12,20 @@ namespace itmit.asb.app.Views.Guard
 {
 	public class MapPage : ContentPage
 	{
-		private readonly Map _map;
+		private readonly CustomMap _map;
 		private readonly IBidsService _bidsService;
 
 		public MapPage(Bid bid)
 		{
-			_bidsService = new BidsService(new UserToken
-			{
-				Token = (string) App.User.UserToken.Token.Clone()
-			});
+			_bidsService = DependencyService.Get<IBidsService>();
 
-			_map = new Map
+			_bidsService.Token = new UserToken
+			{
+				Token = (string)App.User.UserToken.Token.Clone()
+			};
+			
+
+			_map = new CustomMap
 			{
 				IsShowingUser = true,
 				HeightRequest = 100,
@@ -66,20 +70,33 @@ namespace itmit.asb.app.Views.Guard
 			Timer timer = new Timer(UpdateAlertLocation, bid, 0, 10000);
 		}
 
-		private async void UpdateAlertLocation(object obj)
+		private void UpdateAlertLocation(object obj)
 		{
 			if (obj is Bid bid)
 			{
-				try
+				Device.BeginInvokeOnMainThread(async () =>
 				{
-					await _bidsService.SyncBidLocation(bid);
-					_map.Pins[0]
-						.Position = new Position(bid.Location.Latitude, bid.Location.Longitude);
-				}
-				catch (Exception e)
-				{
-					Debug.WriteLine(e);
-				}
+					try
+					{
+						bid = await _bidsService.SyncBidLocation(bid);
+						var position = new Position(bid.Location.Latitude, bid.Location.Longitude);
+						_map.Pins.Clear();
+						_map.Pins.Add(new Pin
+						{
+							Label = "Тревога",
+							Position = position
+						});
+						_map.RouteCoordinates.Add(position);
+						
+						_map.MoveToRegion(MapSpan.FromCenterAndRadius(
+											  new Position(bid.Location.Latitude, bid.Location.Longitude),
+											  _map.ZoomLevel));
+					}
+					catch (Exception e)
+					{
+						Console.WriteLine(e);
+					}
+				});
 			}
 		}
 

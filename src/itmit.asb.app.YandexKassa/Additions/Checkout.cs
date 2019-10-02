@@ -16,7 +16,6 @@ namespace RU.Yandex.Money.Android.Sdk
 			JniObjectReference rm = default;
 			try
 			{
-				
 				rm = _members.StaticMethods.InvokeObjectMethod(id, args);
 			}
 			catch (Java.Lang.IllegalArgumentException e)

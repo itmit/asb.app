@@ -14,14 +14,26 @@ namespace itmit.asb.app.ViewModels
 	public class AboutViewModel : BaseViewModel
 	{
 		private INavigation _navigation;
-		private DateTime _activeTo;
+		private string _activeTo;
+		private bool _isShowedIndicator;
+		private bool _isShowedActivityTitle = true;
 
 		public AboutViewModel(INavigation navigation)
 		{
+			Instance = this;
 			var user = App.User;
 			if (user != null)
 			{
-				ActiveTo = user.ActiveFrom.DateTime.Add(new TimeSpan(30,3,0,0));
+				IsShowedActivityTitle = user.ActiveFrom.Ticks > DateTime.MinValue.Ticks;
+				if (IsShowedActivityTitle)
+				{
+					ActiveTo = user.ActiveFrom.DateTime.Add(new TimeSpan(30, 3, 0, 0))
+								   .ToString("dd.MM.yyyy hh:mm");
+				}
+				else
+				{
+					ActiveTo = "Не активна";
+				}
 			}
 
 			_navigation = navigation;
@@ -29,30 +41,32 @@ namespace itmit.asb.app.ViewModels
 			{
 				DependencyService.Get<IYandexCheckout>().Buy();
 
-				//OpenRobokassaExecute();
+				
 			}, obj => true);
 		}
 
-		public DateTime ActiveTo
+		public static AboutViewModel Instance
+		{
+			get;
+			private set;
+		}
+
+		public bool IsShowedActivityTitle
+		{
+			get => _isShowedActivityTitle;
+			set => SetProperty(ref _isShowedActivityTitle, value);
+		}
+
+		public bool IsShowedIndicator
+		{
+			get => _isShowedIndicator;
+			set => SetProperty(ref _isShowedIndicator, value);
+		}
+
+		public string ActiveTo
 		{
 			get => _activeTo;
 			set => SetProperty(ref _activeTo, value);
-		}
-
-		private async void OpenRobokassaExecute()
-		{
-			var view = new WebView
-			{
-				Margin = 10,
-				Source = "https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=asbapp&OutSum=1.00&InvoiceID=1&Description=%D0%A2%D0%BE%D0%B2%D0%B0%D1%80%D1%8B%20%D0%B4%D0%BB%D1%8F%20%D0%B6%D0%B8%D0%B2%D0%BE%D1%82%D0%BD%D1%8B%D1%85&SignatureValue=9f314f76aaf59f0d555af5c6f396b0ff&IsTest=1"
-			};
-			view.Navigating += ViewOnNavigating;
-			var page = new ContentPage()
-			{
-				Title = "ROBOKASSA",
-				Content = view
-			};
-			await _navigation.PushAsync(page);
 		}
 
 		private async void ViewOnNavigating(object sender, WebNavigatingEventArgs e)

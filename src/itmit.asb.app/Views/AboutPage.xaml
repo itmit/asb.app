@@ -33,16 +33,26 @@
                 <StackLayout Grid.Row="1" Grid.Column="0" Style="{StaticResource StackLayoutBuy}">
                     <Frame Style="{StaticResource FrameBuyTwo}">
                         <Frame Style="{StaticResource FrameBuyOne}">
-                            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                <Label Text="АКТИВНА ДО" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"
-                                       FontAttributes="Bold" />
-                                <!--<Label Text="ДО" FontSize="Medium" TextColor="#b20d0b" HorizontalOptions="Center" />-->
-                                <FlexLayout HorizontalOptions="Center" Padding="20,0,0,0">
-                                    <Label HorizontalTextAlignment="Center" Text="{Binding ActiveTo, StringFormat='{}{0:dd.MM.yyyy hh:mm}'}" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold"
-                                           Margin="0,0,10,0" />
-                                    <!--<Label Text="ДНЕЙ" FontSize="Medium" TextColor="#b20d0b" Margin="0,3,0,0" />-->
-                                </FlexLayout>
-                            </StackLayout>
+                            <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <ActivityIndicator IsRunning="{Binding IsShowedIndicator, Mode=OneWay}"
+                                                   IsVisible="{Binding IsShowedIndicator, Mode=OneWay}"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center">
+                                    <ActivityIndicator.Color>
+                                        <OnPlatform x:TypeArguments="Color">
+                                            <On Platform="iOS" Value="2499CE"/>
+                                        </OnPlatform>
+                                    </ActivityIndicator.Color>
+                                </ActivityIndicator>
+                                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                                    <Label IsVisible="{Binding IsShowedActivityTitle}" Text="АКТИВНА ДО" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"
+                                           FontAttributes="Bold" />
+                                    <FlexLayout HorizontalOptions="Center" Padding="20,0,0,0">
+                                        <Label HorizontalTextAlignment="Center" Text="{Binding ActiveTo}" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold"
+                                               Margin="0,0,10,0" />
+                                    </FlexLayout>
+                                </StackLayout>
+                            </Grid>
                         </Frame>
                     </Frame>
                 </StackLayout>

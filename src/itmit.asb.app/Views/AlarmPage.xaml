@@ -9,6 +9,7 @@
     <ContentPage.Content>
         <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <ActivityIndicator IsRunning="{Binding IsBusy, Mode=OneWay}"
+                               IsVisible="{Binding IsBusy, Mode=OneWay}"
                                VerticalOptions="Center"
                                HorizontalOptions="Center">
                 <ActivityIndicator.Color>

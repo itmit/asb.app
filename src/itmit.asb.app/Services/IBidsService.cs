@@ -14,6 +14,12 @@ namespace itmit.asb.app.Services
 		/// <returns>Возвращает <c>true</c> в случае успеха, иначе <c>false</c>.</returns>
 		Task<bool> CreateBid(Bid bid);
 
+		UserToken Token
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Получает тревоги в соответствии с заданным статусом.
 		/// </summary>
