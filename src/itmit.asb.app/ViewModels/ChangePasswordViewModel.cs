@@ -29,7 +29,7 @@ namespace itmit.asb.app.ViewModels
 
 			IAuthService service = new AuthService();
 
-			if (await service.ResetPassword(phoneNumber, code, changePassword))
+			if (await service.ResetPassword(phoneNumber, code, changePassword, changeConfirmPassword))
 			{
 				Application.Current.MainPage = new NavigationPage(new LoginPage());
 			}

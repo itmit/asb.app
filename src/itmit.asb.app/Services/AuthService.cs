@@ -305,7 +305,7 @@ namespace itmit.asb.app.Services
 			}
 		}
 
-		public async Task<bool> ResetPassword(string phoneNumber, string code, string password)
+		public async Task<bool> ResetPassword(string phoneNumber, string code, string password, string confirmPassword)
 		{
 			using (var client = new HttpClient())
 			{
@@ -322,6 +322,9 @@ namespace itmit.asb.app.Services
 					},
 					{
 						"new_password", password
+					},
+					{
+						"new_password_confirmation", confirmPassword
 					}
 				});
 
