@@ -1,10 +1,12 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using Realms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = itmit.asb.app.Models.Location;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -158,6 +160,8 @@ namespace itmit.asb.app.ViewModels
 			var token = await service.RegisterAsync(user, pass, cPass);
 			if (!string.IsNullOrEmpty(token.Token))
 			{
+				app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
+
 				app.MainPage = new AlarmPage();
 
 				user.UserToken = token;

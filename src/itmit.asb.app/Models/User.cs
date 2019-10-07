@@ -9,7 +9,6 @@ namespace itmit.asb.app.Models
 	/// </summary>
 	public class User : RealmObject
 	{
-		private string _userType;
 
 		#region Properties
 		/// <summary>
@@ -99,8 +98,8 @@ namespace itmit.asb.app.Models
 		[Ignored]
 		public UserType UserType
 		{
-			get => (UserType)Enum.Parse(typeof(UserType), _userType);
-			set => _userType = value.ToString();
+			get;
+			set;
 		}
 
 		/// <summary>

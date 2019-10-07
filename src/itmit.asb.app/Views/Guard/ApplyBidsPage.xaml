@@ -11,6 +11,21 @@
              x:Class="itmit.asb.app.Views.Guard.ApplyBidsPage">
     <ContentPage.Content>
         <StackLayout>
+
+            <StackLayout IsVisible="{Binding HasActiveBid}">
+                <Label Text="Выбранная заявка" FontSize="Medium" TextColor="#ef2b2e"/>
+                <StackLayout>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectFirstBidCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="{Binding FirstBid.Client.Name}" FontSize="30" HorizontalOptions="Center" TextColor="#ef2b2e" />
+                    <Label Text="{Binding FirstBid.CreatedAt, StringFormat='{0:dd.MM.yyyy HH:mm:ss}'}" FontSize="25"
+                           HorizontalOptions="Center" TextColor="White" />
+                    <BoxView HeightRequest="1" BackgroundColor="White" />
+                </StackLayout>
+                <Label Text="Все заявки" FontSize="Medium" TextColor="#ef2b2e"/>
+            </StackLayout>
+
             <ScrollView>
                 <ListView ItemsSource="{Binding Bids}"
                           IsRefreshing="{Binding IsBusy, Mode=OneWay}"

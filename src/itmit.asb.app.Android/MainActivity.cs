@@ -177,11 +177,11 @@ namespace itmit.asb.app.Droid
 
 			HashSet<PaymentMethodType> paymentMethodTypes = GetPaymentMethodTypes(settings);
 
-			BigDecimal amount = new BigDecimal(new BigInteger("11"));
+			BigDecimal amount = new BigDecimal(new BigInteger("1"));
 			PaymentParameters paymentParameters = new PaymentParameters(
 				new Amount(amount, Rub),
-				"prod_name",
-				"prod_desc",
+				"АСБ Подписка",
+				"Для получения возможности отправки тревоги, необходимо оплатить подписку.",
 				"test_NjM5MDYw4_MI8X9BbkIMK20BqJ84Iw4gLyeWnXJrqrk",
 				"639060", 
 				paymentMethodTypes
@@ -316,7 +316,7 @@ namespace itmit.asb.app.Droid
 					case Result.Canceled:
 
 						// user canceled tokenization
-						Toast.MakeText(this, "Tokenization canceled", ToastLength.Short).Show();
+						Toast.MakeText(this, "Оплата отменена.", ToastLength.Short).Show();
 						break;
 				}
 			}

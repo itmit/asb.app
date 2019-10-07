@@ -44,6 +44,10 @@ namespace itmit.asb.app.ViewModels
 														});
 														CanExecuteAcceptBidCommand(null);
 														IsValid = false;
+
+														DependencyService.Get<ILocationTrackingService>()
+																		 .StartService(Guid.NewGuid());
+
 														Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
 													}
 												},
@@ -56,6 +60,9 @@ namespace itmit.asb.app.ViewModels
 													   {
 														   CloseBidCommandExecute(bidParam);
 													   });
+													   CanExecuteAcceptBidCommand(null);
+													   IsValid = false;
+
 													   CanExecuteCloseBidCommand(null);
 													   Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
 												   }

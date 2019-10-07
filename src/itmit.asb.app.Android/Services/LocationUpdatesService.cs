@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using Android.Content;
+using Android.Locations;
 using Android.OS;
 using Android.Util;
 using AndroidX.Work;
 using itmit.asb.app.Droid.Services;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using Java.Lang;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using ILocationListener = Android.Locations.ILocationListener;
 using Location = itmit.asb.app.Models.Location;
 
 [assembly: Dependency(typeof(LocationUpdatesService))]
@@ -27,6 +31,11 @@ namespace itmit.asb.app.Droid.Services
 		private readonly string _tag = typeof(LocationTrackingService).FullName;
 		private readonly LocationService _locationService = new LocationService();
 		private Result _result = Result.InvokeSuccess();
+		private LocationManager _locationManager;
+		private string _locationProvider;
+		private ILocationListener _locationListener;
+		private const long Milliseconds = 5000;
+		private const double MinimumDistance = 5.5;
 		#endregion
 		#endregion
 
@@ -40,8 +49,31 @@ namespace itmit.asb.app.Droid.Services
 		#region Overrided
 		public override Result DoWork()
 		{
-			if (App.User == null)
+			Criteria criteria = new Criteria
 			{
+				Accuracy = Accuracy.Fine,
+				AltitudeRequired = false,
+				BearingRequired = false
+			};
+
+			_locationManager = Android.App.Application.Context.GetSystemService(Context.LocationService) as LocationManager;
+
+			if (App.User == null || _locationManager == null)
+			{
+				return Result.InvokeFailure();
+			}
+			
+			_locationProvider = _locationManager.GetBestProvider(criteria, true);
+			_locationListener = new LocationListener();
+
+			if (_locationProvider != null)
+			{
+				Log.Verbose(_tag, "Location provider: " + _locationProvider);
+			}
+			else
+			{
+				Log.Error(_tag, "Location provider is null. Location events will not work.");
+
 				return Result.InvokeFailure();
 			}
 
@@ -60,10 +92,25 @@ namespace itmit.asb.app.Droid.Services
 				Looper.Prepare();
 			}
 
-			var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Default));
+			try
+			{
+				_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, (float)MinimumDistance, _locationListener);
+				//_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, a, _locationListener);
+			}
+			catch (SecurityException ex)
+			{
+				Log.Error(_tag, "fail to request location update, ignore", ex);
+			}
+			catch (IllegalArgumentException ex)
+			{
+				Log.Error(_tag, "network provider does not exist, " + ex.Message);
+			}
+
+			var location = _locationManager.GetLastKnownLocation(_locationProvider);
 
 			if (location == null)
 			{
+				Log.Debug(_tag, "FAILED location received; location is null");
 				return;
 			}
 

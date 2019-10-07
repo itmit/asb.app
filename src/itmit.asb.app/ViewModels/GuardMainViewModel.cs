@@ -25,6 +25,8 @@ namespace itmit.asb.app.ViewModels
 		private bool _hasWaitApplyAlerts;
 		private bool _isPlaySound;
 		private readonly IPlaySoundService _soundService = DependencyService.Get<IPlaySoundService>();
+		private bool _hasActiveBid;
+		private Bid _firstBid;
 		#endregion
 		#endregion
 
@@ -118,6 +120,24 @@ namespace itmit.asb.app.ViewModels
 			set => SetProperty(ref _bids, value);
 		}
 
+		public bool HasActiveBid
+		{
+			get => _hasActiveBid;
+			set => SetProperty(ref _hasActiveBid, value);
+		}
+
+		public ICommand SelectFirstBidCommand => new RelayCommand(obj =>
+		{
+			try
+			{
+				PushPage(new BidDetailPage(FirstBid));
+			}
+			catch (Exception e)
+			{
+				Debug.WriteLine(e);
+			}
+		}, obj => true);
+
 		public Bid SelectedBid
 		{
 			get => _selectedBid;
@@ -162,8 +182,26 @@ namespace itmit.asb.app.ViewModels
 
 			_hasWaitApplyAlerts = false;
 			var newBidsList = new List<Bid>();
+			if (!string.IsNullOrEmpty(App.User.BidGuid))
+			{
+				Bid firstBid = bidsList.Single(x => x.Guid == Guid.Parse(App.User.BidGuid));
+				if (CheckStatusBids(firstBid))
+				{
+					HasActiveBid = true;
+					FirstBid = firstBid;
+				}
+			} else
+			{
+				HasActiveBid = false;
+			}
+
 			foreach (var bid in bidsList)
 			{
+				if (string.IsNullOrEmpty(bid.Client.Name))
+				{
+					bid.Client.Name = bid.Client.Organization;
+				}
+
 				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
 				bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
 
@@ -190,6 +228,12 @@ namespace itmit.asb.app.ViewModels
 			
 
 			IsBusy = false;
+		}
+
+		public Bid FirstBid
+		{
+			get => _firstBid;
+			set => SetProperty(ref _firstBid, value);
 		}
 
 		private void StopPlayAlertSound()
