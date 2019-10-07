@@ -147,6 +147,7 @@ namespace itmit.asb.app.ViewModels
 				App.User.UserPictureSource = UserPictureSource;
 			});
 
+
 			using (var memoryStream = new MemoryStream())
 			{
 				image.GetStream()
@@ -155,6 +156,7 @@ namespace itmit.asb.app.ViewModels
 				_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
 			}
 		}
+
 		#endregion
 	}
 }

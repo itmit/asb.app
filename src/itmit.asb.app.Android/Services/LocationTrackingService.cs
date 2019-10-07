@@ -11,6 +11,7 @@ using Android.Support.V4.Content;
 using Android.Util;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using Java.Util;
 using Xamarin.Essentials;
 using Location = itmit.asb.app.Models.Location;
 
@@ -35,6 +36,7 @@ namespace itmit.asb.app.Droid.Services
 		private readonly ILocationService _locationService = new LocationService();
 		private Guid _bidGuid;
 		private UserToken _token;
+		private bool _isGuard;
 		#endregion
 		#endregion
 
@@ -53,6 +55,8 @@ namespace itmit.asb.app.Droid.Services
 			{
 				Token = (string)App.User.UserToken.Token.Clone()
 			};
+			_isGuard = App.User.IsGuard;
+
 
 			// This Action is only for demonstration purposes.
 			_runnable = () =>
@@ -97,8 +101,6 @@ namespace itmit.asb.app.Droid.Services
 
 		public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
 		{
-			Guid.TryParse(intent.GetStringExtra("BidGuid"), out _bidGuid);
-
 			if (intent.Action.Equals(Constants.ActionStartService))
 			{
 				if (_isStarted)
@@ -107,6 +109,8 @@ namespace itmit.asb.app.Droid.Services
 				}
 				else
 				{
+					Guid.TryParse(intent.GetStringExtra("BidGuid"), out _bidGuid);
+
 					Log.Info(_tag, "OnStartCommand: The service is starting.");
 					RegisterForegroundService();
 					_handler.PostDelayed(_runnable, Constants.DelayBetweenLogMessages);
@@ -136,6 +140,11 @@ namespace itmit.asb.app.Droid.Services
 		#region Private
 		private async void Update()
 		{
+			if (_bidGuid.Equals(Guid.Empty))
+			{
+				Log.Error(_tag, "Bid Guid is empty.");
+			}
+
 			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
 			{
 				if (Looper.MyLooper() == null)
@@ -149,15 +158,54 @@ namespace itmit.asb.app.Droid.Services
 				{
 					return;
 				}
-				/*
-				var res = await _locationService.AddPointOnMapTask(
-							  new Location(location.Latitude, location.Longitude), _token, _bidGuid);
-							  */
 
-				var res = await AddPointOnMapTask(
-					new Location(location.Latitude, location.Longitude), _token, _bidGuid);
+				bool res;
+				if (_isGuard)
+				{
+
+					res = await UpdateCurrentLocation(new Location(location.Latitude, location.Longitude), _token, _bidGuid);
+
+				}
+				else
+				{
+					res = await AddPointOnMapTask(
+							  new Location(location.Latitude, location.Longitude), _token, _bidGuid);
+				}
 
 				Log.Debug(_tag, res ? $"Update location is SUCCESS at {DateTime.Now};" : $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
+			}
+		}
+
+		/// <summary>
+		/// Адрес для API обновления местоположения пользователя.
+		/// </summary>
+		private const string UpdateCurrentLocationUri = "http://lk.asb-security.ru/api/client/updateCurrentLocation";
+		private async Task<bool> UpdateCurrentLocation(Location location, UserToken token, Guid bidGuid)
+		{
+
+			using (var client = new HttpClient(new CustomAndroidClientHandler()))
+			{
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var response = await client.PostAsync(UpdateCurrentLocationUri,
+													  new FormUrlEncodedContent(new Dictionary<string, string>
+													  {
+														  {
+															  "latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
+														  },
+														  {
+															  "longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
+														  }
+													  }));
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				System.Diagnostics.Debug.WriteLine(jsonString);
+
+				var result = await Task.FromResult(response.IsSuccessStatusCode);
+
+
+				return result;
 			}
 		}
 

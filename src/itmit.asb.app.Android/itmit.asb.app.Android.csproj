@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomAndroidClientHandler.cs" />
+    <Compile Include="LocationListener.cs" />
     <Compile Include="Renderers\CustomMapRenderer.cs" />
     <Compile Include="Renderers\NativePickerRenderer.cs" />
     <Compile Include="Services\BidServiceDroid.cs" />

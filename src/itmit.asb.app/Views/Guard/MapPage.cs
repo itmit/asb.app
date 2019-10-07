@@ -44,6 +44,7 @@ namespace itmit.asb.app.Views.Guard
 			//map.MoveToRegion (MapSpan.FromCenterAndRadius (new Position (37, -122), Distance.FromMiles (0.3)));
 			// or create a new MapSpan object directly
 			double degrees = 360 / Math.Pow(2, 14);
+			_map.ZoomLevel = new Distance(250);
 			_map.MoveToRegion(new MapSpan(new Position(bid.Location.Latitude, bid.Location.Longitude), degrees, degrees));
 
 			// create map style buttons
