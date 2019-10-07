@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -20,76 +21,25 @@ namespace itmit.asb.app.ViewModels
 
 		private async void OpenRobokassaExecute()
 		{
-			// регистрационная информация (логин, пароль #1)
-			// registration info (login, password #1)
-			string sMrchLogin = "demo";
-			string sMrchPass1 = "password_1";
+            using(var client = new HttpClient())
+            {
 
-			// номер заказа
-			// number of order
-			int nInvId = 0;
 
-			// описание заказа
-			// order description
-			string sDesc = "Оплата заказа в Тестовом магазине ROBOKASSA";
+                var response = await client.GetAsync("https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=demo&OutSum=11.00&InvId=&Description=%D0%9E%D0%BF%D0%BB%D0%B0%D1%82%D0%B0%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%20%D0%B2%20%D0%A2%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D0%BE%D0%BC%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B5%20ROBOKASSA&shp_Item=1&Culture=ru&Encoding=utf-8&Receipt=%7B%22sno%22%3A%22osn%22%2C%22items%22%3A%5B%7B%22name%22%3A%22%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20ROBOKASSA%22%2C%22quantity%22%3A1.0%2C%22sum%22%3A6.0%2C%22tax%22%3A%22vat18%22%7D%2C%7B%22name%22%3A%22%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F%20%D0%B4%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%20Robo.market%22%2C%22quantity%22%3A1.0%2C%22sum%22%3A5.0%2C%22tax%22%3A%22vat18%22%7D%5D%7D&SignatureValue=3925b771e47d405cbcbb492daa936824");
+                var str = await response.Content.ReadAsStringAsync();
+                var view = new WebView
+                {
+                    Margin = 10,
+                    Source = str
+                };
+                var page = new ContentPage()
+                {
+                    Title = "ROBOKASSA",
+                    Content = view
+                };
+                await _navigation.PushAsync(page);
+            }
 
-			// сумма заказа
-			// sum of order
-			string sOutSum = "11.00";
-
-			// тип товара
-			// code of goods
-			string sShpItem = "1";
-
-			// язык
-			// language
-			string sCulture = "ru";
-
-			// кодировка
-			// encoding
-			string sEncoding = "utf-8";
-			// формирование подписи
-			// generate signature
-			string sCrcBase = $"{sMrchLogin}:{sOutSum}:{nInvId}:{sMrchPass1}:shp_Item={sShpItem}";
-
-			MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
-			byte[] bSignature = md5.ComputeHash(Encoding.UTF8.GetBytes(sCrcBase));
-
-			StringBuilder sbSignature = new StringBuilder();
-			foreach (byte b in bSignature)
-			{
-				sbSignature.AppendFormat("{0:x2}", b);
-			}
-
-			string sCrc = sbSignature.ToString();
-			var str = "https://auth.robokassa.ru/Merchant/Index.aspx?" +
-					  "MerchantLogin=" +
-					  sMrchLogin +
-					  "&OutSum=" +
-					  sOutSum +
-					  "&InvId=" +
-					  nInvId +
-					  "&shp_Item=" +
-					  sShpItem +
-					  "&SignatureValue=" +
-					  sCrc +
-					  "&Description=" +
-					  sDesc +
-					  "&Culture=" +
-					  sCulture +
-					  "&Encoding=" +
-					  sEncoding;
-			var view = new WebView
-			{
-				Source = str,
-				Margin = 10
-			};
-			var page = new ContentPage()
-			{
-				Title = "ROBOKASSA",
-				Content = view
-			};
-			await _navigation.PushAsync(page);
 		}
 
 		public ICommand OpenRobokassa
