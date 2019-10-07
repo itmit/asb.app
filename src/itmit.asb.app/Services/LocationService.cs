@@ -19,12 +19,12 @@ namespace itmit.asb.app.Services
 		/// <summary>
 		/// Адрес для API создания точки на карте.
 		/// </summary>
-		private const string CreatePointUri = "http://asb.itmit-studio.ru/api/pointOnMap";
+		private const string CreatePointUri = "http://lk.asb-security.ru/api/pointOnMap";
 
 		/// <summary>
 		/// Адрес для API обновления местоположения пользователя.
 		/// </summary>
-		private const string UpdateCurrentLocationUri = "http://asb.itmit-studio.ru/api/client/updateCurrentLocation";
+		private const string UpdateCurrentLocationUri = "http://lk.asb-security.ru/api/client/updateCurrentLocation";
 		#endregion
 		#endregion
 

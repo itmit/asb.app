@@ -13,6 +13,15 @@ namespace itmit.asb.app.ViewModels
 	/// </summary>
 	public class RegistrationViewModel : BaseViewModel
 	{
+		private string _phoneNumber;
+		private string _userType;
+		private string _password;
+		private string _confirmPassword;
+		private bool _isEntity;
+		private bool _isIndividual;
+		private string _name;
+		private string _organization;
+
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="RegistrationViewModel" />.
 		/// </summary>
@@ -27,10 +36,12 @@ namespace itmit.asb.app.ViewModels
 
 				if (UserType.Equals("Юридическое"))
 				{
+					user.Organization = Organization;
 					user.UserType = Models.UserType.Entity;
 				}
 				else if (UserType.Equals("Физическое"))
 				{
+					user.Name = Name;
 					user.UserType = Models.UserType.Individual;
 				}
 
@@ -39,13 +50,45 @@ namespace itmit.asb.app.ViewModels
 			}, obj => !IsBusy && Connectivity.NetworkAccess == NetworkAccess.Internet);
 		}
 
+		public bool IsEntity
+		{
+			get => _isEntity;
+			set
+			{
+				SetProperty(ref _isEntity, value);
+				SetProperty(ref _isIndividual, !value, nameof(IsIndividual));
+			}
+		}
+
+		public bool IsIndividual
+		{
+			get => _isIndividual;
+			set
+			{
+				SetProperty(ref _isIndividual, value);
+				SetProperty(ref _isEntity, !value, nameof(IsEntity));
+			}
+		}
+
+		public string Name
+		{
+			get => _name;
+			set => SetProperty(ref _name, value);
+		}
+
+		public string Organization
+		{
+			get => _organization;
+			set => SetProperty(ref _organization, value);
+		}
+
 		/// <summary>
 		/// Возвращает или устанавливает телефонный номер.
 		/// </summary>
 		public string PhoneNumber
 		{
-			get;
-			set;
+			get => _phoneNumber;
+			set => SetProperty(ref _phoneNumber, value);
 		}
 
 		/// <summary>
@@ -53,8 +96,19 @@ namespace itmit.asb.app.ViewModels
 		/// </summary>
 		public string UserType
 		{
-			get;
-			set;
+			get => _userType;
+			set
+			{
+				if (value.Equals("Юридическое"))
+				{
+					IsEntity = true;
+				}
+				else if (value.Equals("Физическое"))
+				{
+					IsEntity = false;
+				}
+				SetProperty(ref _userType, value);
+			}
 		}
 
 		/// <summary>
@@ -62,8 +116,8 @@ namespace itmit.asb.app.ViewModels
 		/// </summary>
 		public string Password
 		{
-			get;
-			set;
+			get => _password;
+			set => SetProperty(ref _password, value);
 		}
 
 		/// <summary>
@@ -71,8 +125,8 @@ namespace itmit.asb.app.ViewModels
 		/// </summary>
 		public string ConfirmPassword
 		{
-			get;
-			set;
+			get => _confirmPassword;
+			set => SetProperty(ref _confirmPassword, value);
 		}
 
 		/// <summary>
@@ -87,6 +141,12 @@ namespace itmit.asb.app.ViewModels
 
 		private async void OnRegister(User user, string pass, string cPass)
 		{
+			if (!pass.Equals(cPass))
+			{
+				await Application.Current.MainPage.DisplayAlert("Уведомление", "Пароли не совпадают.", "ОK");
+				return;
+			}
+
 			var app = Application.Current as App;
 
 			if (app == null)

@@ -17,7 +17,7 @@
             </Grid.RowDefinitions>
             <ScrollView Grid.Row="0">
                 <StackLayout Margin="0,10,0,10">
-                    <Label Text="Неправильные логин или пароль" TextColor="#b20e0b"
+                    <Label Text="Неправильный логин или пароль" TextColor="#b20e0b"
                            HorizontalOptions="Center" FontSize="Medium"
                            IsVisible="{Binding AuthNotSuccess}" />
 
@@ -25,7 +25,7 @@
                     <controls:LoginEntry x:Name="Login" Placeholder="ТЕЛЕФОН" Text="{Binding Login}"
                                          Style="{StaticResource EntryLoginPageNumber}">
                         <controls:LoginEntry.Behaviors>
-                            <app:MaskedBehavior Mask="+X (XXX) XXX-XX-XX" />
+                            <app:MaskedBehavior Mask="+7 (XXX) XXX-XX-XX" />
                         </controls:LoginEntry.Behaviors>
                     </controls:LoginEntry>
                     <controls:LoginEntry x:Name="Password" Placeholder="ПАРОЛЬ" Text="{Binding Password}"
@@ -42,7 +42,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Grid.Column="0" x:Name="ForgetPass" Text="Восстановить пароль ?" Style="{StaticResource ButtonLoginTwo}" Command="{Binding OpenForgotPassPage}"/>
+                <Button Grid.Row="0" Grid.Column="0" x:Name="ForgetPass" Text="Восстановить пароль" Style="{StaticResource ButtonLoginTwo}" Command="{Binding OpenForgotPassPage}"/>
                 <Button Grid.Row="0" Grid.Column="1" x:Name="Registration" Text="Регистрация" Style="{StaticResource ButtonLoginTwo}" Command="{Binding OpenRegistrationPage}"/>
             </Grid>
         </Grid>

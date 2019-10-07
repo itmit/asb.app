@@ -20,37 +20,47 @@ namespace itmit.asb.app.Services
 		/// <summary>
 		/// Задает адрес авторизации.
 		/// </summary>
-		private const string AuthUri = "http://asb.itmit-studio.ru/api/login";
+		private const string AuthUri = "http://lk.asb-security.ru/api/login";
 
 		/// <summary>
 		/// Задает адрес для регистрации.
 		/// </summary>
-		private const string RegisterUri = "http://asb.itmit-studio.ru/api/register";
+		private const string RegisterUri = "http://lk.asb-security.ru/api/register";
+
+		private const string ForgotPasswordUri = "http://lk.asb-security.ru/api/forgotPassword";
+
+		private const string CheckCodeUri = "http://lk.asb-security.ru/api/checkCode";
+
+		private const string ResetPasswordUri = "http://lk.asb-security.ru/api/resetPassword";
+
+		private const string SetActivityFromUri = "http://lk.asb-security.ru/api/client/setActivityFrom";
+
+		private const string CheckActivityStatusUri = "http://lk.asb-security.ru/api/client/chechClientActiveStatus";
 
 		/// <summary>
 		/// Задает адрес для получения картинок.
 		/// </summary>
-		private const string BasePictureUri = "http://asb.itmit-studio.ru/";
+		private const string BasePictureUri = "http://lk.asb-security.ru/";
 
 		/// <summary>
 		/// Задает адрес для получения пользователя.
 		/// </summary>
-		private const string DetailsUri = "http://asb.itmit-studio.ru/api/details";
+		private const string DetailsUri = "http://lk.asb-security.ru/api/details";
 
 		/// <summary>
 		/// Задает ключ к api для авторизации.
 		/// </summary>
-		private const string SecretKey = "znrAr76W8rN22aMAcAT0BbYFcF4ivR8j9GVAOgkD";
+		private const string SecretKey = "slYVEHsXme0pW4PoNzE9r2swGksXKb7VuKJF9DgO";
 
 		/// <summary>
 		/// Задает адрес для сохранения примечания.
 		/// </summary>
-		private const string SetNodeUri = "http://asb.itmit-studio.ru/api/client/note";
+		private const string SetNodeUri = "http://lk.asb-security.ru/api/client/note";
 
 		/// <summary>
 		/// Задает адрес для получения пользователя.
 		/// </summary>
-		private const string UploadImageUrl = "http://asb.itmit-studio.ru/api/client/changePhoto";
+		private const string UploadImageUrl = "http://lk.asb-security.ru/api/client/changePhoto";
 		#endregion
 		#endregion
 
@@ -138,6 +148,12 @@ namespace itmit.asb.app.Services
 					var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
 					jsonData.Data.UserToken = token;
 					jsonData.Data.UserPictureSource = BasePictureUri + jsonData.Data.UserPictureSource;
+
+					if (jsonData.Data.ActiveFromDateTime != null)
+					{
+						jsonData.Data.ActiveFrom = (DateTimeOffset) jsonData.Data.ActiveFromDateTime;
+					}
+
 					return await Task.FromResult(jsonData.Data);
 				}
 			}
@@ -197,7 +213,7 @@ namespace itmit.asb.app.Services
 					client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
 					client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-					var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+					var encodedContent = new Dictionary<string, string>
 					{
 						{
 							"phone_number", user.PhoneNumber
@@ -211,9 +227,19 @@ namespace itmit.asb.app.Services
 						{
 							"c_password", cPassword
 						}
-					});
+					};
 
-					HttpResponseMessage response = await client.PostAsync(RegisterUri, encodedContent);
+					if (user.UserType == UserType.Entity)
+					{
+						encodedContent.Add("organization", user.Organization);
+					}
+
+					if (user.UserType == UserType.Individual)
+					{
+						encodedContent.Add("name", user.Name);
+					}
+
+					HttpResponseMessage response = await client.PostAsync(RegisterUri, new FormUrlEncodedContent(encodedContent));
 					var jsonString = await response.Content.ReadAsStringAsync();
 					Debug.WriteLine(jsonString);
 
@@ -230,6 +256,126 @@ namespace itmit.asb.app.Services
 			}
 
 			return await Task.FromResult(new UserToken());
+		}
+
+		public async Task<bool> ForgotPassword(string phoneNumber)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"phone_number", phoneNumber
+					}
+				});
+
+				HttpResponseMessage response = await client.PostAsync(ForgotPasswordUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<bool> CheckCode(string phoneNumber, string code)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"phone_number", phoneNumber
+					},
+					{
+						"secret_code", code
+					}
+				});
+
+				HttpResponseMessage response = await client.PostAsync(CheckCodeUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<bool> ResetPassword(string phoneNumber, string code, string password, string confirmPassword)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse(SecretKey);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>
+				{
+					{
+						"phone_number", phoneNumber
+					},
+					{
+						"secret_code", code
+					},
+					{
+						"new_password", password
+					},
+					{
+						"new_password_confirmation", confirmPassword
+					}
+				});
+
+				HttpResponseMessage response = await client.PostAsync(ResetPasswordUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<bool> SetActivityFrom(UserToken token)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new FormUrlEncodedContent(new Dictionary<string, string>());
+
+				HttpResponseMessage response = await client.PostAsync(SetActivityFromUri, encodedContent);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				return await Task.FromResult(response.IsSuccessStatusCode);
+			}
+		}
+
+		public async Task<User> SetActivityStatus(User user)
+		{
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{user.UserToken.TokenType} {user.UserToken.Token}");
+
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+
+				var response = await client.PostAsync(CheckActivityStatusUri, null);
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				if (response.IsSuccessStatusCode)
+				{
+					if (jsonString != null)
+					{
+						var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
+						//return await Task.FromResult(jsonData.Data);
+					}
+				}
+				return await Task.FromResult(user);
+			}
 		}
 		#endregion
 	}

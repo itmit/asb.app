@@ -4,6 +4,7 @@ using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views.Guard;
+using Realms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -31,6 +32,7 @@ namespace itmit.asb.app.ViewModels
 		{
 			_bid = bid;
 			_navigation = navigation;
+			
 
 			AcceptBidCommand = new RelayCommand(obj =>
 												{
@@ -40,6 +42,7 @@ namespace itmit.asb.app.ViewModels
 														{
 															AcceptBidCommandExecute(bidParam);
 														});
+														CanExecuteAcceptBidCommand(null);
 														IsValid = false;
 														Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
 													}
@@ -53,7 +56,7 @@ namespace itmit.asb.app.ViewModels
 													   {
 														   CloseBidCommandExecute(bidParam);
 													   });
-
+													   CanExecuteCloseBidCommand(null);
 													   Application.Current.MainPage.DisplayAlert("Внимание", "Статус тревоги успешно изменен", "OK");
 												   }
 											   },
@@ -148,13 +151,44 @@ namespace itmit.asb.app.ViewModels
 		#region Public
 		public async void AcceptBidCommandExecute(Bid bid)
 		{
-			IBidsService bidService = new BidsService(App.User.UserToken);
+			var con = RealmConfiguration.DefaultConfiguration;
+			con.SchemaVersion = 7;
+			using (var realm = Realm.GetInstance(con))
+			{
+				var user = App.User;
+				realm.Write(() =>
+				{
+					user.HasActiveBid = true;
+					user.BidGuid = bid.Guid.ToString();
+				});
+			}
+
+			IBidsService bidService = new BidsService
+			{
+				Token = App.User.UserToken
+			};
+
 			await bidService.SetBidStatusAsync(bid, BidStatus.Accepted);
 		}
 
 		public async void CloseBidCommandExecute(Bid bid)
 		{
-			IBidsService bidService = new BidsService(App.User.UserToken);
+			var con = RealmConfiguration.DefaultConfiguration;
+			con.SchemaVersion = 7;
+			using (var realm = Realm.GetInstance(con))
+			{
+				var user = App.User;
+				realm.Write(() =>
+				{
+					user.HasActiveBid = false;
+					user.BidGuid = string.Empty;
+				});
+			}
+			IBidsService bidService = new BidsService
+			{
+				Token = App.User.UserToken
+			};
+
 			await bidService.SetBidStatusAsync(bid, BidStatus.Processed);
 		}
 		#endregion
@@ -162,14 +196,14 @@ namespace itmit.asb.app.ViewModels
 		#region Private
 		private bool CanExecuteAcceptBidCommand(object obj)
 		{
-			if (obj == null)
+			if (obj == null || App.User == null)
 			{
 				return false;
 			}
 
 			if (obj is Bid bid)
 			{
-				return bid.Guid != Guid.Empty && bid.Status != BidStatus.Accepted;
+				return bid.Guid != Guid.Empty && bid.Status != BidStatus.Accepted && !App.User.HasActiveBid;
 			}
 
 			return false;
@@ -177,14 +211,14 @@ namespace itmit.asb.app.ViewModels
 
 		private bool CanExecuteCloseBidCommand(object obj)
 		{
-			if (obj == null)
+			if (obj == null || App.User == null)
 			{
 				return false;
 			}
 
 			if (obj is Bid bid)
 			{
-				IsVisible = bid.Guid != Guid.Empty && bid.Status == BidStatus.Accepted;
+				IsVisible = bid.Guid != Guid.Empty && bid.Status == BidStatus.Accepted && Guid.Parse(App.User.BidGuid) == _bid.Guid;
 				return IsVisible;
 			}
 

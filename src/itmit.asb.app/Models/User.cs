@@ -31,6 +31,20 @@ namespace itmit.asb.app.Models
 			set;
 		}
 
+		[JsonProperty("on_duty")]
+		public bool HasActiveBid
+		{
+			get;
+			set;
+		}
+
+		[JsonProperty("bid_uuid")]
+		public string BidGuid
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
 		/// Возвращает или устанавливает имя пользователя.
 		/// </summary>
@@ -89,6 +103,29 @@ namespace itmit.asb.app.Models
 			set => _userType = value.ToString();
 		}
 
+		/// <summary>
+		/// Возвращает или устанавливает тип пользователя.
+		/// </summary>
+		[JsonProperty("is_active")]
+		public bool IsActive
+		{
+			get;
+			set;
+		}
+
+		[JsonProperty("active_from")]
+		[Ignored]
+		public DateTime? ActiveFromDateTime
+		{
+			get;
+			set;
+		}
+
+		public DateTimeOffset ActiveFrom
+		{
+			get;
+			set;
+		}
 		/// <summary>
 		/// Возвращает или устанавливает токен пользователя.
 		/// </summary>

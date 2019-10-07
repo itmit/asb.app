@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -46,14 +51,13 @@ namespace itmit.asb.app.Droid.Services
 
 			_token = new UserToken
 			{
-				Token = App.User.UserToken.Token.Clone() as string
+				Token = (string)App.User.UserToken.Token.Clone()
 			};
 
 			// This Action is only for demonstration purposes.
 			_runnable = () =>
 			{
 				var duration = DateTime.UtcNow.Subtract(_startTime);
-
 				var msg = _wasReset ? $"Service restarted at {_startTime} ({duration:c} ago)."
 							  : $"Service started at {_startTime} ({duration:c} ago).";
 
@@ -134,17 +138,53 @@ namespace itmit.asb.app.Droid.Services
 		{
 			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
 			{
+				if (Looper.MyLooper() == null)
+				{
+					Looper.Prepare();
+				}
+
 				var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
 
-				if (location == null)
+				if (location == null || _token == null)
 				{
 					return;
 				}
-
+				/*
 				var res = await _locationService.AddPointOnMapTask(
 							  new Location(location.Latitude, location.Longitude), _token, _bidGuid);
+							  */
+
+				var res = await AddPointOnMapTask(
+					new Location(location.Latitude, location.Longitude), _token, _bidGuid);
 
 				Log.Debug(_tag, res ? $"Update location is SUCCESS at {DateTime.Now};" : $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
+			}
+		}
+
+		private async Task<bool> AddPointOnMapTask(Location location, UserToken token, Guid bidGuid)
+		{
+			using (var client = new HttpClient(new CustomAndroidClientHandler()))
+			{
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var encodedContent = new Dictionary<string, string>
+				{
+					{
+						"latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
+					},
+					{
+						"longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
+					}
+				};
+
+				if (bidGuid != Guid.Empty)
+				{
+					encodedContent.Add("uid", bidGuid.ToString());
+				}
+
+				var response = await client.PostAsync("http://lk.asb-security.ru/api/pointOnMap", new FormUrlEncodedContent(encodedContent));
+				return await Task.FromResult(response.IsSuccessStatusCode);
 			}
 		}
 

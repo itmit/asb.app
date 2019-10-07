@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using itmit.asb.app.Droid.Services;
 using itmit.asb.app.Models;
+using itmit.asb.app.Services;
 using Newtonsoft.Json;
+using Xamarin.Forms;
 
-namespace itmit.asb.app.Services
+[assembly: Dependency(typeof(BidServiceDroid))]
+namespace itmit.asb.app.Droid.Services
 {
-	/// <summary>
-	/// Представляет механизм для работы с API заявок.
-	/// </summary>
-	public class BidsService : IBidsService
+	public class BidServiceDroid : IBidsService
 	{
 		#region Data
 		#region Consts
@@ -44,7 +44,7 @@ namespace itmit.asb.app.Services
 		/// <summary>
 		/// Инициализирует новый экземпляр <see cref="BidsService" />.
 		/// </summary>
-		public BidsService()
+		public BidServiceDroid()
 		{
 
 		}
@@ -199,7 +199,7 @@ namespace itmit.asb.app.Services
 		/// <returns>Возвращает <c>true</c> в случае успеха, иначе <c>false</c>.</returns>
 		public async Task<Bid> SyncBidLocation(Bid bid)
 		{
-			using (var client = new HttpClient())
+			using (var client = new HttpClient(new CustomAndroidClientHandler()))
 			{
 				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{Token.TokenType} {Token.Token}");
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

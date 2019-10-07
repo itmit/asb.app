@@ -10,27 +10,23 @@ namespace itmit.asb.app.ViewModels
 {
 	public class AlarmViewModel : BaseViewModel
 	{
+		private bool _isSentOut;
+
 		#region .ctor
 		public AlarmViewModel()
 		{
 			AlarmAndCallCommand = new RelayCommand(obj =>
 												   {
-													   var bidId = Guid.NewGuid();
-													   SendAlarm(BidType.Call, bidId);
-													   DependencyService.Get<ILocationTrackingService>()
-																		.StartService(bidId);
-													   App.Call("+7 911 447-11-83");
+													   IsSentOut = true;
+													   SendAlarm(BidType.Call);
 												   },
-												   obj => CheckNetworkAccess());
+												   obj => CheckNetworkAccess() && !IsSentOut);
 			AlarmCommand = new RelayCommand(obj =>
 											{
-												var bidId = Guid.NewGuid();
-												SendAlarm(BidType.Alert, bidId);
-												DependencyService.Get<ILocationTrackingService>()
-																 .StartService(bidId);
-												Application.Current.MainPage.DisplayAlert("Внимание", "Тревога отправлена", "OK");
+												IsSentOut = true;
+												SendAlarm(BidType.Alert);
 											},
-											obj => CheckNetworkAccess());
+											obj => CheckNetworkAccess() && !IsSentOut);
 		}
 		#endregion
 
@@ -44,18 +40,33 @@ namespace itmit.asb.app.ViewModels
 		{
 			get;
 		}
+
+		public bool IsSentOut
+		{
+			get => _isSentOut;
+			set => SetProperty(ref _isSentOut, value);
+		}
 		#endregion
 
 		#region Private
-		private async void SendAlarm(BidType type, Guid guid)
+		private async void SendAlarm(BidType type)
 		{
-			if (guid == Guid.Empty)
+			IsBusy = true;
+			if (!App.User.IsActive)
 			{
-				guid = Guid.NewGuid();
+				await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+				IsBusy = false;
+				IsSentOut = false;
+				return;
 			}
 
-			IBidsService service = new BidsService(App.User.UserToken);
-			await service.CreateBid(new Bid
+			var guid = Guid.NewGuid();
+
+			IBidsService service = new BidsService
+			{
+				Token = App.User.UserToken
+			};
+			var res = await service.CreateBid(new Bid
 			{
 				Guid = guid,
 				Client = App.User,
@@ -63,6 +74,31 @@ namespace itmit.asb.app.ViewModels
 				Status = BidStatus.PendingAcceptance,
 				Type = type
 			});
+
+			if (res)
+			{
+				DependencyService.Get<ILocationTrackingService>()
+								 .StartService(guid);
+
+				if (type == BidType.Call)
+				{
+					App.Call("+7 911 447-11-83");
+				}
+				else if (type == BidType.Alert)
+				{
+					await Application.Current.MainPage.DisplayAlert("Внимание", "Тревога отправлена", "OK");
+				}
+			}
+			else
+			{
+				if (service.LastError.Equals("Client is not active"))
+				{
+					IsSentOut = false;
+					await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+				}
+			}
+
+			IsBusy = false;
 		}
 		#endregion
 	}

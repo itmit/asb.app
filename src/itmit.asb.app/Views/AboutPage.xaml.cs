@@ -67,5 +67,6 @@ namespace itmit.asb.app.Views
 			}
 		}
 		#endregion
+
 	}
 }
