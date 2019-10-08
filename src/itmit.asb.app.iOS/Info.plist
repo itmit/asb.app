@@ -2,6 +2,30 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationUsageDescription</key>
+	<string></string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string></string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string></string>
+	</array>
+	<key>NSAppleEventsUsageDescription</key>
+	<string></string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string></string>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
+	<key>UILaunchImageFile</key>
+	<string></string>
+	<key>UILaunchImageFile~iphone</key>
+	<string></string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string></string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -51,13 +75,6 @@
 	<array>
 		<string>MKDirectionsModeCar</string>
 		<string>MKDirectionsModePedestrian</string>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>location</string>
-		<string>fetch</string>
-		<string>remote-notification</string>
 	</array>
 </dict>
 </plist>
