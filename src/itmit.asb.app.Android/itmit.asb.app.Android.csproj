@@ -135,9 +135,9 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\itmit.asb.app.YandexKassa\itmit.asb.app.YandexMoney.csproj">
+    <ProjectReference Include="..\itmit.asb.app.Droid.YandexMoney\itmit.asb.app.Droid.YandexMoney.csproj">
       <Project>{1ad23dc8-a58e-4308-9c3f-ba8d5e396e3a}</Project>
-      <Name>itmit.asb.app.YandexMoney</Name>
+      <Name>itmit.asb.app.Droid.YandexMoney</Name>
     </ProjectReference>
     <ProjectReference Include="..\itmit.asb.app\itmit.asb.app.csproj">
       <Project>{1182E7C8-F3E2-4F39-BB0C-D063B441E305}</Project>

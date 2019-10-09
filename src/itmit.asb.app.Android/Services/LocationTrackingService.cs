@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using itmit.asb.app.Services;
 using Java.Util;
 using Xamarin.Essentials;
 using Location = itmit.asb.app.Models.Location;
+using NetworkAccess = Xamarin.Essentials.NetworkAccess;
 
 namespace itmit.asb.app.Droid.Services
 {
@@ -65,7 +67,18 @@ namespace itmit.asb.app.Droid.Services
 				var msg = _wasReset ? $"Service restarted at {_startTime} ({duration:c} ago)."
 							  : $"Service started at {_startTime} ({duration:c} ago).";
 
-				Update();
+				try
+				{
+					Update();
+				}
+				catch(WebException e)
+				{
+					Log.Error(_tag, e.Message);
+				}
+				catch (Exception e)
+				{
+					Log.Error(_tag, e.Message);
+				}
 
 				Log.Debug(_tag, msg);
 				var i = new Intent(Constants.NotificationBroadcastAction);

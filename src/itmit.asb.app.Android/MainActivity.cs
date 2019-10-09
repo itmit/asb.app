@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Android;
@@ -96,7 +97,11 @@ namespace itmit.asb.app.Droid
 
 			LoadApplication(new App());
 
-			InitLog();
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) == Permission.Granted ||
+				ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) == Permission.Granted)
+			{
+				InitLog();
+			}
 		}
 
 		private void InitLog()
@@ -457,6 +462,12 @@ namespace itmit.asb.app.Droid
 			Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 			PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 			base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+			if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) == Permission.Granted ||
+				ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) == Permission.Granted)
+			{
+				InitLog();
+			}
 		}
 
 		private void CheckPermission(string[] permissions, int permissionsRequestCode)

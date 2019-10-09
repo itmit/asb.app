@@ -146,6 +146,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\ClassLibrary1\itmit.asb.app.iOS.YandexMoney.csproj">
+      <Project>{388e444d-75b0-40ff-9e37-cf263a492a84}</Project>
+      <Name>itmit.asb.app.iOS.YandexMoney</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="..\itmit.asb.app\itmit.asb.app.csproj">
       <Project>{1182E7C8-F3E2-4F39-BB0C-D063B441E305}</Project>
       <Name>itmit.asb.app</Name>
