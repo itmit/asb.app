@@ -12,7 +12,7 @@ namespace itmit.asb.app.Views
 		#region .ctor
 		public AlarmPage()
 		{
-			InitializeComponent();
+            InitializeComponent();
 
 			BindingContext = new AlarmViewModel();
 		}
