@@ -28,9 +28,9 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-<CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
-<OptimizePNGs>false</OptimizePNGs>
-<CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
+    <OptimizePNGs>false</OptimizePNGs>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -178,7 +178,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\itmit.asb.app.iOS.YandexMoney.csproj">
+    <ProjectReference Include="..\itmit.asb.app.iOS.YandexMoney\itmit.asb.app.iOS.YandexMoney.csproj">
       <Project>{388e444d-75b0-40ff-9e37-cf263a492a84}</Project>
       <Name>itmit.asb.app.iOS.YandexMoney</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
