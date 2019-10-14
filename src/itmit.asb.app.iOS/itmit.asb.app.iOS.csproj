@@ -26,8 +26,11 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
+<CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
+<OptimizePNGs>false</OptimizePNGs>
+<CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -38,6 +41,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,9 +54,11 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <OptimizePNGs>false</OptimizePNGs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -61,8 +68,9 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -115,16 +123,40 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <BundleResource Include="Resources\tab_about.png" />
-    <BundleResource Include="Resources\tab_about%402x.png" />
-    <BundleResource Include="Resources\tab_about%403x.png" />
-    <BundleResource Include="Resources\tab_feed.png" />
-    <BundleResource Include="Resources\tab_feed%402x.png" />
-    <BundleResource Include="Resources\tab_feed%403x.png" />
-    <BundleResource Include="Resources\xamarin_logo.png" />
-    <BundleResource Include="Resources\xamarin_logo%402x.png" />
-    <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <BundleResource Include="Resources\ic_account_circle_black_36dp.png" />
+    <BundleResource Include="Resources\ic_account_circle_black_36dp%402x.png" />
+    <BundleResource Include="Resources\ic_account_circle_black_36dp%403x.png" />
+    <BundleResource Include="Resources\ic_adjust_black_36dp.png" />
+    <BundleResource Include="Resources\ic_adjust_black_36dp%402x.png" />
+    <BundleResource Include="Resources\ic_adjust_black_36dp%403x.png" />
+    <BundleResource Include="Resources\ic_call_black_36dp %402x.png" />
+    <BundleResource Include="Resources\ic_call_black_36dp %403x.png" />
+    <BundleResource Include="Resources\ic_call_black_36dp.png" />
+    <BundleResource Include="Resources\ic_keyboard_tab_black_36dp.png" />
+    <BundleResource Include="Resources\ic_keyboard_tab_black_36dp%402x.png" />
+    <BundleResource Include="Resources\ic_keyboard_tab_black_36dp%403x.png" />
+    <BundleResource Include="Resources\ic_vertical_align_top_black_36dp.png" />
+    <BundleResource Include="Resources\ic_vertical_align_top_black_36dp%402x.png" />
+    <BundleResource Include="Resources\ic_vertical_align_top_black_36dp%403x.png" />
+    <BundleResource Include="Resources\img_424515.png" />
+    <BundleResource Include="Resources\img_424515%402x.png" />
+    <BundleResource Include="Resources\img_424515%403x.png" />
+    <BundleResource Include="Resources\logo.png" />
+    <BundleResource Include="Resources\logo%402x.png" />
+    <BundleResource Include="Resources\logo%403x.png" />
+    <BundleResource Include="Resources\mainf%402x.png" />
+    <BundleResource Include="Resources\mainf%403x.png" />
+    <BundleResource Include="Resources\mainf.png" />
+    <BundleResource Include="Resources\r_user.png" />
+    <BundleResource Include="Resources\r_user%402x.png" />
+    <BundleResource Include="Resources\r_user%403x.png" />
+    <BundleResource Include="Resources\user1.png" />
+    <BundleResource Include="Resources\user1%402x.png" />
+    <BundleResource Include="Resources\user1%403x.png" />
+    <BundleResource Include="Resources\zvonok.png" />
+    <BundleResource Include="Resources\zvonok%402x.png" />
+    <BundleResource Include="Resources\zvonok%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -158,38 +190,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <AndroidResource Include="Resources\ic_account_circle_black_36dp.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\ic_adjust_black_36dp.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\ic_call_black_36dp.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\ic_keyboard_tab_black_36dp.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\ic_vertical_align_top_black_36dp.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\img_424515.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\logo.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\mainf.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
     <AndroidResource Include="Resources\Prim.xml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
@@ -198,19 +198,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\r_user.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
     <AndroidResource Include="Resources\TabbedPageBottom.xml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\user1.png">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\zvonok.png">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>

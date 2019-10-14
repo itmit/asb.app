@@ -99,7 +99,7 @@ namespace itmit.asb.app
 
 		public void StartBackgroundService(TimeSpan timeSpan)
 		{
-			_updatesService.StartService();
+			//_updatesService.StartService();
 		}
 		#endregion
 

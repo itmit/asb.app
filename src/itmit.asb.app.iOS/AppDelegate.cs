@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using ImageCircle.Forms.Plugin.iOS;
 using itmit.asb.app.Services;
 using Matcha.BackgroundService.iOS;
 using UIKit;
@@ -27,6 +28,7 @@ namespace itmit.asb.app.iOS
 		//
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
+            ImageCircleRenderer.Init();
 			Forms.Init();
 			FormsMaps.Init();
 			LoadApplication(new App());
