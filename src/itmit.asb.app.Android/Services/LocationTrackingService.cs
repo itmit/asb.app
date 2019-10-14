@@ -7,13 +7,16 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Locations;
 using Android.OS;
 using Android.Support.V4.Content;
 using Android.Util;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using Java.Lang;
 using Java.Util;
 using Xamarin.Essentials;
+using Exception = System.Exception;
 using Location = itmit.asb.app.Models.Location;
 using NetworkAccess = Xamarin.Essentials.NetworkAccess;
 
@@ -33,12 +36,17 @@ namespace itmit.asb.app.Droid.Services
 		private readonly string _tag = typeof(LocationTrackingService).FullName;
 		private Handler _handler;
 		private Action _runnable;
+		private const long Milliseconds = 5000;
+		private const double MinimumDistance = 0;
 		private bool _wasReset;
 		private DateTime _startTime;
 		private readonly ILocationService _locationService = new LocationService();
 		private Guid _bidGuid;
 		private UserToken _token;
 		private bool _isGuard;
+		private LocationManager _locationManager;
+		private string _locationProvider;
+		private LocationListener _locationListener;
 		#endregion
 		#endregion
 
@@ -59,6 +67,30 @@ namespace itmit.asb.app.Droid.Services
 			};
 			_isGuard = App.User.IsGuard;
 
+			Criteria criteria = new Criteria
+			{
+				Accuracy = Accuracy.Fine,
+				AltitudeRequired = false,
+				BearingRequired = false
+			};
+
+			_locationManager = Application.Context.GetSystemService(Context.LocationService) as LocationManager;
+
+			if (_locationManager != null)
+			{
+				_locationProvider = _locationManager.GetBestProvider(criteria, true);
+			}
+
+			_locationListener = new LocationListener();
+
+			if (_locationProvider != null)
+			{
+				Log.Verbose(_tag, "Location provider: " + _locationProvider);
+			}
+			else
+			{
+				Log.Error(_tag, "Location provider is null. Location events will not work.");
+			}
 
 			// This Action is only for demonstration purposes.
 			_runnable = () =>
@@ -165,7 +197,21 @@ namespace itmit.asb.app.Droid.Services
 					Looper.Prepare();
 				}
 
-				var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
+				try
+				{
+					_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, (float)MinimumDistance, _locationListener);
+					//_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, a, _locationListener);
+				}
+				catch (SecurityException ex)
+				{
+					Log.Error(_tag, "fail to request location update, ignore", ex);
+				}
+				catch (IllegalArgumentException ex)
+				{
+					Log.Error(_tag, "network provider does not exist, " + ex.Message);
+				}
+
+				var location = _locationManager.GetLastKnownLocation(_locationProvider);
 
 				if (location == null || _token == null)
 				{

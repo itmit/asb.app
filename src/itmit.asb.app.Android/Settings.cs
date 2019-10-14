@@ -35,9 +35,9 @@ namespace itmit.asb.app.Droid
 
 		public bool IsYandexMoneyAllowed => _sp.GetBoolean(KeyYandexMoneyAllowed, false);
 
-		public bool IsSberbankOnlineAllowed => _sp.GetBoolean(KeySberbankOnlineAllowed, true);
+		public bool IsSberbankOnlineAllowed => _sp.GetBoolean(KeySberbankOnlineAllowed, false);
 
-		public bool IsGooglePayAllowed => _sp.GetBoolean(KeyGooglePayAllowed, true);
+		public bool IsGooglePayAllowed => _sp.GetBoolean(KeyGooglePayAllowed, false);
 
 		public bool IsNewCardAllowed => _sp.GetBoolean(KeyNewCardAllowed, true);
 
