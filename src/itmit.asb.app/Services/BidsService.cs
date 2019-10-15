@@ -227,7 +227,7 @@ namespace itmit.asb.app.Services
 				return await Task.FromResult(bid);
 			}
 		}
-
+		
 		public string LastError
 		{
 			get;

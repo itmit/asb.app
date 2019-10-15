@@ -95,7 +95,6 @@ namespace itmit.asb.app.Droid.Services
 			try
 			{
 				_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, (float)MinimumDistance, _locationListener);
-				//_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, a, _locationListener);
 			}
 			catch (SecurityException ex)
 			{

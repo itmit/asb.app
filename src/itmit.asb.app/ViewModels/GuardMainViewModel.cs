@@ -184,13 +184,18 @@ namespace itmit.asb.app.ViewModels
 			var newBidsList = new List<Bid>();
 			if (!string.IsNullOrEmpty(App.User.BidGuid))
 			{
-				Bid firstBid = bidsList.Single(x => x.Guid == Guid.Parse(App.User.BidGuid));
-				if (CheckStatusBids(firstBid))
+				Bid firstBid = bidsList.SingleOrDefault(x => x.Guid == Guid.Parse(App.User.BidGuid));
+				if (firstBid != null && CheckStatusBids(firstBid))
 				{
 					HasActiveBid = true;
 					FirstBid = firstBid;
 				}
-			} else
+				else
+				{
+					HasActiveBid = false;
+				}
+			} 
+			else
 			{
 				HasActiveBid = false;
 			}
