@@ -11,11 +11,6 @@
                                IsVisible="{Binding IsBusy, Mode=OneWay}"
                                VerticalOptions="Center"
                                HorizontalOptions="Center">
-                <ActivityIndicator.Color>
-                    <OnPlatform x:TypeArguments="Color">
-                        <On Platform="iOS" Value="2499CE"/>
-                    </OnPlatform>
-                </ActivityIndicator.Color>
             </ActivityIndicator>
             <Grid ColumnSpacing="0" RowSpacing="0">
                 <Grid.RowDefinitions>
