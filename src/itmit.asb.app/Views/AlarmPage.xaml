@@ -25,9 +25,9 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackLayout Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
-                            <Frame Style="{StaticResource FrameAlarmTrevThree}">
-                                <Frame Style="{StaticResource FrameAlarmTrevTwo}">
-                                    <Frame Style="{StaticResource FrameAlarmTrevOne}">
+                            <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevThree}">
+                                <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevTwo}">
+                                    <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevOne}">
                                         <Grid VerticalOptions="Center">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer 
@@ -51,9 +51,9 @@
                             </Frame>
                         </StackLayout>
                         <StackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
-                            <Frame Style="{StaticResource FrameAlarmThree}">
-                                <Frame Style="{StaticResource FrameAlarmTwo}">
-                                    <Frame Style="{StaticResource FrameAlarmOne}">
+                            <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmThree}">
+                                <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTwo}">
+                                    <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmOne}">
                                         <Grid VerticalOptions="Center">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding AlarmAndCallCommand}"
