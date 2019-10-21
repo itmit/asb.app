@@ -21,11 +21,18 @@
                 <ScrollView Grid.Row="0">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackLayout Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
-                            <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevThree}">
+                        <StackLayout Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="Alarm.png" WidthRequest="250" HeightRequest="250">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                                Command="{Binding AlarmCommand}"
+                                                NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <!--<Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevThree}">
                                 <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevTwo}">
                                     <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevOne}">
                                         <Grid VerticalOptions="Center">
@@ -48,10 +55,17 @@
                                         </Grid>
                                     </Frame>
                                 </Frame>
-                            </Frame>
+                            </Frame>-->
                         </StackLayout>
                         <StackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
-                            <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmThree}">
+                            <Image Source="AlarmAndCall.png" WidthRequest="150" HeightRequest="150">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                                Command="{Binding AlarmCommand}"
+                                                NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <!--<Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmThree}">
                                 <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTwo}">
                                     <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmOne}">
                                         <Grid VerticalOptions="Center">
@@ -75,7 +89,7 @@
                                         </Grid>
                                     </Frame>
                                 </Frame>
-                            </Frame>
+                            </Frame>-->
                         </StackLayout>
                     </Grid>
                 </ScrollView>
