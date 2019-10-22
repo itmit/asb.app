@@ -75,7 +75,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
-		<string>network-authentication</string>
+		<string>fetch</string>
 	</array>
 </dict>
 </plist>

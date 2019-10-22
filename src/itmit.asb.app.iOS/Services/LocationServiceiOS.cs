@@ -32,7 +32,7 @@ namespace itmit.asb.app.iOS.Services
 			{
 				//here we run the actual task
 				Console.WriteLine($"Background task '{LocationUpdateService}' started");
-				Action();
+				MainThread.BeginInvokeOnMainThread(Action);
 				taskEnded = true;
 				UIApplication.SharedApplication.EndBackgroundTask(taskId);
 				Console.WriteLine($"Background task '{LocationUpdateService}' finished");

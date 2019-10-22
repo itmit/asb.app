@@ -32,30 +32,6 @@
                                                 NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
-                            <!--<Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevThree}">
-                                <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevTwo}">
-                                    <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTrevOne}">
-                                        <Grid VerticalOptions="Center">
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer 
-                                                Command="{Binding AlarmCommand}"
-                                                NumberOfTapsRequired="1" />
-                                            </Grid.GestureRecognizers>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="100" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Image Grid.Column="0" Grid.Row="0" Source="img_424515.png"
-                                               Style="{StaticResource ImageAlarmTrevoga}" />
-                                            <Label Grid.Column="0" Grid.Row="1" Text="ТРЕВОГА"
-                                               Style="{StaticResource LabelAlarmTrevoga}" />
-                                        </Grid>
-                                    </Frame>
-                                </Frame>
-                            </Frame>-->
                         </StackLayout>
                         <StackLayout Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Margin="20">
                             <Image Source="AlarmAndCall.png" WidthRequest="150" HeightRequest="150">
@@ -65,31 +41,6 @@
                                                 NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
-                            <!--<Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmThree}">
-                                <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmTwo}">
-                                    <Frame IsClippedToBounds="True" Style="{StaticResource FrameAlarmOne}">
-                                        <Grid VerticalOptions="Center">
-                                            <Grid.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding AlarmAndCallCommand}"
-                                                                  NumberOfTapsRequired="1" />
-                                            </Grid.GestureRecognizers>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="50" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                            </Grid.RowDefinitions>
-                                            <Image Grid.Column="0" Grid.Row="0" Source="zvonok.png" />
-                                            <Label Grid.Column="0" Grid.Row="1" Text="ТРЕВОГА И"
-                                               Style="{StaticResource LabelAlarmPage}" Margin="0,10,0,0" />
-                                            <Label Grid.Column="0" Grid.Row="2" Text="ЗВОНОК"
-                                               Style="{StaticResource LabelAlarmPage}" VerticalOptions="Center" />
-                                        </Grid>
-                                    </Frame>
-                                </Frame>
-                            </Frame>-->
                         </StackLayout>
                     </Grid>
                 </ScrollView>
