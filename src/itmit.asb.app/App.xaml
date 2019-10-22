@@ -43,8 +43,8 @@
             <Style x:Key="FrameAlarmOne" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="#ef2b2e" />
                 <Setter Property="CornerRadius" Value="100" />
-                <Setter Property="WidthRequest" Value="140" />
-                <Setter Property="HeightRequest" Value="140" />
+                <Setter Property="WidthRequest" Value="170" />
+                <Setter Property="HeightRequest" Value="170" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="Padding" Value="0" />
             </Style>
@@ -75,22 +75,22 @@
             </Style>
             <Style x:Key="FrameAlarmTrevOne" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="#ef2b2e" />
-                <Setter Property="CornerRadius" Value="100" />
-                <Setter Property="WidthRequest" Value="180" />
-                <Setter Property="HeightRequest" Value="180" />
+                <Setter Property="CornerRadius" Value="130" />
+                <Setter Property="WidthRequest" Value="230"/>
+                <Setter Property="HeightRequest" Value="230"/>
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="Padding" Value="0" />
             </Style>
             <Style x:Key="FrameAlarmTrevTwo" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="#000000" />
-                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="CornerRadius" Value="130" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="Padding" Value="5" />
             </Style>
             <Style x:Key="FrameAlarmTrevThree" TargetType="Frame">
                 <Setter Property="BorderColor" Value="#2e2e2e" />
                 <Setter Property="BackgroundColor" Value="#2e2e2e" />
-                <Setter Property="CornerRadius" Value="100" />
+                <Setter Property="CornerRadius" Value="130" />
                 <Setter Property="Margin" Value="0" />
                 <Setter Property="Padding" Value="10" />
             </Style>
