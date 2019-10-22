@@ -119,12 +119,16 @@ namespace itmit.asb.app.Models
 			get;
 			set;
 		}
-
+		
+		/// <summary>
+		/// Возвращает или устанавливает дату начала активности.
+		/// </summary>
 		public DateTimeOffset ActiveFrom
 		{
 			get;
 			set;
 		}
+
 		/// <summary>
 		/// Возвращает или устанавливает токен пользователя.
 		/// </summary>

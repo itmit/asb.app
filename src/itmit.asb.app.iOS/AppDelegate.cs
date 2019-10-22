@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using System;
+using Foundation;
 using ImageCircle.Forms.Plugin.iOS;
 using itmit.asb.app.Services;
 using Matcha.BackgroundService.iOS;
@@ -32,10 +33,19 @@ namespace itmit.asb.app.iOS
 			Forms.Init();
 			FormsMaps.Init();
 			LoadApplication(new App());
+			UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
 
 			BackgroundAggregator.Init(this);
 
 			return base.FinishedLaunching(app, options);
+		}
+
+		public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
+		{
+			// Check for new data, and display it
+
+			// Inform system of fetch results
+			completionHandler(UIBackgroundFetchResult.NewData);
 		}
 		#endregion
 	}

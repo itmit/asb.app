@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using itmit.asb.app.iOS.Services;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using UIKit;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(LocationServiceIos))]
 namespace itmit.asb.app.iOS.Services
 {
-	public class LocationServiceIOS : ILocationUpdatesService
+	public class LocationServiceIos : ILocationUpdatesService
 	{
 		public const string LocationUpdateService = "LocationUpdateServiceBackgroundTaskManager";
 
@@ -41,7 +44,7 @@ namespace itmit.asb.app.iOS.Services
 				while (!taskEnded)
 				{
 					Console.WriteLine($"Background task '{LocationUpdateService}' time remaining: {UIApplication.SharedApplication.BackgroundTimeRemaining}");
-					await Task.Delay(1000);
+					await Task.Delay(10000);
 				}
 			});
 		}
@@ -50,7 +53,7 @@ namespace itmit.asb.app.iOS.Services
 		{
 			var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
 
-			if (location == null)
+			if (location == null || App.User == null)
 			{
 				return;
 			}
