@@ -5,6 +5,8 @@ using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using itmit.asb.app.Views.Guard;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Realms;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -29,6 +31,7 @@ namespace itmit.asb.app
 
 			DependencyService.Register<IAuthService>();
 
+
 			if (User == null)
 			{
 				MainPage = new NavigationPage(new LoginPage());
@@ -43,6 +46,15 @@ namespace itmit.asb.app
 			}
 
 			MainPage = new AlarmPage();
+		}
+
+		private async void CheckLocationPermission()
+		{
+			var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+			if (status != PermissionStatus.Granted)
+			{
+				await CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+			}
 		}
 		#endregion
 
@@ -116,6 +128,11 @@ namespace itmit.asb.app
 
 		protected override void OnStart()
 		{
+			if (Device.RuntimePlatform == Device.iOS)
+			{
+				CheckLocationPermission();
+			}
+
 			// Handle when your app starts
 			if (User != null)
 			{

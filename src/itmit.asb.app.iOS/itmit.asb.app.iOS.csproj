@@ -78,11 +78,15 @@
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LocationCheck.cs" />
+    <Compile Include="LocationManager.cs" />
+    <Compile Include="LocationUpdatedEventArgs.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\EditorLcPageRenderer.cs" />
     <Compile Include="Renderers\LoginEntryRenderer.cs" />
-    <Compile Include="Services\LocationServiceiOS.cs" />
+    <Compile Include="Services\LocationServiceIos.cs" />
+    <Compile Include="Services\LocationTrackingServiceIos.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />

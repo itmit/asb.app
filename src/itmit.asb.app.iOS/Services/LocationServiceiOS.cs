@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using CoreLocation;
 using itmit.asb.app.iOS.Services;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using UIKit;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Location = Xamarin.Essentials.Location;
 
 [assembly: Dependency(typeof(LocationServiceIos))]
 namespace itmit.asb.app.iOS.Services
@@ -21,14 +24,15 @@ namespace itmit.asb.app.iOS.Services
 		{
 			nint taskId = 0;
 			var taskEnded = false;
+			var id = taskId;
 			taskId = UIApplication.SharedApplication.BeginBackgroundTask(LocationUpdateService, () =>
 			{
 				//when time is up and task has not finished, call this method to finish the task to prevent the app from being terminated
 				Console.WriteLine($"Background task '{LocationUpdateService}' got killed");
 				taskEnded = true;
-				UIApplication.SharedApplication.EndBackgroundTask(taskId);
+				UIApplication.SharedApplication.EndBackgroundTask(id);
 			});
-			await Task.Factory.StartNew(async () =>
+			await Task.Factory.StartNew(() =>
 			{
 				//here we run the actual task
 				Console.WriteLine($"Background task '{LocationUpdateService}' started");
@@ -51,7 +55,26 @@ namespace itmit.asb.app.iOS.Services
 
 		private async void Action()
 		{
-			var location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Best));
+			Location location = null;
+			try
+			{
+				var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+				CancellationTokenSource source = new CancellationTokenSource();
+				CancellationToken cancelToken = source.Token;
+				location = await Geolocation.GetLocationAsync(request, cancelToken);
+			}
+			catch (FeatureNotSupportedException fnsEx)
+			{
+				// Handle not supported on device exception               
+			}
+			catch (PermissionException pEx)
+			{
+				// Handle permission exception                
+			}
+			catch (Exception ex)
+			{
+				// Unable to get location              
+			}
 
 			if (location == null || App.User == null)
 			{
@@ -67,7 +90,6 @@ namespace itmit.asb.app.iOS.Services
 		/// </summary>
 		public void StopService()
 		{
-			throw new System.NotImplementedException();
 		}
 	}
 }
