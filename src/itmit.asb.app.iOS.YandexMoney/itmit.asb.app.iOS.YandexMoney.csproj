@@ -56,5 +56,10 @@
   <ItemGroup>
     <ObjcBindingNativeLibrary Include="libYandexCheckout.a" />
   </ItemGroup>
+  <ItemGroup>
+    <NativeReference Include="Native References/libYandexCheckout.a">
+      <Kind>Static</Kind>
+    </NativeReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
 </Project>

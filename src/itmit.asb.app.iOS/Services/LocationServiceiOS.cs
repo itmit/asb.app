@@ -65,15 +65,15 @@ namespace itmit.asb.app.iOS.Services
 			}
 			catch (FeatureNotSupportedException fnsEx)
 			{
-				// Handle not supported on device exception               
+				// Handle not supported on device exception
 			}
 			catch (PermissionException pEx)
 			{
-				// Handle permission exception                
+				// Handle permission exception
 			}
 			catch (Exception ex)
 			{
-				// Unable to get location              
+				// Unable to get location
 			}
 
 			if (location == null || App.User == null)
@@ -89,7 +89,6 @@ namespace itmit.asb.app.iOS.Services
 		/// Останавливает сервис.
 		/// </summary>
 		public void StopService()
-		{
-		}
+		{ }
 	}
 }
