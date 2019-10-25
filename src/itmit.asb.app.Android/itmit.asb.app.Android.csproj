@@ -216,10 +216,10 @@
     <AndroidResource Include="Resources\drawable\r_user.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\drawable\Alarm.png" />
+    <AndroidResource Include="Resources\drawable\Alarm.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\drawable\AlarmAndCall.png" />
+    <AndroidResource Include="Resources\drawable\AlarmAndCall.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

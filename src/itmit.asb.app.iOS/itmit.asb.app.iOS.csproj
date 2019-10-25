@@ -84,6 +84,8 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\EditorLcPageRenderer.cs" />
+    <Compile Include="Renderers\FrameLcPagePrimRenderer.cs" />
+    <Compile Include="Renderers\FrameLcPagePrimTwoRenderer.cs" />
     <Compile Include="Renderers\LoginEntryRenderer.cs" />
     <Compile Include="Services\LocationServiceIos.cs" />
     <Compile Include="Services\LocationTrackingServiceIos.cs" />
