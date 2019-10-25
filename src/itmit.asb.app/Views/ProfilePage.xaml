@@ -51,10 +51,10 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <controls:PrimLcPage Padding="8" Margin="1,1,1,0">
+                                    <controls:PrimLcPage Padding="8" Margin="1,1,1,0" IsClippedToBounds="True">
                                         <Label Text="ПРИМЕЧАНИЕ" Style="{StaticResource LabelLcPagePrim}" />
                                     </controls:PrimLcPage>
-                                    <controls:PrimLcPageTwo Grid.Row="1" Style="{StaticResource FramePrimLcPageTwo}">
+                                    <controls:PrimLcPageTwo Grid.Row="1" Style="{StaticResource FramePrimLcPageTwo}" IsClippedToBounds="True">
                                         <controls:EditorLcPage Text="{Binding Note, Mode=TwoWay}"
                                                                Placeholder="Добавьте подробную информацию о себе"
                                                                Style="{StaticResource EditorLcPage}"

@@ -4,7 +4,6 @@ using System.ComponentModel;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-using Color = UIKit.UIColor;
 
 [assembly: ExportRenderer(typeof(LoginEntry), typeof(LoginEntryRenderer))]
 namespace itmit.asb.app.iOS.Renderers
@@ -15,7 +14,7 @@ namespace itmit.asb.app.iOS.Renderers
         {
             base.OnElementPropertyChanged(sender, e);
 
-            Control.BackgroundColor = Color.FromRGB(199, 11, 9);
+            Control.BackgroundColor = UIColor.FromRGBA(0, 0, 0, 0);
             Control.Layer.BorderWidth = 0;
             Control.BorderStyle = UITextBorderStyle.None;
         }
