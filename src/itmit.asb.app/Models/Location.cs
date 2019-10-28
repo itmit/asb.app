@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Essentials;
 
 namespace itmit.asb.app.Models
@@ -57,8 +59,26 @@ namespace itmit.asb.app.Models
 		/// <returns>Текущие координаты.</returns>
 		public static async Task<Location> GetCurrentGeolocationAsync(GeolocationAccuracy accuracy)
 		{
-			var request = new GeolocationRequest(accuracy);
-			var location = await Geolocation.GetLocationAsync(request);
+			Xamarin.Essentials.Location location = null;
+			try
+			{
+				var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+				CancellationTokenSource source = new CancellationTokenSource();
+				CancellationToken cancelToken = source.Token;
+				location = await Geolocation.GetLocationAsync(request, cancelToken);
+			}
+			catch (FeatureNotSupportedException fnsEx)
+			{
+				// Handle not supported on device exception
+			}
+			catch (PermissionException pEx)
+			{
+				// Handle permission exception
+			}
+			catch (Exception ex)
+			{
+				// Unable to get location
+			}
 
 			if (location == null)
 			{

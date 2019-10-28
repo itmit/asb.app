@@ -46,7 +46,7 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.itmit.asb.app</string>
+	<string>itmit.asb.app</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string></string>
 	<key>UIDeviceFamily</key>
@@ -59,8 +59,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string></string>
@@ -77,5 +75,7 @@
 		<string>location</string>
 		<string>fetch</string>
 	</array>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 </dict>
 </plist>
