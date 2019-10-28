@@ -59,6 +59,7 @@
                                                                Placeholder="Добавьте подробную информацию о себе"
                                                                Style="{StaticResource EditorLcPage}"
                                                                PlaceholderColor="#f4e213" HasRoundedCorner="true"
+                                                               BackgroundColor="LightGray"
                                                                IsExpandable="true" />
                                     </controls:PrimLcPageTwo>
                                 </Grid>
