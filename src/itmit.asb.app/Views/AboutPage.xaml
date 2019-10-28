@@ -38,11 +38,6 @@
                                                    IsVisible="{Binding IsShowedIndicator, Mode=OneWay}"
                                                    VerticalOptions="Center"
                                                    HorizontalOptions="Center">
-                                    <ActivityIndicator.Color>
-                                        <OnPlatform x:TypeArguments="Color">
-                                            <On Platform="iOS" Value="2499CE"/>
-                                        </OnPlatform>
-                                    </ActivityIndicator.Color>
                                 </ActivityIndicator>
                                 <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
                                     <Label IsVisible="{Binding IsShowedActivityTitle}" Text="АКТИВНА ДО" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"

@@ -81,21 +81,31 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
-    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignEntitlements>
+    </CodesignEntitlements>
+    <CodesignProvision>AsbAppStore</CodesignProvision>
+    <MtouchFloat32>true</MtouchFloat32>
+    <OptimizePNGs>true</OptimizePNGs>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <CodesignExtraArgs />
+    <CodesignResourceRules />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="LocationCheck.cs" />
+    <Compile Include="LocationManager.cs" />
+    <Compile Include="LocationUpdatedEventArgs.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\EditorLcPageRenderer.cs" />
     <Compile Include="Renderers\FrameLcPagePrimRenderer.cs" />
     <Compile Include="Renderers\FrameLcPagePrimTwoRenderer.cs" />
     <Compile Include="Renderers\LoginEntryRenderer.cs" />
-    <Compile Include="Services\LocationServiceiOS.cs" />
+    <Compile Include="Services\LocationServiceIos.cs" />
+    <Compile Include="Services\LocationTrackingServiceIos.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />

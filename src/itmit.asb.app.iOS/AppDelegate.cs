@@ -19,6 +19,8 @@ namespace itmit.asb.app.iOS
 	[Register("AppDelegate")]
 	public class AppDelegate : FormsApplicationDelegate
 	{
+		private LocationCheck _showTrackingMap;
+
 		#region Overrided
 		//
 		// This method is invoked when the application has loaded and is ready to run. In this 
@@ -36,6 +38,13 @@ namespace itmit.asb.app.iOS
 			UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
 
 			BackgroundAggregator.Init(this);
+
+			_showTrackingMap = new LocationCheck((s, ev) =>
+			{
+				Console.WriteLine(((LocationCheck.LocationCheckEventArgs) ev).Allowed ? "Present Tracking Map ViewController" : "Disable Tracking Map");
+
+				_showTrackingMap.Dispose();
+			});
 
 			return base.FinishedLaunching(app, options);
 		}

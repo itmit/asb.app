@@ -42,9 +42,6 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="libYandexCheckout.linkwith.cs">
-      <DependentUpon>libYandexCheckout.a</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +51,9 @@
     <ObjcBindingCoreSource Include="Structs.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ObjcBindingNativeLibrary Include="libYandexCheckout.a" />
+    <NativeReference Include="Native References/libYandexCheckout.a">
+      <Kind>Static</Kind>
+    </NativeReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
 </Project>
