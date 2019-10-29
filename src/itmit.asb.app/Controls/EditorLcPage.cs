@@ -10,8 +10,8 @@ namespace itmit.asb.app.Controls
 
 		public static BindableProperty IsExpandableProperty = BindableProperty.Create(nameof(IsExpandable), typeof(bool), typeof(EditorLcPage), false);
 
-		public static BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(EditorLcPage), Color.LightGray);
-		public static BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(EditorLcPage));
+		public new static BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(EditorLcPage), Color.LightGray);
+		public new static BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(EditorLcPage));
 		#endregion
 		#endregion
 
