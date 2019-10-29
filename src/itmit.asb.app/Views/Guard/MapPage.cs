@@ -17,7 +17,7 @@ namespace itmit.asb.app.Views.Guard
 
 		public MapPage(Bid bid)
 		{
-			_bidsService = DependencyService.Get<IBidsService>();
+			//_bidsService = DependencyService.Get<IBidsService>();
 
 			_bidsService.Token = new UserToken
 			{
@@ -73,7 +73,7 @@ namespace itmit.asb.app.Views.Guard
 
 		private void UpdateAlertLocation(object obj)
 		{
-			if (obj is Bid bid)
+			/*if (obj is Bid bid)
 			{
 				Device.BeginInvokeOnMainThread(async () =>
 				{
@@ -98,7 +98,7 @@ namespace itmit.asb.app.Views.Guard
 						Console.WriteLine(e);
 					}
 				});
-			}
+			}*/
 		}
 
 		private void HandleClicked(object sender, EventArgs e)

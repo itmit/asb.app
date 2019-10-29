@@ -13,8 +13,8 @@ namespace itmit.asb.app.Views.Guard
 		{
 			InitializeComponent();
 			var vm = new GuardMainViewModel(Navigation, false);
-			vm.StartUpdateTimer();
-			BindingContext = vm;
+			//vm.StartUpdateTimer();
+			//BindingContext = vm;
 		}
 		#endregion
 	}
