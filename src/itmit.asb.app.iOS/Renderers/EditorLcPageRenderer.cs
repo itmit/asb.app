@@ -27,7 +27,7 @@ namespace itmit.asb.app.iOS.Renderers
 			{
 				Text = element?.Placeholder,
 				TextColor = element.PlaceholderColor.ToUIColor(),
-				BackgroundColor = UIColor.Clear
+				BackgroundColor = UIColor.LightGray
 			};
 
 			var edgeInsets = Control.TextContainerInset;
@@ -120,17 +120,6 @@ namespace itmit.asb.app.iOS.Renderers
 			else if (EditorLcPage.PlaceholderColorProperty.PropertyName == e.PropertyName)
 			{
 				_placeholderLabel.TextColor = customControl.PlaceholderColor.ToUIColor();
-			}
-			else if (EditorLcPage.HasRoundedCornerProperty.PropertyName == e.PropertyName)
-			{
-				if (customControl.HasRoundedCorner)
-				{
-					Control.Layer.CornerRadius = 5;
-				}
-				else
-				{
-					Control.Layer.CornerRadius = 0;
-				}
 			}
 			else if (EditorLcPage.IsExpandableProperty.PropertyName == e.PropertyName)
 			{
