@@ -23,11 +23,13 @@ namespace itmit.asb.app.iOS.Renderers
 		{
 			var element = Element as EditorLcPage;
 
+            element.BackgroundColor = Color.LightGreen;
+
 			_placeholderLabel = new UILabel
 			{
 				Text = element?.Placeholder,
 				TextColor = element.PlaceholderColor.ToUIColor(),
-				BackgroundColor = UIColor.LightGray
+				BackgroundColor = UIColor.Clear
 			};
 
 			var edgeInsets = Control.TextContainerInset;
@@ -134,5 +136,5 @@ namespace itmit.asb.app.iOS.Renderers
 			}
 		}
 		#endregion
-	}
+    }
 }
