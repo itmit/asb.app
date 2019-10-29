@@ -1,7 +1,10 @@
 ﻿using System;
 using CoreLocation;
+using itmit.asb.app.iOS.Services;
 using itmit.asb.app.Services;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(LocationTrackingServiceIos))]
 namespace itmit.asb.app.iOS.Services
 {
 	public class LocationTrackingServiceIos : ILocationTrackingService

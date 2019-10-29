@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
@@ -61,7 +62,7 @@ namespace itmit.asb.app.ViewModels
 			}
 
 			var guid = Guid.NewGuid();
-
+			Debug.WriteLine("+++++++++++++++++++++++++++++++");
 			IBidsService service = new BidsService
 			{
 				Token = App.User.UserToken

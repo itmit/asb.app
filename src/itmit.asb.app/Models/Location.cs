@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -29,7 +30,7 @@ namespace itmit.asb.app.Models
 		{
 			Latitude = latitude;
 			Longitude = longitude;
-		}
+		} 
 		#endregion
 
 		#region Properties
@@ -70,14 +71,23 @@ namespace itmit.asb.app.Models
 			catch (FeatureNotSupportedException fnsEx)
 			{
 				// Handle not supported on device exception
+				Debug.WriteLine("-------------------------------------------------");
+				Debug.WriteLine(fnsEx);
+				Debug.WriteLine("-------------------------------------------------");
 			}
 			catch (PermissionException pEx)
 			{
 				// Handle permission exception
+				Debug.WriteLine("-------------------------------------------------");
+				Debug.WriteLine(pEx);
+				Debug.WriteLine("-------------------------------------------------");
 			}
 			catch (Exception ex)
 			{
 				// Unable to get location
+				Debug.WriteLine("-------------------------------------------------");
+				Debug.WriteLine(ex);
+				Debug.WriteLine("-------------------------------------------------");
 			}
 
 			if (location == null)
