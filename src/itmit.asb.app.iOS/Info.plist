@@ -71,5 +71,7 @@
 	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>1.1.01</string>
+	<key>MinimumOSVersion</key>
+	<string>12.1</string>
 </dict>
 </plist>
