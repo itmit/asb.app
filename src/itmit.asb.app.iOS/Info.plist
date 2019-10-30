@@ -10,13 +10,13 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>NSAppleMusicUsageDescription</key>
-	<string></string>
+	<string>To upload pictures to a user profile</string>
 	<key>UILaunchImageFile~iphone</key>
-	<string></string>
+	<string>Uploading pictures</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1.1.01</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>Photo use</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -30,8 +30,6 @@
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
-	<key>NSAppleEventsUsageDescription</key>
-	<string></string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
@@ -42,13 +40,11 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationUsageDescription</key>
-	<string></string>
-	<key>MinimumOSVersion</key>
-	<string>8.0</string>
+	<string>Geolocation of the user&apos;s location for the map</string>
 	<key>CFBundleIdentifier</key>
 	<string>itmit.asb.app</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string></string>
+	<string>Use Photo Library</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -61,13 +57,11 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
-	<key>UILaunchImageFile</key>
-	<string></string>
+	<string>Access location information during background operation</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Access location information during background operation</string>
 	<key>CFBundleName</key>
 	<string>itmit.asb.app</string>
 	<key>UIBackgroundModes</key>
@@ -76,6 +70,6 @@
 		<string>fetch</string>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1</string>
+	<string>1.1.01</string>
 </dict>
 </plist>
