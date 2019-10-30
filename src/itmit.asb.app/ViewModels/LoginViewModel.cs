@@ -138,7 +138,10 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
-			app.MainPage = new AlarmPage();
+			MainThread.BeginInvokeOnMainThread(() =>
+			{
+				app.MainPage = new AlarmPage();
+			});
 		}
 		#endregion
 	}

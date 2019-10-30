@@ -26,10 +26,7 @@ namespace itmit.asb.app.Views
 
 		private void ImageButton_Clicked_1(object sender, EventArgs e)
 		{
-			Task.Run(() =>
-			{
-				App.Call("+7 (911) 447-11-83");
-			});
+			App.Call("+7 (911) 111-11-11");
 		}
 
 		private void ImageButton_Clicked_2(object sender, EventArgs e)

@@ -21,50 +21,19 @@ namespace itmit.asb.app.iOS.Renderers
 		#region Public
 		public void CreatePlaceholder()
 		{
-			var element = Element as EditorLcPage;
-
-            element.BackgroundColor = Color.LightGreen;
-
-			_placeholderLabel = new UILabel
+			if (Element is EditorLcPage element)
 			{
-				Text = element?.Placeholder,
-				TextColor = element.PlaceholderColor.ToUIColor(),
-				BackgroundColor = UIColor.Clear
-			};
+				element.BackgroundColor = Color.FromHex("#424242");
 
-			var edgeInsets = Control.TextContainerInset;
-			var lineFragmentPadding = Control.TextContainer.LineFragmentPadding;
+				_placeholderLabel = new UILabel
+				{
+					Text = element.Placeholder,
+					TextColor = element.PlaceholderColor.ToUIColor(),
+					BackgroundColor = UIColor.Clear
+				};
+			}
 
 			Control.AddSubview(_placeholderLabel);
-
-			var vConstraints = NSLayoutConstraint.FromVisualFormat("V:|-" + edgeInsets.Top + "-[PlaceholderLabel]-" + edgeInsets.Bottom + "-|",
-																   0,
-																   new NSDictionary(),
-																   NSDictionary.FromObjectsAndKeys(new NSObject[]
-																								   {
-																									   _placeholderLabel
-																								   },
-																								   new NSObject[]
-																								   {
-																									   new NSString("PlaceholderLabel")
-																								   }));
-
-			var hConstraints = NSLayoutConstraint.FromVisualFormat("H:|-" + lineFragmentPadding + "-[PlaceholderLabel]-" + lineFragmentPadding + "-|",
-																   0,
-																   new NSDictionary(),
-																   NSDictionary.FromObjectsAndKeys(new NSObject[]
-																								   {
-																									   _placeholderLabel
-																								   },
-																								   new NSObject[]
-																								   {
-																									   new NSString("PlaceholderLabel")
-																								   }));
-
-			_placeholderLabel.TranslatesAutoresizingMaskIntoConstraints = false;
-
-			Control.AddConstraints(hConstraints);
-			Control.AddConstraints(vConstraints);
 		}
 		#endregion
 
@@ -85,56 +54,16 @@ namespace itmit.asb.app.iOS.Renderers
 			{
 				var customControl = (EditorLcPage) e.NewElement;
 
-				if (customControl.IsExpandable)
+				if (Control != null)
 				{
-					Control.ScrollEnabled = false;
-				}
-				else
-				{
-					Control.ScrollEnabled = true;
-				}
+					Control.ScrollEnabled = !customControl.IsExpandable;
 
-				if (customControl.HasRoundedCorner)
-				{
-					Control.Layer.CornerRadius = 5;
-				}
-				else
-				{
-					Control.Layer.CornerRadius = 0;
+					Control.Layer.CornerRadius = customControl.HasRoundedCorner ? 5 : 0;
 				}
 			}
 		}
 
-		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			base.OnElementPropertyChanged(sender, e);
-
-			var customControl = (EditorLcPage) Element;
-
-			if (e.PropertyName == Editor.TextProperty.PropertyName)
-			{
-				_placeholderLabel.Hidden = !string.IsNullOrEmpty(Control.Text);
-			}
-			else if (EditorLcPage.PlaceholderProperty.PropertyName == e.PropertyName)
-			{
-				_placeholderLabel.Text = customControl.Placeholder;
-			}
-			else if (EditorLcPage.PlaceholderColorProperty.PropertyName == e.PropertyName)
-			{
-				_placeholderLabel.TextColor = customControl.PlaceholderColor.ToUIColor();
-			}
-			else if (EditorLcPage.IsExpandableProperty.PropertyName == e.PropertyName)
-			{
-				if (customControl.IsExpandable)
-				{
-					Control.ScrollEnabled = false;
-				}
-				else
-				{
-					Control.ScrollEnabled = true;
-				}
-			}
-		}
+		
 		#endregion
-    }
+	}
 }
