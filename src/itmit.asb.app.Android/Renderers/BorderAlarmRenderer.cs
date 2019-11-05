@@ -12,12 +12,21 @@ namespace itmit.asb.app.Droid.Renderers
 	public class BorderAlarmRenderer : VisualElementRenderer<Frame>
 	{
 		#region .ctor
-		[Obsolete]
 		public BorderAlarmRenderer(Context context)
 			: base(context)
 		{
 			SetBackgroundDrawable(Resources.GetDrawable(Resource.Drawable.border_alarm));
 		}
 		#endregion
+
+		protected override void OnElementChanged(ElementChangedEventArgs<Frame> e)
+		{
+			base.OnElementChanged(e);
+
+			if (e.NewElement != null)
+			{
+				var a = (BorderAlarm)e.NewElement;
+			}
+		}
 	}
 }
