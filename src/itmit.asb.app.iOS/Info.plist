@@ -64,8 +64,6 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Access location information during background operation</string>
-	<key>CFBundleName</key>
-	<string>itmit.asb.app</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
@@ -74,6 +72,8 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.2.1</string>
 	<key>MinimumOSVersion</key>
-	<string>13.0</string>
+	<string>13.1</string>
+	<key>CFBundleName</key>
+	<string>АСБ</string>
 </dict>
 </plist>
