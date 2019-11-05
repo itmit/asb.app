@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Threading;
 using Foundation;
 using ImageCircle.Forms.Plugin.iOS;
 using itmit.asb.app.Services;
 using Matcha.BackgroundService.iOS;
 using UIKit;
 using Xamarin;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -35,7 +37,7 @@ namespace itmit.asb.app.iOS
 			Forms.Init();
 			FormsMaps.Init();
 			LoadApplication(new App());
-			UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(UIApplication.BackgroundFetchIntervalMinimum);
+			UIApplication.SharedApplication.SetMinimumBackgroundFetchInterval(1800000);
 
 			BackgroundAggregator.Init(this);
 
@@ -51,10 +53,45 @@ namespace itmit.asb.app.iOS
 
 		public override void PerformFetch(UIApplication application, Action<UIBackgroundFetchResult> completionHandler)
 		{
-			// Check for new data, and display it
+			Action();
 
 			// Inform system of fetch results
 			completionHandler(UIBackgroundFetchResult.NewData);
+		}
+
+		private async void Action()
+		{
+			Location location = null;
+			try
+			{
+				var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+				CancellationTokenSource source = new CancellationTokenSource();
+				CancellationToken cancelToken = source.Token;
+				location = await Geolocation.GetLocationAsync(request, cancelToken);
+			}
+			catch (FeatureNotSupportedException fnsEx)
+			{
+				// Handle not supported on device exception.
+				Console.WriteLine(fnsEx);
+			}
+			catch (PermissionException pEx)
+			{
+				// Handle permission exception.
+				Console.WriteLine(pEx);
+			}
+			catch (Exception ex)
+			{
+				// Unable to get location.
+				Console.WriteLine(ex);
+			}
+
+			if (location == null || App.User == null)
+			{
+				return;
+			}
+
+			var service = new LocationService();
+			await service.UpdateCurrentLocationTask(new Models.Location(location.Latitude, location.Longitude), App.User.UserToken);
 		}
 		#endregion
 	}
