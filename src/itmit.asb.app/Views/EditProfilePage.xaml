@@ -5,43 +5,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:itmit.asb.app.Controls"
              xmlns:app="clr-namespace:itmit.asb.app"
-             NavigationPage.HasNavigationBar="False"
              BackgroundImageSource="mainf.png"
              mc:Ignorable="d"
              x:Class="itmit.asb.app.Views.EditProfilePage">
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <StackLayout BackgroundColor="#ef2b2e">
-                    <ImageButton x:Name="BackButton" Source="arrow_left" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" HorizontalOptions="Start" Margin="5,15" Clicked="BackButton_Clicked"/>
+                <StackLayout IsVisible="{Binding IsIndividual}">
+                    <Label Text="Имя:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Name}" Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
+                    <Label Text="Паспорт:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Passport}" Placeholder="Введите данные..." Margin="30,0" Style="{StaticResource EntryLoginPageNumber}">
+                        <controls:LoginEntry.Behaviors>
+                            <app:MaskedBehavior Mask="XX XX XXXXXX" />
+                        </controls:LoginEntry.Behaviors>
+                    </controls:LoginEntry>
+                    <Label Text="Email:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Email}" Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
                 </StackLayout>
-                <Label Text="Имя:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
-                <Label Text="Паспорт:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Margin="30,0" Style="{StaticResource EntryLoginPageNumber}">
-                    <controls:LoginEntry.Behaviors>
-                        <app:MaskedBehavior Mask="XX XX XXXXXX" />
-                    </controls:LoginEntry.Behaviors>
-                </controls:LoginEntry>
-                <Label Text="Email:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
-                <Label Text="Организация:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
-                <Label Text="Директор:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
-                <Label Text="ИНН:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Margin="30,0" Style="{StaticResource EntryLoginPageNumber}">
-                    <controls:LoginEntry.Behaviors>
-                        <app:MaskedBehavior Mask="XXXXXXXXXXXX" />
-                    </controls:LoginEntry.Behaviors>
-                </controls:LoginEntry>
-                <Label Text="ОГРН:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                <controls:LoginEntry Placeholder="Введите данные..." Margin="30,0" Style="{StaticResource EntryLoginPageNumber}">
-                    <controls:LoginEntry.Behaviors>
-                        <app:MaskedBehavior Mask="XXXXXXXXXXXXX" />
-                    </controls:LoginEntry.Behaviors>
-                </controls:LoginEntry>
-                <Button Text="Отправить" Style="{StaticResource ButtonLoginPage}" Clicked="Button_Clicked"/>
+                <StackLayout IsVisible="{Binding IsEntity}">
+                    <Label Text="Email:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Email}" Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
+                    <Label Text="Организация:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Organization}" Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
+                    <Label Text="Директор:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Director}" Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
+                    <Label Text="ИНН:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding INN}" Placeholder="Введите данные..." Margin="30,0" Style="{StaticResource EntryLoginPageNumber}">
+                        <controls:LoginEntry.Behaviors>
+                            <app:MaskedBehavior Mask="XXXXXXXXXXXX" />
+                        </controls:LoginEntry.Behaviors>
+                    </controls:LoginEntry>
+                    <Label Text="ОГРН:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding OGRN}" Placeholder="Введите данные..." Margin="30,0" Style="{StaticResource EntryLoginPageNumber}">
+                        <controls:LoginEntry.Behaviors>
+                            <app:MaskedBehavior Mask="XXXXXXXXXXXXX" />
+                        </controls:LoginEntry.Behaviors>
+                    </controls:LoginEntry>
+                </StackLayout>
+                <Button Text="Отправить" Style="{StaticResource ButtonLoginPage}" Command="{Binding Sender}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

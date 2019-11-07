@@ -41,7 +41,6 @@ namespace itmit.asb.app
 			if (User.IsGuard)
 			{
 				MainPage = new GuardMainPage();
-
 				return;
 			}
 
@@ -63,11 +62,24 @@ namespace itmit.asb.app
 		{
 			get
 			{
-				var con = RealmConfiguration.DefaultConfiguration;
-				con.SchemaVersion = 7;
-				return Realm.GetInstance(con)
-							.All<User>()
-							.SingleOrDefault();
+                var con = RealmConfiguration.DefaultConfiguration;
+                con.SchemaVersion = 11;
+                var user = Realm.GetInstance(con)
+                        .All<User>()
+                        .SingleOrDefault();
+                if (user == null)
+                {
+                    return user;
+                }
+                if (user.Type.Equals("Individual"))
+                {
+                    user.UserType = UserType.Individual;
+                }
+                else if (user.Type.Equals("Entity"))
+                {
+                    user.UserType = UserType.Entity;
+                }
+                return user;
 			}
 		}
 		#endregion
@@ -96,7 +108,7 @@ namespace itmit.asb.app
 		public void Logout()
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 7;
+			con.SchemaVersion = 11;
 			var realm = Realm.GetInstance(con);
 			using (var transaction = realm.BeginWrite())
 			{

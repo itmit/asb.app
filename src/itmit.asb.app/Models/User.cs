@@ -9,12 +9,11 @@ namespace itmit.asb.app.Models
 	/// </summary>
 	public class User : RealmObject
 	{
-
-		#region Properties
-		/// <summary>
-		/// Возвращает или устанавливает email пользователя.
-		/// </summary>
-		public string Email
+        #region Properties
+        /// <summary>
+        /// Возвращает или устанавливает email пользователя.
+        /// </summary>
+        public string Email
 		{
 			get;
 			set;
@@ -62,19 +61,55 @@ namespace itmit.asb.app.Models
 			set;
 		}
 
-		/// <summary>
-		/// Возвращает или устанавливает организацию пользователя.
+        /// <summary>
+		/// Возвращает или устанавливает паспорт пользователя.
 		/// </summary>
-		public string Organization
+        public string Passport 
+        { 
+            get;
+            set; 
+        }
+
+        /// <summary>
+		/// Возвращает или устанавливает ИНН пользователя.
+		/// </summary>
+        public string Inn 
+        { 
+            get;
+            set;
+        }
+
+        /// <summary>
+		/// Возвращает или устанавливает ОГРН пользователя.
+		/// </summary>
+        public string Ogrn 
+        {
+            get; 
+            set; 
+        }
+
+        /// <summary>
+		/// Возвращает или устанавливает директора пользователя.
+		/// </summary>
+        public string Director 
+        { 
+            get; 
+            set; 
+        }
+
+        /// <summary>
+        /// Возвращает или устанавливает организацию пользователя.
+        /// </summary>
+        public string Organization
 		{
 			get;
 			set;
 		}
 
-		/// <summary>
-		/// Возвращает или устанавливает телефонный номер.
-		/// </summary>
-		[JsonProperty("phone_number")]
+        /// <summary>
+        /// Возвращает или устанавливает телефонный номер.
+        /// </summary>
+        [JsonProperty("phone_number")]
 		public string PhoneNumber
 		{
 			get;
@@ -94,7 +129,6 @@ namespace itmit.asb.app.Models
 		/// <summary>
 		/// Возвращает или устанавливает тип пользователя.
 		/// </summary>
-		[JsonProperty("clientType")]
 		[Ignored]
 		public UserType UserType
 		{
@@ -102,10 +136,20 @@ namespace itmit.asb.app.Models
 			set;
 		}
 
-		/// <summary>
+        /// <summary>
 		/// Возвращает или устанавливает тип пользователя.
 		/// </summary>
-		[JsonProperty("is_active")]
+		[JsonProperty("type")]
+        public string Type
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Возвращает или устанавливает тип пользователя.
+        /// </summary>
+        [JsonProperty("is_active")]
 		public bool IsActive
 		{
 			get;
