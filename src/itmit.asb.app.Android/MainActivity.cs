@@ -438,6 +438,7 @@ namespace itmit.asb.app.Droid
 						}
 						catch (IntentSender.SendIntentException e)
 						{
+							Console.WriteLine(e);
 						}
 
 						break;

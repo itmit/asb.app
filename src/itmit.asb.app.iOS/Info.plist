@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Used Calendar</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -14,7 +16,7 @@
 	<key>UILaunchImageFile~iphone</key>
 	<string>Uploading pictures</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.01</string>
+	<string>1.2.2</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Photo use</string>
 	<key>CFBundleDocumentTypes</key>
@@ -62,14 +64,16 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Access location information during background operation</string>
-	<key>CFBundleName</key>
-	<string>itmit.asb.app</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
 		<string>fetch</string>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.01</string>
+	<string>1.2.2</string>
+	<key>MinimumOSVersion</key>
+	<string>13.1</string>
+	<key>CFBundleName</key>
+	<string>АСБ</string>
 </dict>
 </plist>

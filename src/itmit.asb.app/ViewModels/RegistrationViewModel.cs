@@ -30,7 +30,17 @@ namespace itmit.asb.app.ViewModels
 		{
 			Register = new RelayCommand(obj =>
 			{
-				var user = new User()
+				if (string.IsNullOrEmpty(Password)
+					|| string.IsNullOrEmpty(ConfirmPassword)
+					|| string.IsNullOrEmpty(PhoneNumber)
+					|| UserType.Equals("Юридическое") && string.IsNullOrEmpty(Organization)
+					|| UserType.Equals("Физическое") && string.IsNullOrEmpty(Name))
+				{
+					Application.Current.MainPage.DisplayAlert("Уведомление", "Пожалуйста, внимательно заполните все поля формы.", "ОK");
+					return;
+				}
+
+				var user = new User
 				{
 					PhoneNumber = PhoneNumber
 				};
