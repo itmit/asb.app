@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using Plugin.Permissions.Abstractions;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Location = itmit.asb.app.Models.Location;
@@ -53,16 +54,14 @@ namespace itmit.asb.app.ViewModels
 		private async void SendAlarm(BidType type)
 		{
 			IsBusy = true;
-			if (!App.User.IsActive)
+
+			if (!await CheckPermission(Permission.Location, "Для отправки тревоги, необходимо разрешение на использование геоданных."))
 			{
-				await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
 				IsBusy = false;
-				IsSentOut = false;
 				return;
 			}
 
 			var guid = Guid.NewGuid();
-			Debug.WriteLine("+++++++++++++++++++++++++++++++");
 			IBidsService service = new BidsService
 			{
 				Token = App.User.UserToken
