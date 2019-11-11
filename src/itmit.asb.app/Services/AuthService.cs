@@ -63,7 +63,7 @@ namespace itmit.asb.app.Services
 		private const string UploadImageUrl = "http://lk.asb-security.ru/api/client/changePhoto";
 
         /// <summary>
-		/// Задает адрес для получения профиля пользователя.
+		/// Задает адрес для записи профиля пользователя.
 		/// </summary>
         private const string SetProfile = "http://lk.asb-security.ru/api/client/edit";
         #endregion

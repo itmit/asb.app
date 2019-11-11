@@ -7,7 +7,9 @@
              BackgroundImageSource="mainf.png">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="Center" Margin="0,30">
+            <StackLayout VerticalOptions="FillAndExpand"
+                         HorizontalOptions="Center"
+                         Margin="0,30">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -26,13 +28,29 @@
                             </Frame>
                         </Frame>
                     </StackLayout>
-                    <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
+                    <StackLayout IsVisible="{Binding IsIndividual}"
+                                 Margin="0,20" 
+                                 Grid.Row="1" 
+                                 Padding="30,15">
                         <Label x:Name="Name" Text="{Binding Name}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="PhoneNumberIn" Text="{Binding PhoneNumber}"
+                               Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="Passport" Text="{Binding Passport}"
+                               Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="EmailIn" Text="{Binding Email}" Style="{StaticResource LabelBidDetail}" />
+                    </StackLayout>
+                    <StackLayout IsVisible="{Binding IsEntity}" 
+                                 Margin="0,20" 
+                                 Grid.Row="1" 
+                                 Padding="30,15">
+                        <Label x:Name="PhoneNumberEn" Text="{Binding PhoneNumber}"
+                               Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="Director" Text="{Binding Director}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="OGRN" Text="{Binding OGRN}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="INN" Text="{Binding INN}" Style="{StaticResource LabelBidDetail}" />
                         <Label x:Name="Organization" Text="{Binding Organization}"
                                Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="PhoneNumber" Text="{Binding PhoneNumber}"
-                               Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="Email" Text="{Binding Email}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="EmailEn" Text="{Binding Email}" Style="{StaticResource LabelBidDetail}" />
                     </StackLayout>
                     <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
                         <StackLayout Padding="1" BackgroundColor="Black">
