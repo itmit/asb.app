@@ -304,11 +304,14 @@ namespace itmit.asb.app.Droid
 
 				UpdateActiveUser(payment.ActiveFrom);
 
+				AboutViewModel.Instance.IsShowedActivityTitle = true;
 				AboutViewModel.Instance.ActiveTo = payment.ActiveFrom.Add(new TimeSpan(30, 3, 0, 0)) 
 				                                          .ToString("dd.MM.yyyy hh:mm");
 			}
 			else
 			{
+
+				AboutViewModel.Instance.IsShowedActivityTitle = false;
 				AboutViewModel.Instance.ActiveTo = _oldActivityTo;
 				new AlertDialog.Builder(this).SetMessage("Возникла ошибка при оплате.")
 											 .SetNegativeButton("Ок",
@@ -317,7 +320,6 @@ namespace itmit.asb.app.Droid
 																})
 											 .Show();
 			}
-			AboutViewModel.Instance.IsShowedActivityTitle = true;
 			AboutViewModel.Instance.IsShowedIndicator = false;
 		}
 

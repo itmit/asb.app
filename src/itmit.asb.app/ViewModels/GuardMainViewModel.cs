@@ -222,6 +222,12 @@ namespace itmit.asb.app.ViewModels
 			{
 				await Task.Delay(1000);
 				var user = App.User;
+
+				if (user == null)
+				{
+					return;
+				}
+
 				if (!user.HasActiveBid && user.IsGuard && Bids.Any(x => x.Status == BidStatus.PendingAcceptance))
 				{
 					PlaybackAlertSound();
