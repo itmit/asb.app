@@ -28,7 +28,7 @@ namespace itmit.asb.app.Services
 
 		Task<UserToken> RegisterAsync(User client, string password, string cPassword);
 
-		Task<bool> ForgotPassword(string phoneNumber);
+        Task<bool> ForgotPassword(string phoneNumber);
 
 		Task<bool> CheckCode(string phoneNumber, string code);
 

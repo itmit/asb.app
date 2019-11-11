@@ -1,19 +1,18 @@
-﻿using System;
-using System.Windows.Input;
-using itmit.asb.app.Models;
+﻿using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using Realms;
+using System;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using Location = itmit.asb.app.Models.Location;
 
 namespace itmit.asb.app.ViewModels
 {
-	/// <summary>
-	/// Представляет модель представления для регистрации.
-	/// </summary>
-	public class RegistrationViewModel : BaseViewModel
+    /// <summary>
+    /// Представляет модель представления для регистрации.
+    /// </summary>
+    public class RegistrationViewModel : BaseViewModel
 	{
 		private string _phoneNumber;
 		private string _userType;
@@ -176,7 +175,7 @@ namespace itmit.asb.app.ViewModels
 
 				user.UserToken = token;
 
-				Realm.Write(() =>
+				Realm.Write(() =>   
 				{
 					Realm.Add(user, true);
 				});

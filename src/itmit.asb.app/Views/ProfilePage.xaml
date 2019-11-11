@@ -18,7 +18,12 @@
             <ScrollView Grid.Row="0">
                 <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="Center" Margin="0,30">
                     <StackLayout HorizontalOptions="FillAndExpand" Margin="50,0">
-                        <ImageButton Source="r_user.png" WidthRequest="40" HeightRequest="40" BackgroundColor="Transparent" HorizontalOptions="End" Clicked="ImageButton_Clicked_5"/>
+                        <ImageButton Source="r_user.png"
+                                     WidthRequest="40"
+                                     HeightRequest="40"
+                                     BackgroundColor="Transparent"
+                                     HorizontalOptions="End"
+                                     Command="{Binding OpenProfile}"/>
                     </StackLayout>
                     <Grid ColumnSpacing="0" RowSpacing="0">
                         <Grid.RowDefinitions>
@@ -39,10 +44,22 @@
                             </Frame>
                         </StackLayout>
                         <StackLayout Margin="0,20" Grid.Row="1" Padding="30,15">
-                            <Button Style="{StaticResource ButtonPhoto}" Command="{Binding UpdatePhotoCommand}"
+                            <Button Style="{StaticResource ButtonPhoto}"
+                                    Command="{Binding UpdatePhotoCommand}"
                                     IsEnabled="{Binding IsValid}" />
-                            <Label Text="{Binding Organization}" Style="{StaticResource LabelOrganization}" />
                             <Label Text="{Binding PhoneNumber}" Style="{StaticResource LabelOrganization}" />
+                            <StackLayout IsVisible="{Binding IsEntity}">
+                                <Label Text="{Binding Organization}" Style="{StaticResource LabelOrganization}" />
+                                <Label Text="{Binding Director}" Style="{StaticResource LabelOrganization}" />
+                                <Label Text="{Binding INN}" Style="{StaticResource LabelOrganization}" />
+                                <Label Text="{Binding OGRN}" Style="{StaticResource LabelOrganization}" />
+                                <Label Text="{Binding Email}" Style="{StaticResource LabelOrganization}" />
+                            </StackLayout>
+                            <StackLayout IsVisible="{Binding IsIndividual}">
+                                <Label Text="{Binding Name}" Style="{StaticResource LabelOrganization}" />
+                                <Label Text="{Binding Passport}" Style="{StaticResource LabelOrganization}" />
+                                <Label Text="{Binding Email}" Style="{StaticResource LabelOrganization}" />
+                            </StackLayout>
                         </StackLayout>
                         <StackLayout Margin="30,10,30,30" Grid.Column="0" Grid.Row="2">
                             <Frame Style="{StaticResource FrameLcPagePrimMain}">

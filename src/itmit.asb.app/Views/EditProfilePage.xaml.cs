@@ -1,4 +1,5 @@
-﻿using System;
+﻿using itmit.asb.app.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +16,7 @@ namespace itmit.asb.app.Views
         public EditProfilePage()
         {
             InitializeComponent();
-        }
-        private void BackButton_Clicked(object sender, EventArgs e)
-        {
-            Application.Current.MainPage = new NavigationPage(new ProfilePage());
-        }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            DisplayAlert("Уведомление", "Данные изменены", "ОK");
+            BindingContext = new EditProfileViewModel();
         }
     }
 }

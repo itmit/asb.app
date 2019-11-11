@@ -159,7 +159,7 @@ namespace itmit.asb.app.ViewModels
 		public async void AcceptBidCommandExecute(Bid bid)
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 7;
+			con.SchemaVersion = 11;
 			using (var realm = Realm.GetInstance(con))
 			{
 				var user = App.User;
@@ -181,7 +181,7 @@ namespace itmit.asb.app.ViewModels
 		public async void CloseBidCommandExecute(Bid bid)
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 7;
+			con.SchemaVersion = 11;
 			using (var realm = Realm.GetInstance(con))
 			{
 				var user = App.User;

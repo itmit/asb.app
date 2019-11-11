@@ -2,10 +2,12 @@
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
+using itmit.asb.app.Views;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Plugin.Permissions.Abstractions;
 using Realms;
+using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -15,7 +17,13 @@ namespace itmit.asb.app.ViewModels
 		#region Fields
 		private bool _isValid;
 		private string _note = string.Empty;
-		private string _organization = string.Empty;
+        private string _name;
+        private string _email;
+        private string _organization;
+        private string _passport;
+        private string _inn;
+        private string _ogrn;
+        private string _director;
 		private bool _permissionGranted;
 		private string _phoneNumber = string.Empty;
 		private readonly Realm _realm;
@@ -28,14 +36,29 @@ namespace itmit.asb.app.ViewModels
 		public LcViewModel(User user)
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 7;
+			con.SchemaVersion = 11;
 			_realm = Realm.GetInstance(con);
 
 			UserPictureSource = "user1.png";
-			Organization = user.Organization;
+           
 			PhoneNumber = user.PhoneNumber;
 
-			SetProperty(ref _note, user.Note);
+            if (user.UserType == UserType.Individual)
+            {
+                _name = user.Name;
+                _email = user.Email;
+                _passport = user.Passport;
+            }
+            else if (user.UserType == UserType.Entity)
+            {
+                _email = user.Email;
+                _ogrn = user.Ogrn;
+                _inn = user.Inn;
+                _director = user.Director;
+                _organization = user.Organization;
+            }
+
+            SetProperty(ref _note, user.Note);
 
 			if (!string.IsNullOrEmpty(user.UserPictureSource) && user.UserPictureSource != "null")
 			{
@@ -47,7 +70,8 @@ namespace itmit.asb.app.ViewModels
 													  UpdatePhotoCommandExecute();
 												  },
 												  obj => CanUpdatePhotoCommandExecute());
-		}
+            OpenProfile = new Command(CreateProfilePage);
+        }
 		#endregion
 
 		#region Properties
@@ -56,7 +80,12 @@ namespace itmit.asb.app.ViewModels
 			get;
 		}
 
-		public bool IsValid
+        public ICommand OpenProfile 
+        { 
+            get; 
+        }
+
+        public bool IsValid
 		{
 			get => _isValid;
 			set => SetProperty(ref _isValid, value);
@@ -80,13 +109,56 @@ namespace itmit.asb.app.ViewModels
 			}
 		}
 
-		public string Organization
+		public string Name
 		{
-			get => _organization;
-			set => SetProperty(ref _organization, value);
+			get => _name;
+			set => SetProperty(ref _name, value);
 		}
 
-		public string PhoneNumber
+        public string Email 
+        {
+            get => _email;
+            set => SetProperty(ref _email, value);
+        }
+
+        public string Passport 
+        {
+            get => _passport;
+            set => SetProperty(ref _passport, value);
+        }
+
+        public string Director 
+        {
+            get => _director;
+            set => SetProperty(ref _director, value);
+        }
+
+        public string OGRN 
+        {
+            get => _ogrn;
+            set => SetProperty(ref _ogrn, value);
+        }
+
+        public string INN 
+        {
+            get => _inn;
+            set => SetProperty(ref _inn, value);
+        }
+
+        public string Organization 
+        {
+            get => _organization;
+            set => SetProperty(ref _organization, value);
+        }
+
+        public bool IsIndividual
+            => App.User.UserType == UserType.Individual;
+
+
+        public bool IsEntity
+            => App.User.UserType == UserType.Entity;
+
+        public string PhoneNumber
 		{
 			get => _phoneNumber;
 			set => SetProperty(ref _phoneNumber, value);
@@ -157,6 +229,10 @@ namespace itmit.asb.app.ViewModels
 			}
 		}
 
-		#endregion
-	}
+        private async void CreateProfilePage()
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new EditProfilePage()); 
+        }
+        #endregion
+    }
 }

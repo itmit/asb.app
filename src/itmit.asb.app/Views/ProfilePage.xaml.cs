@@ -48,7 +48,7 @@ namespace itmit.asb.app.Views
 
         private void ImageButton_Clicked_5(object sender, EventArgs e)
         {
-            Application.Current.MainPage = new NavigationPage(new EditProfilePage());
+
         }
     }
 }

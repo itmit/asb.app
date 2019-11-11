@@ -61,16 +61,21 @@ namespace itmit.asb.app.Services
 		/// Задает адрес для получения пользователя.
 		/// </summary>
 		private const string UploadImageUrl = "http://lk.asb-security.ru/api/client/changePhoto";
-		#endregion
-		#endregion
 
-		#region Public
-		/// <summary>
-		/// Устанавливает аватар клиента.
+        /// <summary>
+		/// Задает адрес для получения профиля пользователя.
 		/// </summary>
-		/// <param name="image">Массив байтов картинки отправляемые на сервер.</param>
-		/// <param name="token">Токен пользователя.</param>
-		public async void SetAvatar(byte[] image, UserToken token)
+        private const string SetProfile = "http://lk.asb-security.ru/api/client/edit";
+        #endregion
+        #endregion
+
+        #region Public
+        /// <summary>
+        /// Устанавливает аватар клиента.
+        /// </summary>
+        /// <param name="image">Массив байтов картинки отправляемые на сервер.</param>
+        /// <param name="token">Токен пользователя.</param>
+        public async void SetAvatar(byte[] image, UserToken token)
 		{
 			using (var client = new HttpClient())
 			{
@@ -119,15 +124,61 @@ namespace itmit.asb.app.Services
 				Debug.WriteLine(jsonString);
 			}
 		}
-		#endregion
 
-		#region IAuthService members
-		/// <summary>
-		/// Получает данные авторизованного пользователя по токену.
-		/// </summary>
-		/// <param name="token">Токен для получения пользователя.</param>
-		/// <returns>Авторизованный пользователь.</returns>
-		public async Task<User> GetUserByTokenAsync(UserToken token)
+        /// <summary>
+        /// Устанавливает профиль пользователя.
+        /// </summary>
+        /// <param name="token">Токен пользователя.</param>
+        public async Task<bool> SetEditProfile(User user)
+        {
+            var type = user.UserToken.TokenType;
+            var token = user.UserToken.Token;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{type} {token}");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    {
+                        "name", user.Name
+                    },
+                    {
+                        "passport", user.Passport
+                    },
+                    {
+                        "email", user.Email
+                    },
+                    {
+                        "organization", user.Organization
+                    },
+                    {
+                        "INN", user.Inn
+                    },
+                    {
+                        "OGRN", user.Ogrn
+                    },
+                    {
+                        "director", user.Director
+                    }
+                });
+
+                var response = await client.PostAsync(SetProfile, content);
+
+                var jsonString = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(jsonString);
+
+                return await Task.FromResult(response.IsSuccessStatusCode);
+            }
+        }
+        #endregion
+        #region IAuthService members
+        /// <summary>
+        /// Получает данные авторизованного пользователя по токену.
+        /// </summary>
+        /// <param name="token">Токен для получения пользователя.</param>
+        /// <returns>Авторизованный пользователь.</returns>
+        public async Task<User> GetUserByTokenAsync(UserToken token)
 		{
 			HttpResponseMessage response;
 			using (var client = new HttpClient())
