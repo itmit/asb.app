@@ -154,7 +154,6 @@ namespace itmit.asb.app.ViewModels
         public bool IsIndividual
             => App.User.UserType == UserType.Individual;
 
-
         public bool IsEntity
             => App.User.UserType == UserType.Entity;
 

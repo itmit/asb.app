@@ -10,7 +10,7 @@ namespace itmit.asb.app.Models
 	{
 		#region Properties
 		/// <summary>
-		/// Возвращает или устанавливает клиент отправивший заявку.
+		/// Возвращает или устанавливает клиента отправивший заявку.
 		/// </summary>
 		public User Client
 		{

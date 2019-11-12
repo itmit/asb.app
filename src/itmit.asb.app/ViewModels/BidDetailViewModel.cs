@@ -18,6 +18,10 @@ namespace itmit.asb.app.ViewModels
 		private string _email;
 		private bool _isValid;
 		private string _name;
+        private string _director;
+        private string _inn;
+        private string _ogrn;
+        private string _passport;
 		private string _note;
 		private string _organization;
 		private string _phoneNumber;
@@ -78,11 +82,34 @@ namespace itmit.asb.app.ViewModels
 											  obj => true);
 
 			UserPictureSource = "user1.png";
+
 			Organization = bid.Client.Organization;
+
 			PhoneNumber = bid.Client.PhoneNumber;
+
 			Note = bid.Client.Note;
+
 			Name = bid.Client.Name;
+
 			Email = bid.Client.Email;
+
+            Passport = bid.Client.Passport;
+
+            Director = bid.Client.Director;
+
+            OGRN = bid.Client.Ogrn;
+
+            INN = bid.Client.Inn;
+
+            if (bid.Client.Type.Equals("Individual"))
+            {
+                IsIndividual = true;
+            }
+            else if (bid.Client.Type.Equals("Entity"))
+            {
+                IsEntity = true;
+            }
+
 			if (!string.IsNullOrEmpty(bid.Client.UserPictureSource) && bid.Client.UserPictureSource != "null")
 			{
 				UserPictureSource = bid.Client.UserPictureSource;
@@ -148,15 +175,51 @@ namespace itmit.asb.app.ViewModels
 			set => SetProperty(ref _phoneNumber, value);
 		}
 
-		public string UserPictureSource
+        public string Director 
+        { 
+            get => _director; 
+            set => SetProperty(ref _director, value); 
+        }
+
+        public string Passport 
+        { 
+            get => _passport; 
+            set => SetProperty(ref _passport, value); 
+        }
+
+        public string INN 
+        { 
+            get => _inn; 
+            set => SetProperty(ref _inn, value); 
+        }
+
+        public string OGRN 
+        { 
+            get => _ogrn; 
+            set => SetProperty(ref _ogrn, value); 
+        }
+
+        public string UserPictureSource
 		{
 			get => _userPictureSource;
 			set => SetProperty(ref _userPictureSource, value);
 		}
-		#endregion
 
-		#region Public
-		public async void AcceptBidCommandExecute(Bid bid)
+        public bool IsIndividual 
+        { 
+            get;
+            set; 
+        }
+
+        public bool IsEntity 
+        { 
+            get; 
+            set; 
+        }
+        #endregion
+
+        #region Public
+        public async void AcceptBidCommandExecute(Bid bid)
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
 			con.SchemaVersion = 11;

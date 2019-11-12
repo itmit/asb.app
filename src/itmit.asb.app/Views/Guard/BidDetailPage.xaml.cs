@@ -28,17 +28,30 @@ namespace itmit.asb.app.Views.Guard
 			{
 				Name.FontSize = 40;
 				Organization.FontSize = 40;
-				PhoneNumber.FontSize = 40;
-				Email.FontSize = 40;
+				PhoneNumberIn.FontSize = 40;
+                PhoneNumberEn.FontSize = 40;
+				EmailIn.FontSize = 40;
+                EmailEn.FontSize = 40;
+                Director.FontSize = 40;
+                INN.FontSize = 40;
+                OGRN.FontSize = 40;
 				Note.FontSize = 40;
+                Passport.FontSize = 40;
+                
 			}
 			else
 			{
 				Name.FontSize = 20;
 				Organization.FontSize = 20;
-				PhoneNumber.FontSize = 20;
-				Email.FontSize = 20;
-				Note.FontSize = 20;
+				PhoneNumberIn.FontSize = 20;
+                PhoneNumberEn.FontSize = 20;
+				EmailIn.FontSize = 20;
+                EmailEn.FontSize = 20;
+                Director.FontSize = 20;
+                INN.FontSize = 20;
+                OGRN.FontSize = 20;
+                Note.FontSize = 20;
+                Passport.FontSize = 20;
 			}
 		}
 		#endregion
