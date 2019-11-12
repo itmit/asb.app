@@ -46,7 +46,7 @@
                         <Label x:Name="PhoneNumberEn" Text="{Binding PhoneNumber}"
                                Style="{StaticResource LabelBidDetail}" />
                         <Label x:Name="Director" Text="{Binding Director}" Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="OGRN" Text="{Binding OGRN}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="Ogrn" Text="{Binding OGRN}" Style="{StaticResource LabelBidDetail}" />
                         <Label x:Name="INN" Text="{Binding INN}" Style="{StaticResource LabelBidDetail}" />
                         <Label x:Name="Organization" Text="{Binding Organization}"
                                Style="{StaticResource LabelBidDetail}" />

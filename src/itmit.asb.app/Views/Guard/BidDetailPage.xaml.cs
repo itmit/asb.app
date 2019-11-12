@@ -34,7 +34,7 @@ namespace itmit.asb.app.Views.Guard
                 EmailEn.FontSize = 40;
                 Director.FontSize = 40;
                 INN.FontSize = 40;
-                OGRN.FontSize = 40;
+                Ogrn.FontSize = 40;
 				Note.FontSize = 40;
                 Passport.FontSize = 40;
                 
@@ -49,7 +49,7 @@ namespace itmit.asb.app.Views.Guard
                 EmailEn.FontSize = 20;
                 Director.FontSize = 20;
                 INN.FontSize = 20;
-                OGRN.FontSize = 20;
+                Ogrn.FontSize = 20;
                 Note.FontSize = 20;
                 Passport.FontSize = 20;
 			}

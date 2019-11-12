@@ -54,9 +54,6 @@ namespace itmit.asb.app.Views
 				Subscribe.HorizontalOptions = LayoutOptions.Center;
 				OpisSubscribe.WidthRequest = 400;
 				OpisSubscribe.HorizontalOptions = LayoutOptions.Center;
-				SubscribeLabel.FontSize = 16;
-				ActiveToLabel.FontSize = 16;
-				ActiveUntilLabel.FontSize = 16;
 			}
 			else
 			{
@@ -64,6 +61,10 @@ namespace itmit.asb.app.Views
 				Subscribe.HorizontalOptions = LayoutOptions.Fill;
 				OpisSubscribe.WidthRequest = Application.Current.MainPage.Width;
 				OpisSubscribe.HorizontalOptions = LayoutOptions.Fill;
+
+				SubscribeLabel.FontSize = 18;
+				ActiveToLabel.FontSize = 18;
+				ActiveUntilLabel.FontSize = 18;
 			}
 		}
 		#endregion
