@@ -67,10 +67,12 @@ namespace itmit.asb.app
                 var user = Realm.GetInstance(con)
                         .All<User>()
                         .SingleOrDefault();
-                if (user == null)
+
+                if (user == null || string.IsNullOrEmpty(user.Type))
                 {
-                    return user;
+                    return null;
                 }
+
                 if (user.Type.Equals("Individual"))
                 {
                     user.UserType = UserType.Individual;

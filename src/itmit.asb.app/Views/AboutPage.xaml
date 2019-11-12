@@ -29,7 +29,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Text="ПОДПИСКА" Style="{StaticResource LabelBuy}" />
+                <Label Grid.Row="0" Grid.Column="0" Text="ПОДПИСКА" x:Name="SubscribeLabel" Style="{StaticResource LabelBuy}" />
                 <StackLayout Grid.Row="1" Grid.Column="0" Style="{StaticResource StackLayoutBuy}">
                     <Frame Style="{StaticResource FrameBuyTwo}">
                         <Frame Style="{StaticResource FrameBuyOne}">
@@ -40,10 +40,12 @@
                                                    HorizontalOptions="Center">
                                 </ActivityIndicator>
                                 <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                                    <Label IsVisible="{Binding IsShowedActivityTitle}" Text="АКТИВНА ДО" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"
+                                    <Label IsVisible="{Binding IsShowedActivityTitle}" x:Name="ActiveUntilLabel" Text="АКТИВНА ДО" FontSize="Large" TextColor="#b20d0b" HorizontalOptions="Center"
                                            FontAttributes="Bold" />
                                     <FlexLayout HorizontalOptions="Center" Padding="20,0,0,0">
-                                        <Label HorizontalTextAlignment="Center" Text="{Binding ActiveTo}" FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold"
+                                        <Label HorizontalTextAlignment="Center" Text="{Binding ActiveTo}"
+                                               FontSize="Large" TextColor="#b20d0b" FontAttributes="Bold"
+                                               x:Name="ActiveToLabel"
                                                Margin="0,0,10,0" />
                                     </FlexLayout>
                                 </StackLayout>

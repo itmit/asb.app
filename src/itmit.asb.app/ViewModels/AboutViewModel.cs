@@ -1,14 +1,12 @@
 
 ﻿using System;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using itmit.asb.app.Services;
-using itmit.asb.app.Views;
-using Realms;
-using Xamarin.Forms;
+ using System.Diagnostics;
+ using System.Security.Authentication;
+ using System.Windows.Input;
+ using itmit.asb.app.Models;
+ using itmit.asb.app.Services;
+ using Realms;
+ using Xamarin.Forms;
 
 namespace itmit.asb.app.ViewModels
 {
@@ -22,20 +20,8 @@ namespace itmit.asb.app.ViewModels
 		public AboutViewModel(INavigation navigation)
 		{
 			Instance = this;
-			var user = App.User;
-			if (user != null)
-			{
-				IsShowedActivityTitle = user.ActiveFrom.Ticks > DateTime.MinValue.Ticks;
-				if (IsShowedActivityTitle)
-				{
-					ActiveTo = user.ActiveFrom.DateTime.Add(new TimeSpan(30, 3, 0, 0))
-								   .ToString("dd.MM.yyyy hh:mm");
-				}
-				else
-				{
-					ActiveTo = "Не активна";
-				}
-			}
+			
+			UpdateUserCommand.Execute(null);
 
 			_navigation = navigation;
 			OpenRobokassa = new RelayCommand(obj =>
@@ -69,34 +55,44 @@ namespace itmit.asb.app.ViewModels
 			get => _activeTo;
 			set => SetProperty(ref _activeTo, value);
 		}
+		
+		private readonly IAuthService _authService = DependencyService.Get<IAuthService>();
 
-		private async void ViewOnNavigating(object sender, WebNavigatingEventArgs e)
+		public ICommand UpdateUserCommand => new RelayCommand(obj =>
 		{
-			var uri = new Uri(e.Url);
-			var path = uri.Host + uri.LocalPath;
-			if (path == "www.asb-security.ru/")
+			UpdateUserExecute();
+		}, obj => true);
+
+		private async void UpdateUserExecute()
+		{
+			User user;
+			try
 			{
-				Application.Current.MainPage = new NavigationPage(new AlarmPage());
-
-				var con = RealmConfiguration.DefaultConfiguration;
-				con.SchemaVersion = 11;
-				Realm.GetInstance(con).Write(() =>
-				{
-					App.User.IsActive = true;
-				});
-
-				IAuthService service = new AuthService();
-				await service.SetActivityFrom(App.User.UserToken);
-				await Task.Delay(150);
-				await Application.Current.MainPage.DisplayAlert("Внимание", "Подписка оплачена.", "Ок");
+				var token = App.User.UserToken;
+				user = await _authService.GetUserByTokenAsync(token);
 			}
-			else if (path == "www.asb-security.ru/structure/")
+			catch (AuthenticationException e)
 			{
-				Application.Current.MainPage = new NavigationPage(new AboutPage());
-				await Task.Delay(150);
-				await Application.Current.MainPage.DisplayAlert("Внимание", "Не удалось оплатить подписку.", "Ок");
+				Debug.WriteLine(e);
+				return;
 			}
 
+			IsShowedActivityTitle = user.ActiveFrom.Ticks > DateTime.MinValue.Ticks;
+			if (IsShowedActivityTitle)
+			{
+				ActiveTo = user.ActiveFrom.DateTime.Add(new TimeSpan(30, 3, 0, 0))
+							   .ToString("dd.MM.yyyy hh:mm");
+			}
+			else
+			{
+				ActiveTo = "Не активна";
+			}
+		}
+
+		public Realm Realm
+		{
+			get;
+			set;
 		}
 
 		public ICommand OpenRobokassa

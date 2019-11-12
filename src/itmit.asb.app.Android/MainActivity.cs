@@ -43,7 +43,7 @@ using Platform = Xamarin.Essentials.Platform;
 
 namespace itmit.asb.app.Droid
 {
-	[Activity(Label = "itmit.asb.app",
+	[Activity(Label = "АСБ ЧОП",
 		Icon = "@mipmap/icon2",
 		Theme = "@style/MainTheme",
 		MainLauncher = true,
@@ -305,8 +305,7 @@ namespace itmit.asb.app.Droid
 				UpdateActiveUser(payment.ActiveFrom);
 
 				AboutViewModel.Instance.IsShowedActivityTitle = true;
-				AboutViewModel.Instance.ActiveTo = payment.ActiveFrom.Add(new TimeSpan(30, 3, 0, 0)) 
-				                                          .ToString("dd.MM.yyyy hh:mm");
+				AboutViewModel.Instance.UpdateUserCommand.Execute(null);
 			}
 			else
 			{

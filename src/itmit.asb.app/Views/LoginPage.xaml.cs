@@ -17,6 +17,7 @@ namespace itmit.asb.app.Views
             SizeChanged += OnSizeChanged;
 		}
         #endregion
+
         #region Private
         private void OnSizeChanged(object sender, EventArgs e)
 		{

@@ -54,6 +54,9 @@ namespace itmit.asb.app.Views
 				Subscribe.HorizontalOptions = LayoutOptions.Center;
 				OpisSubscribe.WidthRequest = 400;
 				OpisSubscribe.HorizontalOptions = LayoutOptions.Center;
+				SubscribeLabel.FontSize = 16;
+				ActiveToLabel.FontSize = 16;
+				ActiveUntilLabel.FontSize = 16;
 			}
 			else
 			{
