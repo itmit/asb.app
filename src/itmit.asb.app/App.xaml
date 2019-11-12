@@ -192,6 +192,7 @@
                 <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="HeightRequest" Value="60"/>
             </Style>
+            <converters:StringNullOrEmptyBoolConverter x:Key="StringNullOrEmptyBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

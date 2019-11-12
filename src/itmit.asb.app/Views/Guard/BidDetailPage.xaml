@@ -32,25 +32,41 @@
                                  Margin="0,20" 
                                  Grid.Row="1" 
                                  Padding="30,15">
-                        <Label x:Name="Name" Text="{Binding Name}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="Name" Text="{Binding Name}" 
+                               IsVisible="{Binding Name, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
+                               Style="{StaticResource LabelBidDetail}" />
                         <Label x:Name="PhoneNumberIn" Text="{Binding PhoneNumber}"
+                               IsVisible="{Binding PhoneNumber, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
                                Style="{StaticResource LabelBidDetail}" />
                         <Label x:Name="Passport" Text="{Binding Passport}"
+                               IsVisible="{Binding Passport, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
                                Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="EmailIn" Text="{Binding Email}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="EmailIn" 
+                               IsVisible="{Binding Email, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
+                               Text="{Binding Email}" Style="{StaticResource LabelBidDetail}" />
                     </StackLayout>
                     <StackLayout IsVisible="{Binding IsEntity}" 
                                  Margin="0,20" 
                                  Grid.Row="1" 
                                  Padding="30,15">
                         <Label x:Name="PhoneNumberEn" Text="{Binding PhoneNumber}"
+                               IsVisible="{Binding PhoneNumber, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
                                Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="Director" Text="{Binding Director}" Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="Ogrn" Text="{Binding OGRN}" Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="INN" Text="{Binding INN}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="Director" Text="{Binding Director}" 
+                               IsVisible="{Binding Director, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
+                               Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="Ogrn" Text="{Binding OGRN}" 
+                               IsVisible="{Binding OGRN, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
+                               Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="INN" Text="{Binding INN}" 
+                               IsVisible="{Binding INN, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
+                               Style="{StaticResource LabelBidDetail}" />
                         <Label x:Name="Organization" Text="{Binding Organization}"
+                               IsVisible="{Binding Organization, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
                                Style="{StaticResource LabelBidDetail}" />
-                        <Label x:Name="EmailEn" Text="{Binding Email}" Style="{StaticResource LabelBidDetail}" />
+                        <Label x:Name="EmailEn" Text="{Binding Email}"
+                               IsVisible="{Binding Email, Converter={StaticResource StringNullOrEmptyBoolConverter}}"
+                               Style="{StaticResource LabelBidDetail}" />
                     </StackLayout>
                     <StackLayout Margin="30,10,30,0" Grid.Column="0" Grid.Row="2">
                         <StackLayout Padding="1" BackgroundColor="Black">
