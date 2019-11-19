@@ -21,6 +21,7 @@ namespace itmit.asb.app.Views
 		#region Private
 		private void ImageButton_Clicked(object sender, EventArgs e)
 		{
+			Application.Current.MainPage.Navigation.PopModalAsync();
 			Application.Current.MainPage = new NavigationPage(new AlarmPage());
 		}
 
@@ -31,11 +32,13 @@ namespace itmit.asb.app.Views
 
 		private void ImageButton_Clicked_2(object sender, EventArgs e)
 		{
+			Application.Current.MainPage.Navigation.PopModalAsync();
 			Application.Current.MainPage = new NavigationPage(new ProfilePage());
 		}
 
 		private void ImageButton_Clicked_3(object sender, EventArgs e)
 		{
+			Application.Current.MainPage.Navigation.PopModalAsync();
 			Application.Current.MainPage = new NavigationPage(new AboutPage());
 		}
 

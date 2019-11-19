@@ -1,6 +1,7 @@
 ﻿using System;
 using CoreLocation;
 using itmit.asb.app.iOS.Services;
+using itmit.asb.app.Models;
 using itmit.asb.app.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -13,19 +14,31 @@ namespace itmit.asb.app.iOS.Services
 	{
 		public const string LocationUpdateService = "LocationUpdateServiceBackgroundTaskManager";
 
-		public async void HandleLocationChanged(object sender, LocationUpdatedEventArgs e)
+		public void HandleLocationChanged(object sender, LocationUpdatedEventArgs e)
 		{
 			if (Connectivity.NetworkAccess != NetworkAccess.Internet)
 			{
 				return;
 			}
-			
+
 			var token = App.User.UserToken;
 			if (token == null)
 			{
 				return;
 			}
 
+			try
+			{
+				UpdateLocation(token, e);
+			}
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception);
+			}
+		}
+
+		private async void UpdateLocation(UserToken token, LocationUpdatedEventArgs e)
+		{
 			// Handle foreground updates
 			CLLocation location = e.Location;
 
@@ -37,10 +50,8 @@ namespace itmit.asb.app.iOS.Services
 			else
 			{
 				await service.AddPointOnMapTask(
-						  new Location(location.Coordinate.Latitude, location.Coordinate.Longitude), token);
+					new Location(location.Coordinate.Latitude, location.Coordinate.Longitude), token);
 			}
-
-			Console.WriteLine("foreground updated");
 		}
 
 		public static LocationManager Manager { get; set; }

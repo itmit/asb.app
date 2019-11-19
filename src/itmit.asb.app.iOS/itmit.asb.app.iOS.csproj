@@ -25,7 +25,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchArch>i386, x86_64</MtouchArch>
+    <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer: Vadim Grashenko (DSN36L2SUL)</CodesignKey>
@@ -35,6 +35,10 @@
     <MtouchFloat32>false</MtouchFloat32>
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+    <CodesignExtraArgs />
+    <CodesignResourceRules />
+    <CodesignEntitlements />
+    <MtouchSdkVersion>13.2</MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>

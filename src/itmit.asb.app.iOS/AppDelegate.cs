@@ -10,6 +10,8 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
+
+[assembly: Dependency(typeof(YandexCheckout))]
 [assembly: Dependency(typeof(AuthService))]
 [assembly: Dependency(typeof(BidsService))]
 
