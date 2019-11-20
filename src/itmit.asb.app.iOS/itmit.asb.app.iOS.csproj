@@ -240,4 +240,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\AlarmAndCall.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\arrow_alt_left_white.png" />
+  </ItemGroup>
 </Project>
