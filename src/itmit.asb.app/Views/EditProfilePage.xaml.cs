@@ -15,8 +15,18 @@ namespace itmit.asb.app.Views
     {
         public EditProfilePage()
         {
+			if (Device.RuntimePlatform == Device.iOS)
+			{
+				BackButton.IsEnabled = true;
+				BackButton.IsVisible = true;
+			}
             InitializeComponent();
             BindingContext = new EditProfileViewModel();
         }
-    }
+
+		private void BackButton_OnClicked(object sender, EventArgs e)
+		{
+			Navigation.PopAsync();
+		}
+	}
 }

@@ -11,6 +11,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
+                <ImageButton Margin="10" Source="arrow_alt_left_white" Clicked="BackButton_OnClicked" x:Name="BackButton" IsEnabled="False" IsVisible="False"/>
                 <StackLayout IsVisible="{Binding IsIndividual}">
                     <Label Text="Имя:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
                     <controls:LoginEntry Text="{Binding Name}" Placeholder="Введите данные..." Keyboard="Text" Margin="30,0" Style="{StaticResource EntryLoginPageNumber}"/>
