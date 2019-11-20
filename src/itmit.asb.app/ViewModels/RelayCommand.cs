@@ -5,10 +5,6 @@ namespace itmit.asb.app.ViewModels
 {
 	public class RelayCommand : ICommand
 	{
-		#region Delegates and events
-		public event EventHandler CanExecuteChanged;
-		#endregion
-
 		#region Data
 		#region Fields
 		private readonly Func<object, bool> _canExecute;
@@ -22,10 +18,12 @@ namespace itmit.asb.app.ViewModels
 			_execute = execute;
 			_canExecute = canExecute;
 		}
-		#endregion
 
-		#region ICommand members
-		public bool CanExecute(object parameter) => _execute == null || _canExecute(parameter);
+        public event EventHandler CanExecuteChanged;
+        #endregion
+
+        #region ICommand members
+        public bool CanExecute(object parameter) => _execute == null || _canExecute(parameter);
 
 		public void Execute(object parameter)
 		{
