@@ -18,7 +18,11 @@
 	<key>CFBundleVersion</key>
 	<string>1.2.2</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Photo use</string>
+	<string>This app needs access to the camera to take photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to microphone.</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -46,7 +50,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>itmit.asb.app</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Use Photo Library</string>
+	<string>This app needs access to the photo gallery.</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>

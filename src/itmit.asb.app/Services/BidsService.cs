@@ -59,8 +59,22 @@ namespace itmit.asb.app.Services
 		{
 			using (var client = new HttpClient())
 			{
-				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Token.TokenType, Token.Token);
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{Token.TokenType} {Token.Token}");
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				double latitude;
+				double longitude;
+
+				if (bid.Location == null)
+				{
+					latitude = 0;
+					longitude = 0;
+				}
+				else
+				{
+					latitude = bid.Location.Latitude;
+					longitude = bid.Location.Longitude;
+				}
+
 				var data = new Dictionary<string, string>
 				{
 					{
@@ -70,10 +84,10 @@ namespace itmit.asb.app.Services
 						"type", bid.Type.ToString()
 					},
 					{
-						"latitude", bid.Location.Latitude.ToString(CultureInfo.InvariantCulture)
+						"latitude", latitude.ToString(CultureInfo.InvariantCulture)
 					},
 					{
-						"longitude", bid.Location.Longitude.ToString(CultureInfo.InvariantCulture)
+						"longitude", longitude.ToString(CultureInfo.InvariantCulture)
 					}
 				};
 				var response = await client.PostAsync(BidApiUri, new FormUrlEncodedContent(data));

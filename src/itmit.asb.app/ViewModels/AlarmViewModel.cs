@@ -64,7 +64,11 @@ namespace itmit.asb.app.ViewModels
 			var guid = Guid.NewGuid();
 			IBidsService service = new BidsService
 			{
-				Token = App.User.UserToken
+				Token = new UserToken()
+				{
+					Token = (string)App.User.UserToken.Token.Clone(),
+					TokenType = (string)App.User.UserToken.TokenType.Clone()
+				}
 			};
 			var res = await service.CreateBid(new Bid
 			{
@@ -95,6 +99,10 @@ namespace itmit.asb.app.ViewModels
 				{
 					IsSentOut = false;
 					await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+				}
+				else
+				{
+					await Application.Current.MainPage.DisplayAlert("Внимание", "Ошибка сервера.", "Ок");
 				}
 			}
 
