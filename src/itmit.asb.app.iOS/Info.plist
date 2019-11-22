@@ -16,13 +16,9 @@
 	<key>UILaunchImageFile~iphone</key>
 	<string>Uploading pictures</string>
 	<key>CFBundleVersion</key>
-	<string>1.2.4</string>
+	<string>1.2.5</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to the camera to take photos.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to photos.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to microphone.</string>
+	<string>Photo use</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -50,7 +46,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>itmit.asb.app</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs access to the photo gallery.</string>
+	<string>Use Photo Library</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -74,7 +70,7 @@
 		<string>fetch</string>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.4</string>
+	<string>1.2.5</string>
 	<key>MinimumOSVersion</key>
 	<string>12.1</string>
 	<key>CFBundleName</key>
