@@ -39,13 +39,13 @@ namespace itmit.asb.app.Controls
 			set => SetValue(IsExpandableProperty, value);
 		}
 
-		public string Placeholder
+		public new string Placeholder
 		{
 			get => (string) GetValue(PlaceholderProperty);
 			set => SetValue(PlaceholderProperty, value);
 		}
 
-		public Color PlaceholderColor
+		public new Color PlaceholderColor
 		{
 			get => (Color) GetValue(PlaceholderColorProperty);
 			set => SetValue(PlaceholderColorProperty, value);
