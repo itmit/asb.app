@@ -64,11 +64,9 @@ namespace itmit.asb.app.ViewModels
 			var guid = Guid.NewGuid();
 			IBidsService service = new BidsService
 			{
-				Token = new UserToken()
-				{
-					Token = (string)App.User.UserToken.Token.Clone(),
-					TokenType = (string)App.User.UserToken.TokenType.Clone()
-				}
+				AccessToken = (string)App.User.UserToken.Token.Clone(),
+				TokenType = (string)App.User.UserToken.TokenType.Clone()
+				
 			};
 			var res = await service.CreateBid(new Bid
 			{

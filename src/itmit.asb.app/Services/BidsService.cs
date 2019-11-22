@@ -36,6 +36,19 @@ namespace itmit.asb.app.Services
 			get;
 			set;
 		}
+
+		public string AccessToken
+		{
+			get;
+			set;
+		}
+
+		public string TokenType
+		{
+			get;
+			set;
+		}
+
 		#endregion
 		#endregion
 
@@ -59,7 +72,7 @@ namespace itmit.asb.app.Services
 		{
 			using (var client = new HttpClient())
 			{
-				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{Token.TokenType} {Token.Token}");
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{TokenType} {AccessToken}");
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 				double latitude;
 				double longitude;
