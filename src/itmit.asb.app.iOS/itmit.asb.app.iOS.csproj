@@ -215,10 +215,6 @@
       <Project>{1182E7C8-F3E2-4F39-BB0C-D063B441E305}</Project>
       <Name>itmit.asb.app</Name>
     </ProjectReference>
-    <ProjectReference Include="..\itmit.asb.app.iOS.YandexMoney\itmit.asb.app.iOS.YandexMoney.csproj">
-      <Project>{388E444D-75B0-40FF-9E37-CF263A492A84}</Project>
-      <Name>itmit.asb.app.iOS.YandexMoney</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Alarm.png" />

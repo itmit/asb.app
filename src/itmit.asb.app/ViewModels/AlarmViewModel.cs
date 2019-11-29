@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
@@ -62,16 +63,17 @@ namespace itmit.asb.app.ViewModels
 			}
 
 			var guid = Guid.NewGuid();
+			var user = App.User;
 			IBidsService service = new BidsService
 			{
-				AccessToken = (string)App.User.UserToken.Token.Clone(),
-				TokenType = (string)App.User.UserToken.TokenType.Clone()
+				AccessToken = (string)user.UserToken.Token.Clone(),
+				TokenType = (string)user.UserToken.TokenType.Clone()
 				
 			};
 			var res = await service.CreateBid(new Bid
 			{
 				Guid = guid,
-				Client = App.User,
+				Client = user,
 				Location = await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Best),
 				Status = BidStatus.PendingAcceptance,
 				Type = type
@@ -79,9 +81,6 @@ namespace itmit.asb.app.ViewModels
 
 			if (res)
 			{
-				DependencyService.Get<ILocationTrackingService>()
-								 .StartService(guid);
-
 				if (type == BidType.Call)
 				{
 					App.Call("+7 911 447-11-83");
@@ -90,6 +89,12 @@ namespace itmit.asb.app.ViewModels
 				{
 					await Application.Current.MainPage.DisplayAlert("Внимание", "Тревога отправлена", "OK");
 				}
+
+				await Task.Run(() =>
+				{
+					DependencyService.Get<ILocationTrackingService>()
+									 .StartService(guid);
+				});
 			}
 			else
 			{
