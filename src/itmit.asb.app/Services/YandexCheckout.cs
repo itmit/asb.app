@@ -40,6 +40,10 @@ namespace itmit.asb.app.Services
 			}
 		}
 
+		public Task<string> GetPaymentStatus(string paymentToken, UserToken userToken) => throw new NotImplementedException();
+
+		public Task<bool> Activate(string paymentToken, UserToken userToken) => throw new NotImplementedException();
+
 		private void ViewOnNavigated(object sender, WebNavigatedEventArgs e)
 		{
 			if (e.Url.Contains(PaymentSuccessUri))

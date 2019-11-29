@@ -274,12 +274,44 @@ namespace itmit.asb.app.Droid
 						break;
 					}
 
-					CapturePayment(_token,
-								   new UserToken
-								   {
-									   Token = (string) App.User.UserToken.Token.Clone()
-								   });
+					SetActivity(_token);
+
+					
 					break;
+			}
+		}
+
+		private async void SetActivity(string token)
+		{
+			var status = await CheckoutService.GetPaymentStatus(token, App.User.UserToken);
+
+			if (string.IsNullOrEmpty(status) || status.Equals("waiting_for_capture"))
+			{
+				CapturePayment(token,
+							   new UserToken
+							   {
+								   Token = (string)App.User.UserToken.Token.Clone()
+							   });
+			}
+
+			if (!string.IsNullOrEmpty(status) && status.Equals("succeeded"))
+			{
+				AboutViewModel.Instance.IsShowedIndicator = true;
+				AboutViewModel.Instance.IsShowedActivityTitle = false;
+				AboutViewModel.Instance.ActiveTo = "";
+				await CheckoutService.Activate(token, App.User.UserToken);
+
+				new AlertDialog.Builder(this).SetMessage("Подписка оплачена.")
+											 .SetNegativeButton("Ок",
+																(dialog, which) =>
+																{
+																})
+											 .Show();
+
+				UpdateActiveUser(DateTime.Now);
+				AboutViewModel.Instance.IsShowedActivityTitle = true;
+				AboutViewModel.Instance.UpdateUserCommand.Execute(null);
+				AboutViewModel.Instance.IsShowedIndicator = false;
 			}
 		}
 
@@ -325,7 +357,7 @@ namespace itmit.asb.app.Droid
 		private void UpdateActiveUser(DateTimeOffset activeForm)
 		{
 			var con = RealmConfiguration.DefaultConfiguration;
-			con.SchemaVersion = 7;
+			con.SchemaVersion = 11;
 			var realm = Realm.GetInstance(con);
 			using (realm)
 			{
