@@ -38,12 +38,14 @@ namespace itmit.asb.app
 				return;
 			}
 
-			if (User.IsGuard)
-			{
-				MainPage = new GuardMainPage();
-				return;
-			}
-
+            if (Device.OS == TargetPlatform.Android)
+            {
+                if (User.IsGuard)
+                {
+                    MainPage = new GuardMainPage();
+                    return;
+                }
+            }
 			MainPage = new AlarmPage();
 		}
 
