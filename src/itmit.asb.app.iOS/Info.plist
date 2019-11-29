@@ -16,20 +16,9 @@
 	<key>UILaunchImageFile~iphone</key>
 	<string>Uploading pictures</string>
 	<key>CFBundleVersion</key>
-	<string>1.2.5</string>
+	<string>1.2.8</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Photo use</string>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeName</key>
-			<string>MKDirectionsRequest</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.apple.maps.directionsrequest</string>
-			</array>
-		</dict>
-	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -70,7 +59,7 @@
 		<string>fetch</string>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.5</string>
+	<string>1.2.8</string>
 	<key>MinimumOSVersion</key>
 	<string>12.1</string>
 	<key>CFBundleName</key>

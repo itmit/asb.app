@@ -132,11 +132,14 @@ namespace itmit.asb.app.ViewModels
 
 			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 
-			if (user.IsGuard)
-			{
-				app.MainPage = new GuardMainPage();
-				return;
-			}
+            if (Device.OS == TargetPlatform.Android)
+            {
+                if (user.IsGuard)
+                {
+                    app.MainPage = new GuardMainPage();
+                    return;
+                }
+            }
 
 			MainThread.BeginInvokeOnMainThread(() =>
 			{
