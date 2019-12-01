@@ -12,7 +12,7 @@ namespace itmit.asb.app.iOS.Services
 {
 	public class LocationTrackingServiceIos : ILocationTrackingService
 	{
-		private DateTime _lastUpdateTime;
+		private DateTime _lastUpdateTime = DateTime.Now;
 
 		#region Data
 		#region Consts
