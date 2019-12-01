@@ -56,21 +56,25 @@ namespace itmit.asb.app.ViewModels
 		{
 			IsBusy = true;
 
-			if (!await CheckPermission(Permission.Location, "Для отправки тревоги, необходимо разрешение на использование геоданных."))
+			if (Device.RuntimePlatform == Device.Android)
 			{
-				IsBusy = false;
-				return;
+				if (!await CheckPermission(Permission.Location, "Для отправки тревоги, необходимо разрешение на использование геоданных."))
+				{
+					IsBusy = false;
+					return;
+				}
 			}
-
+			
 			var guid = Guid.NewGuid();
 			var user = App.User;
+			bool res;
 			IBidsService service = new BidsService
 			{
 				AccessToken = (string)user.UserToken.Token.Clone(),
 				TokenType = (string)user.UserToken.TokenType.Clone()
-				
+
 			};
-			var res = await service.CreateBid(new Bid
+			res = await service.CreateBid(new Bid
 			{
 				Guid = guid,
 				Client = user,
