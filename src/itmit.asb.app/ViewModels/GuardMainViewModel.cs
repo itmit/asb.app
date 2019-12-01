@@ -171,52 +171,26 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
-			IBidsService bidsService = new BidsService
-			{
-				Token = App.User.UserToken
-			};
-			var bidsList = (await bidsService.GetBidsAsync())
-			               .OrderByDescending(x => x.Status)
-						   .ThenByDescending(x => x.CreatedAt)
-						   .ToList();
+            try
+            {
+                IBidsService bidsService = new BidsService
+                {
+                    Token = App.User.UserToken
+                };
+                var bidsList = (await bidsService.GetBidsAsync())
+                               .OrderByDescending(x => x.Status)
+                               .ThenByDescending(x => x.CreatedAt)
+                               .ToList();
 
-			_hasWaitApplyAlerts = false;
-			var newBidsList = new List<Bid>();
-			if (!string.IsNullOrEmpty(App.User.BidGuid))
-			{
-				Bid firstBid = bidsList.SingleOrDefault(x => x.Guid == Guid.Parse(App.User.BidGuid));
-				if (firstBid != null && CheckStatusBids(firstBid))
-				{
-					HasActiveBid = true;
-					FirstBid = firstBid;
-				}
-				else
-				{
-					HasActiveBid = false;
-				}
-			} 
-			else
-			{
-				HasActiveBid = false;
-			}
-
-			foreach (var bid in bidsList)
-			{
-				if (string.IsNullOrEmpty(bid.Client.Name))
-				{
-					bid.Client.Name = bid.Client.Organization;
-				}
-
-				bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
-				bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
-
-				if (CheckStatusBids(bid))
-				{
-					newBidsList.Add(bid);
-				}
-			}
-
-			Bids = new ObservableCollection<Bid>(newBidsList);
+                SetActiveBid(bidsList);
+                _hasWaitApplyAlerts = false;
+                var newBidsList = FormatBidList(bidsList);
+                Bids = new ObservableCollection<Bid>(newBidsList);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
 			await Task.Run(async () =>
 			{
@@ -242,7 +216,49 @@ namespace itmit.asb.app.ViewModels
 			IsBusy = false;
 		}
 
-		public Bid FirstBid
+        private List<Bid> FormatBidList(List<Bid> bidsList)
+        {
+            var newBidsList = new List<Bid>();
+            foreach (var bid in bidsList)
+            {
+                if (string.IsNullOrEmpty(bid.Client.Name))
+                {
+                    bid.Client.Name = bid.Client.Organization;
+                }
+
+                bid.UpdatedAt = bid.UpdatedAt.Add(new TimeSpan(0, 3, 0, 0));
+                bid.CreatedAt = bid.CreatedAt.Add(new TimeSpan(0, 3, 0, 0));
+
+                if (CheckStatusBids(bid))
+                {
+                    newBidsList.Add(bid);
+                }
+            }
+            return newBidsList;
+        }
+
+        private void SetActiveBid(List<Bid> bidsList)
+        {
+            if (!string.IsNullOrEmpty(App.User.BidGuid))
+            {
+                Bid firstBid = bidsList.SingleOrDefault(x => x.Guid == Guid.Parse(App.User.BidGuid));
+                if (firstBid != null && CheckStatusBids(firstBid))
+                {
+                    HasActiveBid = true;
+                    FirstBid = firstBid;
+                }
+                else
+                {
+                    HasActiveBid = false;
+                }
+            }
+            else
+            {
+                HasActiveBid = false;
+            }
+        }
+
+        public Bid FirstBid
 		{
 			get => _firstBid;
 			set => SetProperty(ref _firstBid, value);
