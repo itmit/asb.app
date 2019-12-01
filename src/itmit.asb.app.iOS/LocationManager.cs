@@ -8,6 +8,11 @@ namespace itmit.asb.app.iOS
 	{
 		private readonly CLLocationManager _locMgr;
 
+		public void StopLocationUpdates()
+		{
+			_locMgr.StopUpdatingLocation();
+		}
+
 		public LocationManager()
 		{
 			_locMgr = new CLLocationManager

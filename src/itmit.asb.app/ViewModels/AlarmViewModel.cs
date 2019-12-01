@@ -83,7 +83,7 @@ namespace itmit.asb.app.ViewModels
 			{
 				if (type == BidType.Call)
 				{
-					App.Call("+7 911 447-11-83");
+					App.Call("+7 111 111-11-11");
 				}
 				else if (type == BidType.Alert)
 				{

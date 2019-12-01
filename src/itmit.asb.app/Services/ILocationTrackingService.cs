@@ -13,6 +13,9 @@ namespace itmit.asb.app.Services
 		/// </summary>
 		/// <param name="bidGuid">Ид тревоги.</param>
 		void StartService(Guid bidGuid);
+
+
+		void StopService();
 		#endregion
 	}
 }
