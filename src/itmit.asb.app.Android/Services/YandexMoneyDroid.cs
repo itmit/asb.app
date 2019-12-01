@@ -20,11 +20,71 @@ namespace itmit.asb.app.Droid.Services
 	{
 		private const string CreatePaymentUri = "http://lk.asb-security.ru/api/client/setActivityFrom";
 		private const string CapturePaymentUri = "http://lk.asb-security.ru/api/client/capturePayment";
+		private const string GetPaymentStatusUri = "http://lk.asb-security.ru/api/client/getPaymentStatus";
+		private const string ActivateUri = "http://lk.asb-security.ru/api/client/activate";
 
 		public void Buy()
 		{
 			MainActivity.Instance.InitUi();
 			MainActivity.Instance.CheckoutService = this;
+		}
+
+		public async Task<string> GetPaymentStatus(string paymentToken, UserToken userToken)
+		{
+			using (var client = new HttpClient(new AndroidClientHandler()))
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{userToken.TokenType} {userToken.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				var data = new Dictionary<string, string>
+				{
+					{
+						"payment_token", paymentToken
+					}
+				};
+
+				var response = await client.PostAsync(GetPaymentStatusUri, new FormUrlEncodedContent(data));
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+				if (response.IsSuccessStatusCode)
+				{
+					if (!string.IsNullOrEmpty(jsonString))
+					{
+						var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<List<string>>>(jsonString);
+						return jsonData.Data[0];
+					}
+				}
+
+				return null;
+			}
+		}
+
+		public async Task<bool> Activate(string paymentToken, UserToken userToken)
+		{
+			using (var client = new HttpClient(new AndroidClientHandler()))
+			{
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{userToken.TokenType} {userToken.Token}");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				var data = new Dictionary<string, string>
+				{
+					{
+						"payment_token", paymentToken
+					}
+				};
+
+				var response = await client.PostAsync(ActivateUri, new FormUrlEncodedContent(data));
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+				if (response.IsSuccessStatusCode)
+				{
+					if (!string.IsNullOrEmpty(jsonString))
+					{
+						var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<Payment>>(jsonString);
+						return await Task.FromResult(jsonData.Data.IsActive);
+					}
+				}
+
+				return false;
+			}
 		}
 
 		public async Task<Uri> CreatePayment(string paymentToken, UserToken userToken)

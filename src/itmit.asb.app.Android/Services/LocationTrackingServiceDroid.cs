@@ -18,5 +18,10 @@ namespace itmit.asb.app.Droid.Services
 			bundle.PutString("BidGuid", bidGuid.ToString());
 			MainActivity.StartForegroundServiceCompat<LocationTrackingService>(Android.App.Application.Context, bundle);
 		}
+
+		public void StopService()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

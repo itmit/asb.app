@@ -70,6 +70,11 @@ namespace itmit.asb.app.iOS.Services
 			Manager.LocationUpdated += HandleLocationChanged;
 			Manager.StartLocationUpdates();
 		}
+
+		public void StopService()
+		{
+			Manager.StopLocationUpdates();
+		}
 		#endregion
 
 		#region Private
