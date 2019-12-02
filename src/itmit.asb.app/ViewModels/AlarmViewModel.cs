@@ -67,21 +67,27 @@ namespace itmit.asb.app.ViewModels
 			
 			var guid = Guid.NewGuid();
 			var user = App.User;
-			bool res;
+			bool res = false;
 			IBidsService service = new BidsService
+				{
+					AccessToken = (string)user.UserToken.Token.Clone(),
+					TokenType = (string)user.UserToken.TokenType.Clone()
+				};
+			try
 			{
-				AccessToken = (string)user.UserToken.Token.Clone(),
-				TokenType = (string)user.UserToken.TokenType.Clone()
-
-			};
-			res = await service.CreateBid(new Bid
+				res = await service.CreateBid(new Bid
+				{
+					Guid = guid,
+					Client = user,
+					Location = await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Best),
+					Status = BidStatus.PendingAcceptance,
+					Type = type
+				});
+			}
+			catch(Exception e)
 			{
-				Guid = guid,
-				Client = user,
-				Location = await Location.GetCurrentGeolocationAsync(GeolocationAccuracy.Best),
-				Status = BidStatus.PendingAcceptance,
-				Type = type
-			});
+				Console.WriteLine(e);
+			}
 
 			if (res)
 			{

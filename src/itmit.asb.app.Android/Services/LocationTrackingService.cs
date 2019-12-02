@@ -200,7 +200,6 @@ namespace itmit.asb.app.Droid.Services
 				try
 				{
 					_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, (float)MinimumDistance, _locationListener);
-					//_locationManager.RequestLocationUpdates(_locationProvider, Milliseconds, a, _locationListener);
 				}
 				catch (SecurityException ex)
 				{
@@ -218,17 +217,23 @@ namespace itmit.asb.app.Droid.Services
 					return;
 				}
 
-				bool res;
-				if (_isGuard)
+				bool res = false;
+				var loc = new Location(location.Latitude, location.Longitude);
+				try
 				{
-
-					res = await UpdateCurrentLocation(new Location(location.Latitude, location.Longitude), _token, _bidGuid);
-
+					if (_isGuard)
+					{
+						res = await UpdateCurrentLocation(loc, _token, _bidGuid);
+					}
+					else
+					{
+						res = await AddPointOnMapTask(loc, _token, _bidGuid);
+					}
 				}
-				else
+				catch (Exception e)
 				{
-					res = await AddPointOnMapTask(
-							  new Location(location.Latitude, location.Longitude), _token, _bidGuid);
+					Log.Error(_tag, "Network error" + e.Message);
+					Console.WriteLine(e);
 				}
 
 				Log.Debug(_tag, res ? $"Update location is SUCCESS at {DateTime.Now};" : $"Update location is FAIL at {DateTime.Now}; Error: {_locationService.LastError}");
@@ -341,6 +346,9 @@ namespace itmit.asb.app.Droid.Services
 			return builder.Build();
 		}
 
+		/// <summary>
+		/// Создает канал уведомлений.
+		/// </summary>
 		private void CreateNotificationChannel()
 		{
 			if (Build.VERSION.SdkInt < BuildVersionCodes.O)
@@ -362,6 +370,9 @@ namespace itmit.asb.app.Droid.Services
 			notificationManager.CreateNotificationChannel(channel);
 		}
 
+		/// <summary>
+		/// Регистрирует сервис.
+		/// </summary>
 		private void RegisterForegroundService()
 		{
 			CreateNotificationChannel();

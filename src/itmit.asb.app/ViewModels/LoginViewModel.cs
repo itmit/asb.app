@@ -29,6 +29,11 @@ namespace itmit.asb.app.ViewModels
 		{
 			LoginCommand = new RelayCommand(obj =>
 											{
+												if (IsBusy)
+												{
+													return;
+												}
+												IsBusy = true;
 												Task.Run(LoginCommandExecute);
 											},
 											obj => CanLoginCommandExecute());
@@ -98,8 +103,6 @@ namespace itmit.asb.app.ViewModels
 
 		private async void LoginCommandExecute()
 		{
-			//await CheckPermission(Permission.Location, "Для отслеживания вашего местоположения необходимо разрешение на использование геоданных.");
-
 			User user;
 			try
 			{
@@ -132,11 +135,12 @@ namespace itmit.asb.app.ViewModels
 
 			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 
-            if (Device.OS == TargetPlatform.Android)
-            {
+			if (Device.RuntimePlatform == Device.Android)
+			{
                 if (user.IsGuard)
                 {
                     app.MainPage = new GuardMainPage();
+					IsBusy = false;
                     return;
                 }
             }
@@ -145,6 +149,7 @@ namespace itmit.asb.app.ViewModels
 			{
 				app.MainPage = new AlarmPage();
 			});
+			IsBusy = false;
 		}
 		#endregion
 	}

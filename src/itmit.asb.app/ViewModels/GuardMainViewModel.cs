@@ -40,7 +40,6 @@ namespace itmit.asb.app.ViewModels
 			_bids = new ObservableCollection<Bid>();
 			RefreshCommand = new RelayCommand(obj =>
 											  {
-												  IsBusy = true;
 												  Task.Run(() =>
 												  {
 													  UpdateBids();
@@ -78,7 +77,6 @@ namespace itmit.asb.app.ViewModels
 			_bids = new ObservableCollection<Bid>();
 			RefreshCommand = new RelayCommand(obj =>
 											  {
-												  IsBusy = true;
 												  Task.Run(() =>
 												  {
 													  UpdateBids();
@@ -171,6 +169,8 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
+			IsBusy = true;
+
             try
             {
                 IBidsService bidsService = new BidsService
@@ -212,7 +212,6 @@ namespace itmit.asb.app.ViewModels
 				}
 			});
 			
-
 			IsBusy = false;
 		}
 

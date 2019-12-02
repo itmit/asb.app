@@ -10,37 +10,43 @@
              BackgroundColor="#1f1f1f"
              x:Class="itmit.asb.app.Views.Guard.ApplyBidsPage">
     <ContentPage.Content>
-        <StackLayout>
-
-            <StackLayout IsVisible="{Binding HasActiveBid}">
-                <Label Text="Выбранная заявка" FontSize="Medium" TextColor="#ef2b2e"/>
-                <StackLayout>
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SelectFirstBidCommand}"/>
-                    </StackLayout.GestureRecognizers>
-                    <Label Text="{Binding FirstBid.Client.Name}" HorizontalTextAlignment="Center" FontSize="30" HorizontalOptions="Center" TextColor="#ef2b2e" />
-                    <Label Text="{Binding FirstBid.CreatedAt, StringFormat='{0:dd.MM.yyyy HH:mm:ss}'}" FontSize="25"
-                           HorizontalOptions="Center" TextColor="White" />
-                    <BoxView HeightRequest="1" BackgroundColor="White" />
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <ActivityIndicator IsRunning="{Binding IsBusy, Mode=OneWay}"
+                               IsVisible="{Binding IsBusy, Mode=OneWay}"
+                               IsEnabled="{Binding IsBusy, Mode=OneWay}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center">
+            </ActivityIndicator>
+            <StackLayout>
+                <StackLayout IsVisible="true">
+                    <Label Text="Выбранная заявка" FontSize="Medium" TextColor="#ef2b2e"/>
+                    <StackLayout>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding SelectFirstBidCommand}"/>
+                        </StackLayout.GestureRecognizers>
+                        <Label Text="{Binding FirstBid.Client.Name}" HorizontalTextAlignment="Center" FontSize="30" HorizontalOptions="Center" TextColor="#ef2b2e" />
+                        <Label Text="{Binding FirstBid.CreatedAt, StringFormat='{0:dd.MM.yyyy HH:mm:ss}'}" FontSize="25"
+                               HorizontalOptions="Center" TextColor="White" />
+                        <BoxView HeightRequest="1" BackgroundColor="White" />
+                    </StackLayout>
+                    <Label Text="Все заявки" FontSize="Medium" TextColor="#ef2b2e"/>
                 </StackLayout>
-                <Label Text="Все заявки" FontSize="Medium" TextColor="#ef2b2e"/>
+                <ScrollView>
+                    <ListView ItemsSource="{Binding Bids}"
+                              IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                              RefreshCommand="{Binding RefreshCommand}"
+                              SelectedItem="{Binding SelectedBid, Mode=TwoWay}"
+                              IsPullToRefreshEnabled="True"
+                              HasUnevenRows="True"
+                              VerticalOptions="StartAndExpand">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <guard:BidViewCell />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
             </StackLayout>
-
-            <ScrollView>
-                <ListView ItemsSource="{Binding Bids}"
-                          IsRefreshing="{Binding IsBusy, Mode=OneWay}"
-                          RefreshCommand="{Binding RefreshCommand}"
-                          SelectedItem="{Binding SelectedBid, Mode=TwoWay}"
-                          IsPullToRefreshEnabled="True"
-                          HasUnevenRows="True"
-                          VerticalOptions="StartAndExpand">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <guard:BidViewCell />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollView>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

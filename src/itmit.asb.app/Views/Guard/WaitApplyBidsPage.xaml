@@ -10,7 +10,13 @@
              BackgroundColor="#1f1f1f"
              x:Class="itmit.asb.app.Views.Guard.WaitApplyBidsPage">
     <ContentPage.Content>
-        <StackLayout>
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <ActivityIndicator IsRunning="{Binding IsBusy, Mode=OneWay}"
+                               IsVisible="{Binding IsBusy, Mode=OneWay}"
+                               IsEnabled="{Binding IsBusy, Mode=OneWay}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center">
+            </ActivityIndicator>
             <ScrollView>
                 <ListView ItemsSource="{Binding Bids}"
                           IsRefreshing="{Binding IsBusy, Mode=OneWay}"
@@ -26,6 +32,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
