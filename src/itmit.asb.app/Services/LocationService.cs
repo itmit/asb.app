@@ -94,7 +94,7 @@ namespace itmit.asb.app.Services
 		{
 			using (var client = new HttpClient())
 			{
-				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				var response = await client.PostAsync(UpdateCurrentLocationUri,

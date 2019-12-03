@@ -42,7 +42,7 @@ namespace itmit.asb.app.iOS
 			if (CLLocationManager.LocationServicesEnabled)
 			{
 				//set the desired accuracy, in meters
-				LocMgr.DesiredAccuracy = 25;
+				LocMgr.DesiredAccuracy = 10;
 				LocMgr.LocationsUpdated += (object sender, CLLocationsUpdatedEventArgs e) =>
 				{
 					// fire our custom Location Updated event
