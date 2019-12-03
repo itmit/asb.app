@@ -12,20 +12,6 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <StackLayout IsVisible="{Binding IsEntity}">
-                    <Label Text="Организация:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                    <controls:LoginEntry Text="{Binding Organization}"
-                                         Placeholder="Введите данные..." 
-                                         Keyboard="Text" Margin="30,0" 
-                                         Style="{StaticResource EntryLoginPageNumber}"/>
-                </StackLayout>
-
-                <StackLayout IsVisible="{Binding IsIndividual}">
-                    <Label Text="ФИО:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
-                    <controls:LoginEntry Text="{Binding Name}" Placeholder="Введите данные..." 
-                                         Keyboard="Text" Margin="30,0" 
-                                         Style="{StaticResource EntryLoginPageNumber}"/>
-                </StackLayout>
 
                 <Label Text="Ваш номер:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
                 <controls:LoginEntry Text="{Binding PhoneNumber}" Placeholder="Введите данные..." Margin="30,0,30,0" Style="{StaticResource EntryLoginPageNumber}">
@@ -40,6 +26,21 @@
                         <x:String>Физическое</x:String>
                     </Picker.Items>
                 </Picker>
+
+                <StackLayout IsVisible="{Binding IsEntity}">
+                    <Label Text="Организация:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Organization}"
+                                         Placeholder="Введите данные..." 
+                                         Keyboard="Text" Margin="30,0" 
+                                         Style="{StaticResource EntryLoginPageNumber}"/>
+                </StackLayout>
+
+                <StackLayout IsVisible="{Binding IsIndividual}">
+                    <Label Text="ФИО:" FontSize="Large" TextColor="#f4e213" Margin="30,30,30,0"/>
+                    <controls:LoginEntry Text="{Binding Name}" Placeholder="Введите данные..." 
+                                         Keyboard="Text" Margin="30,0" 
+                                         Style="{StaticResource EntryLoginPageNumber}"/>
+                </StackLayout>
                 <Label Text="Пароль:" FontSize="Large" TextColor="#f4e213" Margin="30,0,30,0"/>
                 <controls:LoginEntry Text="{Binding Password}" Placeholder="Введите данные..." IsPassword="True" Margin="30,0" Keyboard="Text" Style="{StaticResource EntryLoginPageNumber}"/>
                 <Label Text="Подтвердить пароль:" FontSize="Large" TextColor="#f4e213" Margin="30,0,30,0"/>

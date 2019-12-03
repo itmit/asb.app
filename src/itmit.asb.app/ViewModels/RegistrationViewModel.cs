@@ -3,6 +3,8 @@ using itmit.asb.app.Services;
 using itmit.asb.app.Views;
 using Realms;
 using System;
+using System.Diagnostics;
+using System.Security.Authentication;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -172,9 +174,21 @@ namespace itmit.asb.app.ViewModels
 				app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 
 				app.MainPage = new AlarmPage();
-
-				user.UserToken = token;
-
+				
+				try
+				{
+					user = await service.GetUserByTokenAsync(token);
+				}
+				catch (AuthenticationException e)
+				{
+					Debug.WriteLine(e);
+					return;
+				}
+				using (var transaction = Realm.BeginWrite())
+				{
+					Realm.RemoveAll<User>();
+					transaction.Commit();
+				}
 				Realm.Write(() =>   
 				{
 					Realm.Add(user, true);

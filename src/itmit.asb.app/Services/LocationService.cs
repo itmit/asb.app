@@ -48,7 +48,7 @@ namespace itmit.asb.app.Services
 		{
 			using (var client = new HttpClient())
 			{
-				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				var encodedContent = new Dictionary<string, string>
@@ -88,13 +88,13 @@ namespace itmit.asb.app.Services
 		/// Обновляет текущее местоположение клиента.
 		/// </summary>
 		/// <param name="location">Местоположение.</param>
-		/// <param name="token">Токен пользователя, чье местоположение необходимо обнвоить.</param>
+		/// <param name="token">Токен пользователя, чье местоположение необходимо обновить.</param>
 		/// <returns>Возвращает <c>true</c> в случае успеха, иначе <c>false</c>.</returns>
 		public async Task<bool> UpdateCurrentLocationTask(Location location, UserToken token)
 		{
 			using (var client = new HttpClient())
 			{
-				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
+				client.DefaultRequestHeaders.Authorization = AuthenticationHeaderValue.Parse($"{token.TokenType} {token.Token}");
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				var response = await client.PostAsync(UpdateCurrentLocationUri,
@@ -117,6 +117,35 @@ namespace itmit.asb.app.Services
 				{
 					LastError = jsonString;
 				}
+
+				return result;
+			}
+		}
+
+		public async Task<bool> UpdateCurrentLocationTask(Location location, UserToken token, Guid bidGuid)
+		{
+
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var response = await client.PostAsync(UpdateCurrentLocationUri,
+													  new FormUrlEncodedContent(new Dictionary<string, string>
+													  {
+														  {
+															  "latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
+														  },
+														  {
+															  "longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
+														  }
+													  }));
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				var result = await Task.FromResult(response.IsSuccessStatusCode);
+
 
 				return result;
 			}

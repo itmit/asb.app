@@ -283,12 +283,19 @@ namespace itmit.asb.app.ViewModels
 		{
 			if (obj == null || App.User == null)
 			{
+				IsVisible = false;
+				return false;
+			}
+
+			if (!Guid.TryParse(App.User.BidGuid, out var guid))
+			{
+				IsVisible = false;
 				return false;
 			}
 
 			if (obj is Bid bid)
 			{
-				IsVisible = bid.Guid != Guid.Empty && bid.Status == BidStatus.Accepted && Guid.Parse(App.User.BidGuid) == _bid.Guid;
+				IsVisible = bid.Guid != Guid.Empty && bid.Status == BidStatus.Accepted && guid == _bid.Guid;
 				return IsVisible;
 			}
 
