@@ -13,6 +13,7 @@ namespace itmit.asb.app.iOS.Services
 	public class LocationTrackingServiceIos : ILocationTrackingService
 	{
 		private DateTime _lastUpdateTime = DateTime.Now;
+		private Guid _bidGuid;
 
 		#region Data
 		#region Consts
@@ -69,6 +70,7 @@ namespace itmit.asb.app.iOS.Services
 			Manager = new LocationManager();
 			Manager.LocationUpdated += HandleLocationChanged;
 			Manager.StartLocationUpdates();
+			_bidGuid = bidGuid;
 		}
 
 		public void StopService()
@@ -84,13 +86,14 @@ namespace itmit.asb.app.iOS.Services
 			var location = e.Location;
 
 			var service = new LocationService();
+			var loc = new Location(location.Coordinate.Longitude, location.Coordinate.Latitude);
 			if (App.User.IsGuard)
 			{
-				await service.UpdateCurrentLocationTask(new Location(location.Coordinate.Longitude, location.Coordinate.Latitude), token);
+				await service.UpdateCurrentLocationTask(loc, token, _bidGuid);
 			}
 			else
 			{
-				await service.AddPointOnMapTask(new Location(location.Coordinate.Latitude, location.Coordinate.Longitude), token);
+				await service.AddPointOnMapTask(loc, token, _bidGuid);
 			}
 		}
 		#endregion

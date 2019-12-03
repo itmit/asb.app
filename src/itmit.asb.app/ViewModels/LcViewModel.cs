@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Input;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
@@ -212,18 +213,24 @@ namespace itmit.asb.app.ViewModels
 			}
 
 			UserPictureSource = image.Path;
-
-			_realm.Write(() =>
+			try
 			{
-				App.User.UserPictureSource = UserPictureSource;
-			});
+				_realm.Write(() =>
+				{
+					App.User.UserPictureSource = UserPictureSource;
+				});
 
-			using (var memoryStream = new MemoryStream())
+				using (var memoryStream = new MemoryStream())
+				{
+					image.GetStream()
+						 .CopyTo(memoryStream);
+					image.Dispose();
+					_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
+				}
+			}
+			catch (Exception e)
 			{
-				image.GetStream()
-					 .CopyTo(memoryStream);
-				image.Dispose();
-				_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
+				Console.WriteLine(e);
 			}
 		}
 

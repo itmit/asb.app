@@ -121,6 +121,35 @@ namespace itmit.asb.app.Services
 				return result;
 			}
 		}
+
+		public async Task<bool> UpdateCurrentLocationTask(Location location, UserToken token, Guid bidGuid)
+		{
+
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(token.TokenType, token.Token);
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+				var response = await client.PostAsync(UpdateCurrentLocationUri,
+													  new FormUrlEncodedContent(new Dictionary<string, string>
+													  {
+														  {
+															  "latitude", location.Latitude.ToString(CultureInfo.InvariantCulture)
+														  },
+														  {
+															  "longitude", location.Longitude.ToString(CultureInfo.InvariantCulture)
+														  }
+													  }));
+
+				var jsonString = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(jsonString);
+
+				var result = await Task.FromResult(response.IsSuccessStatusCode);
+
+
+				return result;
+			}
+		}
 		#endregion
 	}
 }

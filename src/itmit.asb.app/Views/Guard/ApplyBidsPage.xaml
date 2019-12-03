@@ -18,7 +18,7 @@
                                HorizontalOptions="Center">
             </ActivityIndicator>
             <StackLayout>
-                <StackLayout IsVisible="true">
+                <StackLayout IsVisible="{Binding HasActiveBid}">
                     <Label Text="Выбранная заявка" FontSize="Medium" TextColor="#ef2b2e"/>
                     <StackLayout>
                         <StackLayout.GestureRecognizers>
