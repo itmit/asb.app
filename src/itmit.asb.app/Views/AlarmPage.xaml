@@ -37,7 +37,7 @@
                             <Image Source="AlarmAndCall.png" WidthRequest="150" HeightRequest="150" VerticalOptions="Center" HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer 
-                                                Command="{Binding AlarmCommand}"
+                                                Command="{Binding AlarmAndCallCommand}"
                                                 NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>

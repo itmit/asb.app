@@ -167,37 +167,44 @@ namespace itmit.asb.app.ViewModels
 				return;
 			}
 
-			IAuthService service = new AuthService();
+			var service = new AuthService();
 			var token = await service.RegisterAsync(user, pass, cPass);
-			if (!string.IsNullOrEmpty(token.Token))
-			{
-				app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
 
-				app.MainPage = new AlarmPage();
-				
-				try
-				{
-					user = await service.GetUserByTokenAsync(token);
-				}
-				catch (AuthenticationException e)
-				{
-					Debug.WriteLine(e);
-					return;
-				}
-				using (var transaction = Realm.BeginWrite())
-				{
-					Realm.RemoveAll<User>();
-					transaction.Commit();
-				}
-				Realm.Write(() =>   
-				{
-					Realm.Add(user, true);
-				});
-			}
-			else
+			if (string.IsNullOrEmpty(token.Token))
 			{
-				await Application.Current.MainPage.DisplayAlert("Уведомление", "Ошибка регистрации", "ОK");
+				if (string.IsNullOrEmpty(service.LastError))
+				{
+					await Application.Current.MainPage.DisplayAlert("Уведомление", "Ошибка регистрации", "ОK");
+				}
+				else
+				{
+					await Application.Current.MainPage.DisplayAlert("Уведомление", service.LastError, "ОK");
+				}
+				return;
 			}
+
+			app.StartBackgroundService(new TimeSpan(0, 0, 0, 5));
+
+			app.MainPage = new AlarmPage();
+			
+			try
+			{
+				user = await service.GetUserByTokenAsync(token);
+			}
+			catch (AuthenticationException e)
+			{
+				Debug.WriteLine(e);
+				return;
+			}
+			using (var transaction = Realm.BeginWrite())
+			{
+				Realm.RemoveAll<User>();
+				transaction.Commit();
+			}
+			Realm.Write(() =>   
+			{
+				Realm.Add(user, true);
+			});
 		}
 	}
 }

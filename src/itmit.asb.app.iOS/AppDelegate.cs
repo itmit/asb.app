@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using FFImageLoading.Forms.Platform;
 using Foundation;
 using ImageCircle.Forms.Plugin.iOS;
 using itmit.asb.app.Services;
@@ -35,7 +36,7 @@ namespace itmit.asb.app.iOS
 		//
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
-            ImageCircleRenderer.Init();
+			CachedImageRenderer.Init();
 			Forms.Init();
 			FormsMaps.Init();
 			LoadApplication(new App());

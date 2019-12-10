@@ -45,10 +45,5 @@ namespace itmit.asb.app.Views
 			app?.Logout();
 		}
         #endregion
-
-        private void ImageButton_Clicked_5(object sender, EventArgs e)
-        {
-
-        }
     }
 }

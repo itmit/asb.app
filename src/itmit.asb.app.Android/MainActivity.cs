@@ -15,6 +15,7 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Webkit;
 using Android.Widget;
+using FFImageLoading.Forms.Platform;
 using itmit.asb.app.Droid.Services;
 using itmit.asb.app.Models;
 using itmit.asb.app.Services;
@@ -373,12 +374,11 @@ namespace itmit.asb.app.Droid
 
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
-			ImageCircleRenderer.Init();
 			BackgroundAggregator.Init(this);
 			Platform.Init(this, savedInstanceState);
 			Forms.Init(this, savedInstanceState);
 			FormsMaps.Init(this, savedInstanceState);
-
+			CachedImageRenderer.Init(true);
 			Instance = this;
 
 			TabLayoutResource = Resource.Layout.Tabbar;

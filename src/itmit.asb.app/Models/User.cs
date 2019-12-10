@@ -1,4 +1,6 @@
 ﻿using System;
+using FFImageLoading.Cache;
+using FFImageLoading.Forms;
 using Newtonsoft.Json;
 using Realms;
 
@@ -9,7 +11,8 @@ namespace itmit.asb.app.Models
 	/// </summary>
 	public class User : RealmObject
 	{
-        #region Properties
+
+		#region Properties
         /// <summary>
         /// Возвращает или устанавливает email пользователя.
         /// </summary>
@@ -114,6 +117,17 @@ namespace itmit.asb.app.Models
 		{
 			get;
 			set;
+		}
+
+		[Ignored]
+		public string ImageSource
+		{
+			get => UserPictureSource;
+			set
+			{
+				UserPictureSource = value;
+				CachedImage.InvalidateCache(UserPictureSource, CacheType.All, true);
+			}
 		}
 
 		/// <summary>

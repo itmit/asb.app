@@ -40,8 +40,6 @@ namespace itmit.asb.app.ViewModels
 			con.SchemaVersion = 11;
 			_realm = Realm.GetInstance(con);
 
-			UserPictureSource = "user1.png";
-           
 			PhoneNumber = user.PhoneNumber;
 
             if (user.UserType == UserType.Individual)
@@ -58,12 +56,12 @@ namespace itmit.asb.app.ViewModels
                 _director = user.Director;
                 _organization = user.Organization;
             }
+			SetProperty(ref _note, user.Note);
+			UserPictureSource = user.UserPictureSource;
 
-            SetProperty(ref _note, user.Note);
-
-			if (!string.IsNullOrEmpty(user.UserPictureSource) && user.UserPictureSource != "null")
+			if (string.IsNullOrEmpty(user.UserPictureSource))
 			{
-				UserPictureSource = user.UserPictureSource;
+				UserPictureSource = "user1.png";
 			}
 
 			UpdatePhotoCommand = new RelayCommand(obj =>
@@ -213,24 +211,18 @@ namespace itmit.asb.app.ViewModels
 			}
 
 			UserPictureSource = image.Path;
-			try
-			{
-				_realm.Write(() =>
-				{
-					App.User.UserPictureSource = UserPictureSource;
-				});
 
-				using (var memoryStream = new MemoryStream())
-				{
-					image.GetStream()
-						 .CopyTo(memoryStream);
-					image.Dispose();
-					_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
-				}
-			}
-			catch (Exception e)
+			_realm.Write(() =>
 			{
-				Console.WriteLine(e);
+				App.User.ImageSource = UserPictureSource;
+			});
+
+			using (var memoryStream = new MemoryStream())
+			{
+				image.GetStream()
+					 .CopyTo(memoryStream);
+				image.Dispose();
+				_service.SetAvatar(memoryStream.ToArray(), App.User.UserToken);
 			}
 		}
 

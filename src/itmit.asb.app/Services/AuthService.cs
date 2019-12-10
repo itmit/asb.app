@@ -198,7 +198,7 @@ namespace itmit.asb.app.Services
 				{
 					var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<User>>(jsonString);
 					jsonData.Data.UserToken = token;
-					jsonData.Data.UserPictureSource = BasePictureUri + jsonData.Data.UserPictureSource;
+					jsonData.Data.ImageSource = BasePictureUri + jsonData.Data.ImageSource;
 
 					if (jsonData.Data.ActiveFromDateTime != null)
 					{
@@ -292,21 +292,32 @@ namespace itmit.asb.app.Services
 
 					HttpResponseMessage response = await client.PostAsync(RegisterUri, new FormUrlEncodedContent(encodedContent));
 					var jsonString = await response.Content.ReadAsStringAsync();
+					
+					if (string.IsNullOrEmpty(jsonString))
+					{
+						return await Task.FromResult(new UserToken());
+					}
+					
 					Debug.WriteLine(jsonString);
 
 					if (response.IsSuccessStatusCode)
 					{
-						if (jsonString != null)
-						{
-							var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<UserToken>>(jsonString);
-							return await Task.FromResult(jsonData.Data);
-						}
+						var jsonData = JsonConvert.DeserializeObject<JsonDataResponse<UserToken>>(jsonString);
+						return await Task.FromResult(jsonData.Data);
 					}
+					var error = JsonConvert.DeserializeObject<JsonDataResponse<string>>(jsonString);
+					LastError = error.Message;
 					return await Task.FromResult(new UserToken());
 				}
 			}
 
 			return await Task.FromResult(new UserToken());
+		}
+
+		public string LastError
+		{
+			get;
+			set;
 		}
 
 		public async Task<bool> ForgotPassword(string phoneNumber)

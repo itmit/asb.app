@@ -6,10 +6,7 @@
                   x:Class="itmit.asb.app.Views.Guard.GuardMainPage"
                   BackgroundColor="#1f1f1f">
     <MasterDetailPage.Detail>
-        <NavigationPage x:Name="NavigationPage">
-            <NavigationPage.ToolbarItems>
-                <ToolbarItem Text="Выход" Command="{Binding ExitCommand}" />
-            </NavigationPage.ToolbarItems>
+        <NavigationPage>
             <x:Arguments>
                 <guard:ApplyBidsPage />
             </x:Arguments>

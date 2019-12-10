@@ -117,7 +117,7 @@ namespace itmit.asb.app.Droid.Services
 
 					foreach (var bid in jsonData.Data)
 					{
-						bid.Client.UserPictureSource = "http://lk.asb-security.ru/" + bid.Client.UserPictureSource;
+						bid.Client.ImageSource = "http://lk.asb-security.ru/" + bid.Client.ImageSource;
 					}
 
 					return await Task.FromResult(jsonData.Data);
@@ -150,7 +150,7 @@ namespace itmit.asb.app.Droid.Services
 
 						foreach (var bid in jsonData.Data)
 						{
-							bid.Client.UserPictureSource = "http://lk.asb-security.ru/" + bid.Client.UserPictureSource;
+							bid.Client.ImageSource = "http://lk.asb-security.ru/" + bid.Client.ImageSource;
 						}
 
 						return await Task.FromResult(jsonData.Data);

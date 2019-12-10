@@ -112,6 +112,7 @@ namespace itmit.asb.app.ViewModels
 			{
 				AuthNotSuccess = true;
 				Debug.WriteLine(e);
+				IsBusy = false;
 				return;
 			}
 

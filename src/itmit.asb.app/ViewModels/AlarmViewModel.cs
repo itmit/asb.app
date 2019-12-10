@@ -13,23 +13,19 @@ namespace itmit.asb.app.ViewModels
 {
 	public class AlarmViewModel : BaseViewModel
 	{
-		private bool _isSentOut;
-
 		#region .ctor
 		public AlarmViewModel()
 		{
 			AlarmAndCallCommand = new RelayCommand(obj =>
 												   {
-													   IsSentOut = true;
 													   SendAlarm(BidType.Call);
 												   },
-												   obj => CheckNetworkAccess() && !IsSentOut);
+												   obj => CheckNetworkAccess());
 			AlarmCommand = new RelayCommand(obj =>
 											{
-												IsSentOut = true;
 												SendAlarm(BidType.Alert);
 											},
-											obj => CheckNetworkAccess() && !IsSentOut);
+											obj => CheckNetworkAccess());
 		}
 		#endregion
 
@@ -43,17 +39,16 @@ namespace itmit.asb.app.ViewModels
 		{
 			get;
 		}
-
-		public bool IsSentOut
-		{
-			get => _isSentOut;
-			set => SetProperty(ref _isSentOut, value);
-		}
 		#endregion
 
 		#region Private
 		private async void SendAlarm(BidType type)
 		{
+			if (IsBusy)
+			{
+				return;
+			}
+
 			IsBusy = true;
 
 			if (Device.RuntimePlatform == Device.Android)
@@ -108,14 +103,13 @@ namespace itmit.asb.app.ViewModels
 			}
 			else
 			{
-				if (service.LastError.Equals("Client is not active"))
+				if (string.IsNullOrEmpty(service.LastError))
 				{
-					IsSentOut = false;
-					await Application.Current.MainPage.DisplayAlert("Внимание", "Не оплачена подписка. Тревога не отправлена.", "Ок");
+					await Application.Current.MainPage.DisplayAlert("Внимание", "Ошибка сервера.", "Ок");
 				}
 				else
 				{
-					await Application.Current.MainPage.DisplayAlert("Внимание", "Ошибка сервера.", "Ок");
+					await Application.Current.MainPage.DisplayAlert("Внимание", service.LastError, "Ок");
 				}
 			}
 
