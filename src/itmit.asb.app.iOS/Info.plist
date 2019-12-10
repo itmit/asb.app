@@ -16,7 +16,7 @@
 	<key>UILaunchImageFile~iphone</key>
 	<string>Uploading pictures</string>
 	<key>CFBundleVersion</key>
-	<string>1.2.9</string>
+	<string>1.3.2</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Photo use</string>
 	<key>UIMainStoryboardFile</key>
@@ -59,7 +59,7 @@
 		<string>fetch</string>
 	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2.9</string>
+	<string>1.3.2</string>
 	<key>MinimumOSVersion</key>
 	<string>12.1</string>
 	<key>CFBundleName</key>
